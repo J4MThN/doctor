@@ -1,0 +1,12 @@
+@font-face {
+    font-family: Vazir;
+    font-style: normal;
+    font-weight: 900;
+    src: url('./Vazir.ttf')
+  }
+
+  @font-face {
+    font-family: Vazirmatn;
+    font-style: normal;
+    src: url('./Vazirmatn-Regular.ttf')
+  }
