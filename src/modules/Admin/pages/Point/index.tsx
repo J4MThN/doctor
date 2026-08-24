@@ -2,7 +2,7 @@
 export default function index() {
   return (
     <div>
-      لیست افراد ها
+     نکات
     </div>
   )
 }

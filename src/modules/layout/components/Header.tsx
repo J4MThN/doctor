@@ -1,6 +1,9 @@
-import Link from "next/link";
 import Prof from "@/src/assest/profdoctor/nody-عکس-پزشکی-1633070672.webp";
 import Image from "next/image";
+
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Notification01Icon, Setting07Icon } from "@hugeicons/core-free-icons";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -16,8 +19,23 @@ export default function Header() {
             <span className="pr-2 font-black text-base">دکتر مرضیه برومند</span>
           </div>
           <div className="flex items-center lg:order-2">
-            <div className=" border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl ml-2"></div>
-            <div className=" border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl"></div>
+            <div className=" border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl ml-2">
+              <HugeiconsIcon
+                icon={Setting07Icon}
+                size={24}
+                color="#6E6E6E"
+                strokeWidth={1.5}
+              />
+            </div>
+            <div className=" border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl">
+              {" "}
+              <HugeiconsIcon
+                icon={Notification01Icon}
+                size={24}
+                color="#6E6E6E"
+                strokeWidth={1.5}
+              />
+            </div>
           </div>
           <div
             className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
@@ -25,13 +43,13 @@ export default function Header() {
           >
             <ul className="flex flex-col font-medium lg:flex-row lg:space-x-4 lg:mt-0 text-center">
               <li className="w-33.75 h-12 border-2 border-[#F2F2F7] rounded-4xl">
-                <Link href="#" className="text-sm text-[#80838D] ">
+                <Link href="/admin" className="text-sm text-[#80838D] ">
                   داشبورد
                 </Link>
               </li>
               <li className="w-33.75 h-12 border-2 border-[#FF657D] rounded-4xl">
                 <Link
-                  href="#"
+                  href="/admin/cycle"
                   className="text-base font-black text-[#1C2024] dark:text-white"
                   aria-current="page"
                 >
@@ -39,22 +57,22 @@ export default function Header() {
                 </Link>
               </li>
               <li className="w-31.5 h-12 border-2 border-[#F2F2F7] rounded-4xl">
-                <Link href="#" className="text-sm text-[#80838D] ">
+                <Link href="/admin/pregnancy" className="text-sm text-[#80838D] ">
                   لیست بارداری ها
                 </Link>
               </li>
               <li className="w-23 h-12 border-2 border-[#F2F2F7] rounded-4xl">
-                <Link href="#" className="text-sm text-[#80838D] ">
+                <Link href="/admin/point" className="text-sm text-[#80838D] ">
                   نکات امروز
                 </Link>
               </li>
               <li className="w-18.25 h-12 border-2 border-[#F2F2F7] rounded-4xl">
-                <Link href="#" className="text-sm text-[#80838D] ">
+                <Link href="/admin/article" className="text-sm text-[#80838D] ">
                   مقالات
                 </Link>
               </li>
               <li className="w-26.5 h-12 border-2 border-[#F2F2F7] rounded-4xl">
-                <Link href="#" className="text-sm text-[#80838D]  ">
+                <Link href="/admin/comment" className="text-sm text-[#80838D]  ">
                   لیست نظرات
                 </Link>
               </li>
