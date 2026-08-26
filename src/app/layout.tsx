@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
+import vazirmatnLocal from "next/font/local";
 import "./css/globals.css";
 import AdminLayout from "../modules/layout/AdminLayout";
+
+const vazirmatn = vazirmatnLocal({
+  src: "../assest/font/Vazirmatn-Medium.ttf",
+});
 
 export const metadata: Metadata = {
   title: "Doctor",
@@ -13,9 +18,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="fa" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">
-        <AdminLayout />
-        {children}
+      <body className={`${vazirmatn.className} ${vazirmatn.style}  antialiased min-h-full w-full  flex flex-col`}  >
+        <div className=" flex w-full ">
+          <AdminLayout />
+        </div>
+        <div className="flex w-full  flex-1 min-h-0">{children}</div>
       </body>
     </html>
   );
