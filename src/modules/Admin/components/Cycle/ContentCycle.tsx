@@ -1,4 +1,4 @@
-import TableCycle from "../Table/TableCycle";
+import TableCycle from "../TableCycle/TableCycle";
 
 export const ContentCycle = () => {
   return (

@@ -1,11 +1,10 @@
- 
 import ListPregnancyPage from "@/src/modules/Admin/pages/ListPregnancy/listpregnancy";
 const page = () => {
   return (
     <>
-      <ListPregnancyPage/>
+      <ListPregnancyPage />
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;
