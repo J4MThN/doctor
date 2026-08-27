@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Button, ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { EyeOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
@@ -16,6 +15,7 @@ interface Doctor {
   age: number;
   maritalStatus: string;
   cycleCount: number;
+  pregnancyCount: string;
 }
 
 interface DoctorsTableProps {
@@ -30,6 +30,7 @@ const doctors: Doctor[] = [
     age: 28,
     maritalStatus: "متاهل",
     cycleCount: 5,
+    pregnancyCount: "بله",
   },
   {
     key: "2",
@@ -38,6 +39,7 @@ const doctors: Doctor[] = [
     age: 32,
     maritalStatus: "متاهل",
     cycleCount: 8,
+    pregnancyCount: "بله",
   },
   {
     key: "3",
@@ -46,6 +48,7 @@ const doctors: Doctor[] = [
     age: 15,
     maritalStatus: "مجرد",
     cycleCount: 4,
+    pregnancyCount: "خیر",
   },
   {
     key: "4",
@@ -54,6 +57,7 @@ const doctors: Doctor[] = [
     age: 19,
     maritalStatus: "مجرد",
     cycleCount: 2,
+    pregnancyCount: "خیر",
   },
   {
     key: "5",
@@ -62,6 +66,7 @@ const doctors: Doctor[] = [
     age: 36,
     maritalStatus: "مطلقه",
     cycleCount: 15,
+    pregnancyCount: "خیر",
   },
   {
     key: "6",
@@ -70,6 +75,7 @@ const doctors: Doctor[] = [
     age: 69,
     maritalStatus: "متاهل",
     cycleCount: 5,
+    pregnancyCount: "بله",
   },
   {
     key: "7",
@@ -78,6 +84,7 @@ const doctors: Doctor[] = [
     age: 24,
     maritalStatus: "مجرد",
     cycleCount: 8,
+    pregnancyCount: "خیر",
   },
   {
     key: "8",
@@ -86,6 +93,7 @@ const doctors: Doctor[] = [
     age: 34,
     maritalStatus: "متاهل",
     cycleCount: 9,
+    pregnancyCount: "بله",
   },
   {
     key: "9",
@@ -94,6 +102,7 @@ const doctors: Doctor[] = [
     age: 31,
     maritalStatus: "مطلقه",
     cycleCount: 11,
+    pregnancyCount: "خیر",
   },
   {
     key: "10",
@@ -102,6 +111,7 @@ const doctors: Doctor[] = [
     age: 26,
     maritalStatus: "مجرد",
     cycleCount: 3,
+    pregnancyCount: "خیر",
   },
   {
     key: "11",
@@ -110,6 +120,7 @@ const doctors: Doctor[] = [
     age: 30,
     maritalStatus: "متاهل",
     cycleCount: 10,
+    pregnancyCount: "بله",
   },
   {
     key: "12",
@@ -118,22 +129,37 @@ const doctors: Doctor[] = [
     age: 33,
     maritalStatus: "متاهل",
     cycleCount: 12,
+    pregnancyCount: "بله",
+  },
+    {
+    key: "13",
+    name: "سمیه اکبری",
+    mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
+    age: 33,
+    maritalStatus: "متاهل",
+    cycleCount: 12,
+    pregnancyCount: "بله",
+  },
+      {
+    key: "14",
+    name: "سمیه اکبری",
+    mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
+    age: 33,
+    maritalStatus: "متاهل",
+    cycleCount: 12,
+    pregnancyCount: "بله",
   },
 ];
 
 export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
 
-  const handleCycleList = () => {
-    router.push("/cycle");
-  };
-
   const columns: ColumnsType<Doctor> = [
     {
       title: "نام و نام خانوادگی",
       dataIndex: "name",
       key: "name",
-      width: "25%",
+      width: "20%",
       align: "right",
       render: (name: string) => (
         <span className="doctor-table-text">{name}</span>
@@ -144,10 +170,12 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
       title: "موبایل",
       dataIndex: "mobile",
       key: "mobile",
-      width: "20%",
-      align: "center",
+      width: "15%",
+      align: "right",
       render: (mobile: string) => (
-        <span className="doctor-table-text" dir='ltr'>{mobile}</span>
+        <span className="doctor-table-text" dir="ltr">
+          {mobile}
+        </span>
       ),
     },
 
@@ -156,7 +184,7 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
       dataIndex: "age",
       key: "age",
       width: "15%",
-      align: "center",
+      align: "right",
       render: (age: number) => (
         <span className="doctor-table-text">{age} سال</span>
       ),
@@ -166,8 +194,8 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
       title: "وضعیت تاهل",
       dataIndex: "maritalStatus",
       key: "maritalStatus",
-      width: "20%",
-      align: "center",
+      width: "15%",
+      align: "right",
       render: (status: string) => (
         <span className="doctor-table-text">{status}</span>
       ),
@@ -178,31 +206,21 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
       dataIndex: "cycleCount",
       key: "cycleCount",
       width: "20%",
-      align: "center",
+      align: "right",
       render: (count: number) => (
         <span className="doctor-table-text">{count} روز</span>
       ),
     },
 
     {
-      title: "#",
-      key: "action",
-      width: "12%",
-      align: "center",
-      render: (_, record) => {
-        const isActive = activeDoctorId === record.key;
-
-        return (
-          <Button
-            type="default"
-            icon={<EyeOutlined />}
-            onClick={handleCycleList}
-            className={`cycle-button ${isActive ? "cycle-button-active" : ""}`}
-          >
-            لیست سیکل ها
-          </Button>
-        );
-      },
+      title: "قصد بارداری طی 12 ماه آینده",
+      key: "pregnancyCount",
+      dataIndex: "pregnancyCount",
+      width: "20%",
+      align: "right",
+      render: (name: string) => (
+        <span className="doctor-table-text">{name}</span>
+      ),
     },
   ];
 

@@ -145,7 +145,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       dataIndex: "mobile",
       key: "mobile",
       width: "20%",
-      align: "center",
+      align: "right",
       render: (mobile: string) => (
         <span className="doctor-table-text" dir='ltr'>{mobile}</span>
       ),
@@ -156,7 +156,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       dataIndex: "age",
       key: "age",
       width: "15%",
-      align: "center",
+      align: "right",
       render: (age: number) => (
         <span className="doctor-table-text">{age} سال</span>
       ),
@@ -167,7 +167,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       dataIndex: "maritalStatus",
       key: "maritalStatus",
       width: "20%",
-      align: "center",
+      align: "right",
       render: (status: string) => (
         <span className="doctor-table-text">{status}</span>
       ),
@@ -178,7 +178,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       dataIndex: "cycleCount",
       key: "cycleCount",
       width: "20%",
-      align: "center",
+      align: "right",
       render: (count: number) => (
         <span className="doctor-table-text">{count} روز</span>
       ),
@@ -188,7 +188,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       title: "#",
       key: "action",
       width: "12%",
-      align: "center",
+      align: "right",
       render: (_, record) => {
         const isActive = activeDoctorId === record.key;
 
