@@ -48,7 +48,7 @@ export default function Header() {
   };
 
   return (
-    <div className="flex h-full w-full mt-6 mr-3 ml-3">
+    <div className="flex h-12 w-full mt-6 mr-3 ml-3">
 
       {/* Profile */}
       <div className="flex w-[15%] bg-white border-[#E5E5EA] items-center">
@@ -58,14 +58,14 @@ export default function Header() {
           alt="AboutUsPic"
         />
 
-        <span className="pr-2 font-black text-[14px]">
+        <span className="pr-2 font-black text-[16px]">
           دکتر مرضیه برومند
         </span>
 
         <HugeiconsIcon
           icon={ArrowDown01FreeIcons}
           size={20}
-          color="#000"
+          color="#6E6E6E"
           className="mr-3"
         />
       </div>

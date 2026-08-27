@@ -1,13 +1,7 @@
-import { ListCyclePage } from "@/src/modules/Admin/pages/ListCycle/listcycle"
-
-
+import { ListCyclePage } from "@/src/modules/Admin/pages/ListCycle/listcycle";
 
 const page = () => {
-  return (
-    
-      <ListCyclePage/>
-    
-  )
-}
+  return <ListCyclePage />;
+};
 
-export default page
+export default page;

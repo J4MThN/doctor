@@ -8,10 +8,10 @@ export default function AdminLayout() {
   const pathname = usePathname();
 
   const pageTitles: Record<string, string> = {
-    "/cycle": "لیست سیکل ها",
-    "/pregnancy": "لیست بارداری ها",
-    "/note": "نکات امروز",
-    "/article": "مقالات",
+    "/cycle": "لیست افراد",
+    "/pregnancy": "لیست افراد",
+    "/note": "لیست نکات",
+    "/article": " لیست مقالات",
     "/comment": "لیست نظرات",
   };
 
