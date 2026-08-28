@@ -24,3 +24,11 @@ export interface Point {
   desc: string;
   image: number;
 }
+
+export interface Article {
+  key: string;
+  icon: any;
+  title: string;
+  desc: string;
+  image: any;
+}

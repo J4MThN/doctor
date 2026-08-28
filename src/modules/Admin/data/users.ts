@@ -1,4 +1,4 @@
-import {Users , Pregnancy , Point} from "../types";
+import {Users , Pregnancy , Point ,Article} from "../types";
 
 import Point1 from "@/src/assest/point/icon/Group 162736.png";
 import Point2 from "@/src/assest/point/icon/Group 162734.png";
@@ -277,6 +277,53 @@ export const points: Point[] = [
     title: "ذهن و بدن چه ارتباطی دارند؟",
     desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
     image: 5,
+  },
+
+];
+
+
+export const article: Article[] = [
+  {
+    key: "1",
+    icon: Point1,
+    title: "ورزش در چرخه قاعدگی",
+    desc: "ورزش در دوران پریودی می‌تواند به کاهش درد قاعدگی بانوان کمک کند.",
+    image: "عمومی",
+  },
+  {
+    key: "2",
+    icon: Point2,
+    title: "ورزش در چرخه قاعدگی",
+    desc: "مراحل چرخه‌ی قاعدگی و آموزش محاسبه‌ی طول سیکل قاعدگی",
+    image: "عمومی",
+  },
+  {
+    key: "3",
+    icon: Point3,
+    title: "7 روز سیکل",
+    desc: "12 نشانه کم خونی که نباید نادیده بگیرید",
+    image: "تخصصی",
+  },
+  {
+    key: "4",
+    icon: Point4,
+    title: "کمبود آهن در زنان چرا شایع است ؟",
+    desc: "چگونه نه بگوییم؟ 24 تمرین و 30 جمله کاربردی برای نه گفتن",
+    image: "تخصصی",
+  },
+  {
+    key: "5",
+    icon: Point5,
+    title: "اگر به کسی نه بگی یعنی کمتر دوسش داری؟",
+    desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
+    image: "عمومی",
+  },
+  {
+    key: "6",
+    icon: Point6,
+    title: "ذهن و بدن چه ارتباطی دارند؟",
+    desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
+    image: "عمومی",
   },
 
 ];

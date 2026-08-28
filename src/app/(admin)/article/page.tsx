@@ -1,9 +1,10 @@
+import { ListArticle } from "@/src/modules/Admin/pages/Article/ListArticle"
+
  
-import ArticlePage from "@/src/modules/Admin/pages/Article/article";
 const page = () => {
   return (
     <>
-      <ArticlePage/>
+      <ListArticle/>
     </>
   )
 }

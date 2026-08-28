@@ -1,12 +1,16 @@
 "use client";
 
-import { Button, ConfigProvider, Table } from "antd";
+import { ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { EyeOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import {
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  Edit02Icon,
+  Cancel01Icon,
+} from "@hugeicons/core-free-icons";
 import Image from "next/image";
 import { Point } from "../../../types";
 import { points } from "../../../data/users";
@@ -15,12 +19,11 @@ interface DoctorsTableProps {
   activeDoctorId?: string;
 }
 
-
 export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
 
- const handleCycleList = () => {
-    router.push("/cycle");
+  const handlePointList = () => {
+    router.push("/note/editnote");
   };
 
   const columns: ColumnsType<Point> = [
@@ -30,9 +33,7 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
       key: "icon",
       width: "20%",
       align: "right",
-      render: (icon) => (
-        <Image src={icon} alt="icon"/>
-      ),
+      render: (icon) => <Image src={icon} alt="icon" />,
     },
 
     {
@@ -42,9 +43,7 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
       width: "15%",
       align: "right",
       render: (title: string) => (
-        <span className="doctor-table-text">
-          {title}
-        </span>
+        <span className="doctor-table-text">{title}</span>
       ),
     },
 
@@ -69,7 +68,7 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
         <span className="doctor-table-text">{image}</span>
       ),
     },
-   {
+    {
       title: "#",
       key: "action",
       width: "12%",
@@ -78,18 +77,37 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
         const isActive = activeDoctorId === record.key;
 
         return (
-          <Button
-            type="default"
-            icon={<EyeOutlined />}
-            onClick={handleCycleList}
-            className={`cycle-button ${isActive ? "cycle-button-active" : ""}`}
-          >
-            لیست سیکل ها
-          </Button>
+          <div className="flex">
+            <button
+              type="button"
+              onClick={handlePointList}
+              className="flex items-center justify-center ml-2 w-10 h-10 border border-[#E5E5EA] cursor-pointer rounded-4xl"
+            >
+              <HugeiconsIcon
+                icon={Edit02Icon}
+                size={20}
+                color="#6666C6"
+                strokeWidth={1.5}
+                stroke="#6666C6"
+              />
+            </button>
+
+            <button
+              type="button"
+              onClick={handlePointList}
+              className="flex items-center justify-center w-10 h-10 border border-[#E5E5EA] cursor-pointer rounded-4xl"
+            >
+              <HugeiconsIcon
+                icon={Cancel01Icon}
+                size={20}
+                color="#E51D1D"
+                strokeWidth={1.5}
+              />
+            </button>
+          </div>
         );
       },
     },
-   
   ];
 
   return (

@@ -127,9 +127,9 @@ body , html  {
 
 
 .cycle-button {
-  min-width: 132px;
-  height: 38px;
-
+  min-width: 140px;
+  height: 40px;
+  font-family: 'Vazirmatn';
   padding: 0 12px !important;
 
   display: inline-flex;
@@ -137,7 +137,7 @@ body , html  {
   justify-content: center;
   gap: 5px;
 
-  border: 1px solid #e5e5ea !important;
+  border: 1px solid #e5e5ea ;
   border-radius: 20px !important;
 
   background: #ffffff !important;
@@ -322,5 +322,62 @@ body , html  {
   white-space: nowrap;
 }
 
+.poin-button {
+  min-width: 40px;
+  height: 40px;
+  font-family: 'Vazirmatn';
+  padding: 0 12px !important;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  border: 1px solid #e5e5ea ;
+  border-radius: 20px !important;
+
+  background: #ffffff !important;
+
+  font-size: 14px !important;
+  font-weight: 400 !important;
+
+  box-shadow: none !important;
+
+  transition: all 0.2s ease;
+}
+
+
+.poin-button .anticon {
+  font-size: 15px;
+}
+
+.poin-button:hover {
+  border-color: #ff657d !important;
+  color: #ff657d !important;
+  background: #fff1f3 !important;
+}
+
+.poin-button:hover .anticon {
+  color: #ff657d !important;
+}
+
+.poin-button-active {
+  border-color: #ff657d !important;
+
+  background: #fff1f3 !important;
+
+  color: #ff657d !important;
+}
+
+.poin-button-active .anticon {
+  color: #ff657d !important;
+}
+
+
+.poin-button-active:hover {
+  border-color: #ff657d !important;
+  background: #fff1f3 !important;
+  color: #ff657d !important;
+}
 
 

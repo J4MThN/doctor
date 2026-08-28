@@ -1,24 +1,24 @@
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import TablePoint from "./TablePoint/TablePoint";
 import { PlusSignIcon } from "@hugeicons/core-free-icons";
 import { useRouter } from "next/navigation";
+import TableArticle from "./TableArticle/TableArticle";
 
-export const ContentPoint = () => {
+export const ContentArticle = () => {
   const router = useRouter();
 
   const handleNavigation = () => {
-    router.push("/note/addnote");
+    router.push("/article/addarticle");
   };
 
   return (
     <div className=" w-full min-h-0 m-6 rounded-3xl bg-[#F9F9FB]">
       <div className="flex w-full justify-between mt-4 mr-6 font-bold text-[#6666C6]">
         <div className="flex">
-          <span className="text-[16px] ml-2"> نکات </span>
+          <span className="text-[16px] ml-2"> مقالات </span>
           <div className="flex items-center justify-center border border-[#6666C6] bg-[#F2F2FF] w-6 h-6 rounded-4xl">
-            <span className="text-[12px] mt-1">6</span>
+            <span className="text-[12px] mt-1">5</span>
           </div>
         </div>
 
@@ -37,13 +37,13 @@ export const ContentPoint = () => {
               strokeWidth={1.5}
             />
             <span className="text-[12px] text-[#FF657D] font-bold mr-1">
-              افزودن نکته
+             افزودن خبر
             </span>
           </button>
         </div>
       </div>
       <div className="mx-4 mt-4">
-        <TablePoint />
+        <TableArticle />
       </div>
     </div>
   );

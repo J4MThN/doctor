@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, ConfigProvider, Table } from "antd";
+import { ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 
@@ -8,80 +8,66 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import {
   ArrowLeft01Icon,
   ArrowRight01Icon,
-  ViewIcon,
+  Edit02Icon,
+  Cancel01Icon,
 } from "@hugeicons/core-free-icons";
-import { Users } from "../../../types/user";
-import { user } from "../../../data/users";
+import Image from "next/image";
+import { Article, Point } from "../../../types";
+import { article, points } from "../../../data/users";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
 }
 
-export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
+export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
 
-  const handleCycleList = () => {
-    router.push("/cycle");
+  const handlePointList = () => {
+    router.push("/article/editarticle");
   };
 
-  const columns: ColumnsType<Users> = [
+  const columns: ColumnsType<Article> = [
     {
-      title: "نام و نام خانوادگی",
-      dataIndex: "name",
-      key: "name",
-      width: "25%",
-      align: "right",
-      render: (name: string) => (
-        <span className="doctor-table-text">{name}</span>
-      ),
-    },
-
-    {
-      title: "موبایل",
-      dataIndex: "mobile",
-      key: "mobile",
+      title: " آیکون",
+      dataIndex: "icon",
+      key: "icon",
       width: "20%",
       align: "right",
-      render: (mobile: string) => (
-        <span className="doctor-table-text" dir="ltr">
-          {mobile}
-        </span>
-      ),
+      render: (icon) => <Image src={icon} alt="icon" />,
     },
 
     {
-      title: "سن",
-      dataIndex: "age",
-      key: "age",
+      title: "عنوان",
+      dataIndex: "title",
+      key: "title",
       width: "15%",
       align: "right",
-      render: (age: number) => (
-        <span className="doctor-table-text">{age} سال</span>
+      render: (title: string) => (
+        <span className="doctor-table-text">{title}</span>
       ),
     },
 
     {
-      title: "وضعیت تاهل",
-      dataIndex: "maritalStatus",
-      key: "maritalStatus",
-      width: "20%",
+      title: "توضیحات",
+      dataIndex: "desc",
+      key: "desc",
+      width: "25%",
       align: "right",
-      render: (status: string) => (
-        <span className="doctor-table-text">{status}</span>
+      render: (desc: string) => (
+        <span className="doctor-table-text">{desc}</span>
       ),
     },
 
     {
-      title: "تعداد سیکل",
-      dataIndex: "cycleCount",
-      key: "cycleCount",
-      width: "20%",
+      title: "تعداد عکس",
+      dataIndex: "image",
+      key: "image",
+      width: "15%",
       align: "right",
-      render: (count: number) => (
-        <span className="doctor-table-text">{count} روز</span>
+      render: (image: number) => (
+        <span className="doctor-table-text">{image}</span>
       ),
     },
-
     {
       title: "#",
       key: "action",
@@ -91,21 +77,34 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
         const isActive = activeDoctorId === record.key;
 
         return (
-          <Button
-            type="default"
-            icon={
+          <div className="flex">
+            <button
+              type="button"
+              onClick={handlePointList}
+              className="flex items-center justify-center ml-2 w-10 h-10 border border-[#E5E5EA] cursor-pointer rounded-4xl"
+            >
               <HugeiconsIcon
-                icon={ViewIcon}
-                size={24}
-                color="currentColor"
+                icon={Edit02Icon}
+                size={20}
+                color="#6666C6"
+                strokeWidth={1.5}
+                stroke="#6666C6"
+              />
+            </button>
+
+            <button
+              type="button"
+              onClick={handlePointList}
+              className="flex items-center justify-center w-10 h-10 border border-[#E5E5EA] cursor-pointer rounded-4xl"
+            >
+              <HugeiconsIcon
+                icon={Cancel01Icon}
+                size={20}
+                color="#E51D1D"
                 strokeWidth={1.5}
               />
-            }
-            onClick={handleCycleList}
-            className={`cycle-button ${isActive ? "cycle-button-active" : ""}`}
-          >
-            لیست سیکل ها
-          </Button>
+            </button>
+          </div>
         );
       },
     },
@@ -123,10 +122,10 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       }}
     >
       <div className="doctor-table-wrapper">
-        <Table<Users>
+        <Table<Article>
           rowKey="key"
           columns={columns}
-          dataSource={user}
+          dataSource={article}
           pagination={{
             pageSize: 5,
             showSizeChanger: false,

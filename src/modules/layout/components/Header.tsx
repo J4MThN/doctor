@@ -74,7 +74,7 @@ export default function Header() {
       <div className="flex items-center justify-center w-[75%]">
         <ul className="flex space-x-4 text-center">
           {menus.map((menu) => {
-            const isActive = pathname === menu.path;
+            const isActive = pathname === menu.path || pathname.startsWith(`${menu.path}/`);
 
             return (
               <li key={menu.path} className={menu.width}>
