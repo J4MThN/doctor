@@ -1,10 +1,10 @@
-import NotePage from "@/src/modules/Admin/pages/Note/note"
+import { ListPoint } from "@/src/modules/Admin/pages/Point/Listnpoint"
 
  
 const page = () => {
   return (
     <>
-      <NotePage/>
+      <ListPoint/>
     </>
   )
 }

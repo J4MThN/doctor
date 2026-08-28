@@ -1,125 +1,18 @@
 "use client";
 
-import React from "react";
 import { Button, ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { EyeOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
-
-interface Doctor {
-  key: string;
-  name: string;
-  mobile: string;
-  age: number;
-  maritalStatus: string;
-  cycleCount: number;
-}
+import {Users} from "../../../types/user";
+import { user } from "../../../data/users";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
 }
-
-const doctors: Doctor[] = [
-  {
-    key: "1",
-    name: "ناهید میرزایی",
-    mobile: "۰۹۱۱ ۵۵۶ ۳۴۳۵",
-    age: 28,
-    maritalStatus: "متاهل",
-    cycleCount: 5,
-  },
-  {
-    key: "2",
-    name: "سیما نوش آبادی",
-    mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
-    age: 32,
-    maritalStatus: "متاهل",
-    cycleCount: 8,
-  },
-  {
-    key: "3",
-    name: "فاطمه محمدی",
-    mobile: "۰۹۱۱ ۵۵۶ ۳۴۳۵",
-    age: 15,
-    maritalStatus: "مجرد",
-    cycleCount: 4,
-  },
-  {
-    key: "4",
-    name: "فاطمه زهرا طبیبی",
-    mobile: "۰۹۳۸ ۶۹۶ ۲۱۴۵",
-    age: 19,
-    maritalStatus: "مجرد",
-    cycleCount: 2,
-  },
-  {
-    key: "5",
-    name: "نگین رمضانی",
-    mobile: "۰۹۳۶ ۷۸۸ ۸۸۴۴",
-    age: 36,
-    maritalStatus: "مطلقه",
-    cycleCount: 15,
-  },
-  {
-    key: "6",
-    name: "مینا میرزایی",
-    mobile: "۰۹۱۱ ۵۵۶ ۳۴۳۵",
-    age: 69,
-    maritalStatus: "متاهل",
-    cycleCount: 5,
-  },
-  {
-    key: "7",
-    name: "نازنین نوش آبادی",
-    mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
-    age: 24,
-    maritalStatus: "مجرد",
-    cycleCount: 8,
-  },
-  {
-    key: "8",
-    name: "الهام رضایی",
-    mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
-    age: 34,
-    maritalStatus: "متاهل",
-    cycleCount: 9,
-  },
-  {
-    key: "9",
-    name: "نرگس محمدی",
-    mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
-    age: 31,
-    maritalStatus: "مطلقه",
-    cycleCount: 11,
-  },
-  {
-    key: "10",
-    name: "زهرا حسینی",
-    mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
-    age: 26,
-    maritalStatus: "مجرد",
-    cycleCount: 3,
-  },
-  {
-    key: "11",
-    name: "لیلا موسوی",
-    mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
-    age: 30,
-    maritalStatus: "متاهل",
-    cycleCount: 10,
-  },
-  {
-    key: "12",
-    name: "سمیه اکبری",
-    mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
-    age: 33,
-    maritalStatus: "متاهل",
-    cycleCount: 12,
-  },
-];
 
 export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
@@ -128,7 +21,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
     router.push("/cycle");
   };
 
-  const columns: ColumnsType<Doctor> = [
+  const columns: ColumnsType<Users> = [
     {
       title: "نام و نام خانوادگی",
       dataIndex: "name",
@@ -147,7 +40,9 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       width: "20%",
       align: "right",
       render: (mobile: string) => (
-        <span className="doctor-table-text" dir='ltr'>{mobile}</span>
+        <span className="doctor-table-text" dir="ltr">
+          {mobile}
+        </span>
       ),
     },
 
@@ -218,10 +113,10 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       }}
     >
       <div className="doctor-table-wrapper">
-        <Table<Doctor>
+        <Table<Users>
           rowKey="key"
           columns={columns}
-          dataSource={doctors}
+          dataSource={user}
           pagination={{
             pageSize: 5,
             showSizeChanger: false,

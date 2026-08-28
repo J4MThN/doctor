@@ -1,0 +1,26 @@
+export interface Users {
+  key: string;
+  name: string;
+  mobile: string;
+  age: number;
+  maritalStatus: string;
+  cycleCount: number;
+}
+
+export interface Pregnancy {
+  key: string;
+  name: string;
+  mobile: string;
+  age: number;
+  maritalStatus: string;
+  cycleCount: number;
+  pregnancyCount: string;
+}
+
+export interface Point {
+  key: string;
+  icon: any;
+  title: string;
+  desc: string;
+  image: number;
+}

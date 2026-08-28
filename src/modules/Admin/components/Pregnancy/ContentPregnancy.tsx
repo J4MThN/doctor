@@ -1,4 +1,4 @@
-import TablePregnancy from "../Table/TablePregnancy/TablePregnancy";
+import TablePregnancy from "./TablePregnancy/TablePregnancy";
 
 export const ContenPregnancy = () => {
   return (

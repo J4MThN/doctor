@@ -17,9 +17,9 @@ export default function Header() {
 
   const menus = [
     {
-      title: "لیست سیکل ها",
-      path: "/cycle",
-      width: "w-33.75",
+      title: "لیست افراد",
+      path: "/",
+      width: "w-30",
     },
     {
       title: "لیست بارداری ها",
