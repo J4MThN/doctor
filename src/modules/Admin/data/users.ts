@@ -1,16 +1,16 @@
-import {Users , Pregnancy , Point ,Article} from "../types";
+import {Users , Pregnancy , Point ,Article, Comment} from "../types";
 
-import Point1 from "@/src/assest/point/icon/Group 162736.png";
-import Point2 from "@/src/assest/point/icon/Group 162734.png";
-import Point3 from "@/src/assest/point/icon/Group 8.png";
-import Point4 from "@/src/assest/point/icon/fi_10136147.png";
-import Point5 from "@/src/assest/point/icon/brain-head-1--Streamline-Ultimate.png";
-import Point6 from "@/src/assest/point/icon/Group 162736.png";
+import Point1 from "@/src/assest/point/icon/Group 162736.svg";
+import Point2 from "@/src/assest/point/icon/fi_10136147.svg";
+import Point3 from "@/src/assest/point/icon/Group 8.svg";
+import Point4 from "@/src/assest/point/icon/Group 162734.svg";
+import Point5 from "@/src/assest/point/icon/brain-head-1--Streamline-Ultimate.svg";
+import Point6 from "@/src/assest/point/icon/brain-head-1--Streamline-Ultimate.svg";
 
 import Article1 from "@/src/assest/article/Article.png";
-import Article2 from "@/src/assest/article/Article1.png";
-import Article3 from "@/src/assest/article/Article2.png";
-import Article4 from "@/src/assest/article/Article3.png";
+import Article2 from "@/src/assest/article/Article2.png";
+import Article3 from "@/src/assest/article/Article3.png";
+import Article4 from "@/src/assest/article/Article.png";
 import Article5 from "@/src/assest/article/Article1.png";
 import Article6 from "@/src/assest/article/Article.png";
 
@@ -294,44 +294,80 @@ export const article: Article[] = [
   {
     key: "1",
     icon: Article1,
-    title: "ورزش در چرخه قاعدگی",
+    title: "روز جهانی بهداشت قاعدگی چیست و چرا مهم است؟",
     desc: "ورزش در دوران پریودی می‌تواند به کاهش درد قاعدگی بانوان کمک کند.",
     subject: "عمومی",
   },
   {
     key: "2",
     icon: Article2,
-    title: "ورزش در چرخه قاعدگی",
+    title: "گاهی بدن هم از فشار روانی حرف می‌زند!",
     desc: "مراحل چرخه‌ی قاعدگی و آموزش محاسبه‌ی طول سیکل قاعدگی",
     subject: "عمومی",
   },
   {
     key: "3",
     icon: Article3,
-    title: "7 روز سیکل",
+    title: "خوراکی‌های خوش‌طعم در دوران پریود؛ چطور انتخا... ",
     desc: "12 نشانه کم خونی که نباید نادیده بگیرید",
     subject: "تخصصی",
   },
   {
     key: "4",
     icon: Article4,
-    title: "کمبود آهن در زنان چرا شایع است ؟",
+    title: "گاهی بدن هم از فشار روانی حرف می‌زند!",
     desc: "چگونه نه بگوییم؟ 24 تمرین و 30 جمله کاربردی برای نه گفتن",
     subject: "تخصصی",
   },
   {
     key: "5",
     icon: Article5,
-    title: "اگر به کسی نه بگی یعنی کمتر دوسش داری؟",
+    title: "ترس، هورمون‌ها و پریود؛ این سه چطور بر هم اثر م...",
     desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
     subject: "عمومی",
   },
   {
     key: "6",
     icon: Article6,
-    title: "ذهن و بدن چه ارتباطی دارند؟",
+    title: "ترس، هورمون‌ها و پریود؛ این سه چطور بر هم اثر م...",
     desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
     subject: "عمومی",
+  },
+
+];
+
+
+
+export const comment: Comment[] = [
+  {
+    key: "1",
+    name: "ناهید میرزایی",
+    desc: "ورزش در دوران پریودی می‌تواند به کاهش درد قاعدگی بانوان کمک کند.",
+    status: "تایید شده",
+  },
+  {
+    key: "2",
+    name: "سیما نوش آبادی",
+    desc: "مراحل چرخه‌ی قاعدگی و آموزش محاسبه‌ی طول سیکل قاعدگی",
+    status: "رد شده",
+  },
+  {
+    key: "3",
+    name: "فاطمه محمدی",
+    desc: "12 نشانه کم خونی که نباید نادیده بگیرید",
+    status: "تایید شده",
+  },
+  {
+    key: "4",
+    name: "فاطمه زهرا طیبی",
+    desc: "چگونه نه بگوییم؟ 24 تمرین و 30 جمله کاربردی برای نه گفتن",
+    status: "تایید شده",
+  },
+  {
+    key: "5",
+    name: "نگین رمضانی",
+    desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
+    status: "تایید شده",
   },
 
 ];

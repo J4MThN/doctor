@@ -32,3 +32,10 @@ export interface Article {
   desc: string;
   subject: any;
 }
+
+export interface Comment {
+  key: string;
+  name: string;
+  desc: string;
+  status: any;
+}

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 export default function AdminLayout() {
   const pathname = usePathname();
+  const isEditList = pathname.startsWith("/article/editarticle/");
 
   const pageTitles: Record<string, string> = {
     "/": "لیست افراد",
@@ -15,10 +16,19 @@ export default function AdminLayout() {
     "/comment": "لیست نظرات",
   };
 
+  if (isEditList) {
+    return (
+      <div className="flex w-full flex-col">
+        <Header />
+        <Nav title="ویرایش مقاله" isEditList={true} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex w-full flex-col">
       <Header />
-      <Nav title={pageTitles[pathname]}  />
+      <Nav title={pageTitles[pathname] ?? ""} />
     </div>
   );
 }

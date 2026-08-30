@@ -1,4 +1,4 @@
-import { ListPoint } from "@/src/modules/Admin/pages/Point/Listnpoint"
+import { ListPoint } from "@/src/modules/Admin/pages/Point/Listpoint"
 
  
 const page = () => {

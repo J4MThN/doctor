@@ -103,7 +103,7 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
           columns={columns}
           dataSource={pregnancy}
           pagination={{
-            pageSize: 5,
+            pageSize: 7,
             showSizeChanger: false,
             showQuickJumper: false,
             placement: ["bottomCenter"],

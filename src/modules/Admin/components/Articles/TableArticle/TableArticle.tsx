@@ -23,10 +23,10 @@ interface DoctorsTableProps {
 export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
 
-  const handlePointEdit = (id:string) => {
+  const handleArticleEdit = (id:string) => {
     router.push(`/article/editarticle/${id}`);
   };
-    const handlePointDelete = (id:string) => {
+    const handleArticleDelete = (id:string) => {
      console.log("Delete:" ,id)
   };
 
@@ -38,7 +38,7 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
       width: "10%",
       align: "right",
       render: (icon) => (
-        <Image className="w-12 h-12 rounded-xl" src={icon} alt="icon" />
+        <Image className="w-11 h-11 rounded-[10px]" src={icon} alt="icon" />
       ),
     },
 
@@ -57,7 +57,7 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
       title: "توضیحات",
       dataIndex: "desc",
       key: "desc",
-      width: "25%",
+      width: "30%",
       align: "right",
       render: (desc: string) => (
         <span className="doctor-table-text">{desc}</span>
@@ -70,7 +70,7 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
       key: "subject",
       width: "15%",
       align: "right",
-      render: (subject: any) => (
+      render: (subject) => (
         <span className="doctor-table-text flex">
           {" "}
           <HugeiconsIcon
@@ -86,17 +86,16 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
     {
       title: "#",
       key: "action",
-      width: "12%",
+      width: "5%",
       align: "right",
       render: (_, record) => {
-        const isActive = activeDoctorId === record.key;
 
         return (
           <div className="flex">
             <button
               type="button"
-              onClick={() => handlePointEdit(record.key)}
-              className="flex items-center justify-center ml-2 w-10 h-10 border border-[#E5E5EA] cursor-pointer rounded-4xl"
+              onClick={() => handleArticleEdit(record.key)}
+              className="flex items-center justify-center ml-2 w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
             >
               <HugeiconsIcon
                 icon={Edit02Icon}
@@ -108,9 +107,10 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
 
             <button
               type="button"
-              onClick={() => handlePointDelete(record.key)}
-              className="flex items-center justify-center w-10 h-10 border border-[#E5E5EA] cursor-pointer rounded-4xl"
+              onClick={() => handleArticleDelete(record.key)}
+              className="flex items-center justify-center w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
             >
+
               <HugeiconsIcon
                 icon={Cancel01Icon}
                 size={20}
@@ -141,7 +141,7 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
           columns={columns}
           dataSource={article}
           pagination={{
-            pageSize: 5,
+            pageSize: 7,
             showSizeChanger: false,
             showQuickJumper: false,
             placement: ["bottomCenter"],

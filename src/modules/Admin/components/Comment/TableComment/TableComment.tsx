@@ -8,50 +8,38 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import {
   ArrowLeft01Icon,
   ArrowRight01Icon,
-  Edit02Icon,
-  Cancel01Icon,
+  MoreVerticalIcon,
 } from "@hugeicons/core-free-icons";
-import Image from "next/image";
-import { Point } from "../../../types";
-import { points } from "../../../data/users";
+import { Comment } from "../../../types";
+import { comment } from "../../../data/users";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
 }
 
-export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
+export default function TableComment({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
 
-  const handlePointEdit = (id: string) => {
-    router.push(`/note/editnote/${id}`);
-  };
-  const handlePointDelete = (id: string) => {
-    console.log("Delete:", id);
-  };
+//   const handlePointEdit = (id: string) => {
+//     router.push(`/note/editnote/${id}`);
+//   };
+//   const handlePointDelete = (id: string) => {
+//     console.log("Delete:", id);
+//   };
 
-  const columns: ColumnsType<Point> = [
+  const columns: ColumnsType<Comment> = [
     {
-      title: " آیکون",
-      dataIndex: "icon",
-      key: "icon",
-      width: "10%",
-      align: "right",
-      render: (icon) => <Image className="w-9 h-8" src={icon} alt="icon" />,
-    },
-
-    {
-      title: "عنوان",
-      dataIndex: "title",
-      key: "title",
+      title: " نام و نام خانوادگی",
+      dataIndex: "name",
+      key: "icnameon",
       width: "15%",
       align: "right",
-      render: (title: string) => (
-        <span className="doctor-table-text">{title}</span>
+      render: (name : string) => (
+          <span className="doctor-table-text">{name}</span>
       ),
     },
-
     {
-      title: "توضیحات",
+      title: "متن نظر",
       dataIndex: "desc",
       key: "desc",
       width: "30%",
@@ -60,17 +48,17 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
         <span className="doctor-table-text">{desc}</span>
       ),
     },
-
     {
-      title: "تعداد عکس",
-      dataIndex: "image",
-      key: "image",
+      title: "وضعیت",
+      dataIndex: "status",
+      key: "status",
       width: "15%",
       align: "right",
-      render: (image: number) => (
-        <span className="doctor-table-text">{image}</span>
+      render: (status) => (
+        <span className="doctor-table-text">{status}</span>
       ),
     },
+
     {
       title: "#",
       key: "action",
@@ -81,28 +69,15 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
           <div className="flex">
             <button
               type="button"
-              onClick={() => handlePointEdit(record.key)}
+            //   onClick={() => handlePointEdit(record.key)}
               className="flex items-center justify-center ml-2 w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
             >
               <HugeiconsIcon
-                icon={Edit02Icon}
+                icon={MoreVerticalIcon}
                 size={20}
                 color="#6666C6"
                 strokeWidth={1.5}
                 stroke="#6666C6"
-              />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handlePointDelete(record.key)}
-              className="flex items-center justify-center w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
-            >
-              <HugeiconsIcon
-                icon={Cancel01Icon}
-                size={20}
-                color="#E51D1D"
-                strokeWidth={1.5}
               />
             </button>
           </div>
@@ -123,10 +98,10 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
       }}
     >
       <div className="doctor-table-wrapper">
-        <Table<Point>
+        <Table<Comment>
           rowKey="key"
           columns={columns}
-          dataSource={points}
+          dataSource={comment}
           pagination={{
             pageSize: 7,
             showSizeChanger: false,

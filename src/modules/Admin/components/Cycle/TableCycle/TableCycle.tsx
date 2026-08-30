@@ -96,7 +96,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
             icon={
               <HugeiconsIcon
                 icon={ViewIcon}
-                size={24}
+                size={18}
                 color="currentColor"
                 strokeWidth={1.5}
               />
@@ -128,7 +128,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
           columns={columns}
           dataSource={user}
           pagination={{
-            pageSize: 5,
+            pageSize: 7,
             showSizeChanger: false,
             showQuickJumper: false,
             placement: ["bottomCenter"],

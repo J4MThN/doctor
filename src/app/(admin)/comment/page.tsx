@@ -1,12 +1,11 @@
-import ListCommentPage from "@/src/modules/Admin/pages/ListComment/listcomment"
+import { ListComment } from "@/src/modules/Admin/pages/ListComment/listcomment";
 
- 
 const page = () => {
   return (
     <>
-      <ListCommentPage/>
+      <ListComment />
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;
