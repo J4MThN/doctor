@@ -10,6 +10,7 @@ import {
   ArrowRight01Icon,
   Edit02Icon,
   Cancel01Icon,
+  EcoPowerIcon,
 } from "@hugeicons/core-free-icons";
 import Image from "next/image";
 import { Article, Point } from "../../../types";
@@ -22,18 +23,23 @@ interface DoctorsTableProps {
 export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
 
-  const handlePointList = () => {
-    router.push("/article/editarticle");
+  const handlePointEdit = (id:string) => {
+    router.push(`/article/editarticle/${id}`);
+  };
+    const handlePointDelete = (id:string) => {
+     console.log("Delete:" ,id)
   };
 
   const columns: ColumnsType<Article> = [
     {
-      title: " آیکون",
+      title: " عکس",
       dataIndex: "icon",
       key: "icon",
-      width: "20%",
+      width: "10%",
       align: "right",
-      render: (icon) => <Image src={icon} alt="icon" />,
+      render: (icon) => (
+        <Image className="w-12 h-12 rounded-xl" src={icon} alt="icon" />
+      ),
     },
 
     {
@@ -59,13 +65,22 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
     },
 
     {
-      title: "تعداد عکس",
-      dataIndex: "image",
-      key: "image",
+      title: "موضوع",
+      dataIndex: "subject",
+      key: "subject",
       width: "15%",
       align: "right",
-      render: (image: number) => (
-        <span className="doctor-table-text">{image}</span>
+      render: (subject: any) => (
+        <span className="doctor-table-text flex">
+          {" "}
+          <HugeiconsIcon
+            icon={EcoPowerIcon}
+            size={20}
+            strokeWidth={1.5}
+            className={`ml-1 ${subject === "عمومی" ? "text-[#6666C6]" : "text-[#FF657D]"}`}
+          />
+          {subject}
+        </span>
       ),
     },
     {
@@ -80,7 +95,7 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
           <div className="flex">
             <button
               type="button"
-              onClick={handlePointList}
+              onClick={() => handlePointEdit(record.key)}
               className="flex items-center justify-center ml-2 w-10 h-10 border border-[#E5E5EA] cursor-pointer rounded-4xl"
             >
               <HugeiconsIcon
@@ -88,13 +103,12 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
                 size={20}
                 color="#6666C6"
                 strokeWidth={1.5}
-                stroke="#6666C6"
               />
             </button>
 
             <button
               type="button"
-              onClick={handlePointList}
+              onClick={() => handlePointDelete(record.key)}
               className="flex items-center justify-center w-10 h-10 border border-[#E5E5EA] cursor-pointer rounded-4xl"
             >
               <HugeiconsIcon

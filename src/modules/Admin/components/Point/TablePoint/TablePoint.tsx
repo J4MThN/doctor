@@ -31,7 +31,7 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
       title: " آیکون",
       dataIndex: "icon",
       key: "icon",
-      width: "20%",
+      width: "10%",
       align: "right",
       render: (icon) => <Image src={icon} alt="icon" />,
     },

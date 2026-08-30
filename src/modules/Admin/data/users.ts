@@ -7,6 +7,14 @@ import Point4 from "@/src/assest/point/icon/fi_10136147.png";
 import Point5 from "@/src/assest/point/icon/brain-head-1--Streamline-Ultimate.png";
 import Point6 from "@/src/assest/point/icon/Group 162736.png";
 
+import Article1 from "@/src/assest/article/Article.png";
+import Article2 from "@/src/assest/article/Article1.png";
+import Article3 from "@/src/assest/article/Article2.png";
+import Article4 from "@/src/assest/article/Article3.png";
+import Article5 from "@/src/assest/article/Article1.png";
+import Article6 from "@/src/assest/article/Article.png";
+
+
 export const user: Users[] = [
   {
     key: "1",
@@ -285,45 +293,45 @@ export const points: Point[] = [
 export const article: Article[] = [
   {
     key: "1",
-    icon: Point1,
+    icon: Article1,
     title: "ورزش در چرخه قاعدگی",
     desc: "ورزش در دوران پریودی می‌تواند به کاهش درد قاعدگی بانوان کمک کند.",
-    image: "عمومی",
+    subject: "عمومی",
   },
   {
     key: "2",
-    icon: Point2,
+    icon: Article2,
     title: "ورزش در چرخه قاعدگی",
     desc: "مراحل چرخه‌ی قاعدگی و آموزش محاسبه‌ی طول سیکل قاعدگی",
-    image: "عمومی",
+    subject: "عمومی",
   },
   {
     key: "3",
-    icon: Point3,
+    icon: Article3,
     title: "7 روز سیکل",
     desc: "12 نشانه کم خونی که نباید نادیده بگیرید",
-    image: "تخصصی",
+    subject: "تخصصی",
   },
   {
     key: "4",
-    icon: Point4,
+    icon: Article4,
     title: "کمبود آهن در زنان چرا شایع است ؟",
     desc: "چگونه نه بگوییم؟ 24 تمرین و 30 جمله کاربردی برای نه گفتن",
-    image: "تخصصی",
+    subject: "تخصصی",
   },
   {
     key: "5",
-    icon: Point5,
+    icon: Article5,
     title: "اگر به کسی نه بگی یعنی کمتر دوسش داری؟",
     desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
-    image: "عمومی",
+    subject: "عمومی",
   },
   {
     key: "6",
-    icon: Point6,
+    icon: Article6,
     title: "ذهن و بدن چه ارتباطی دارند؟",
     desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
-    image: "عمومی",
+    subject: "عمومی",
   },
 
 ];

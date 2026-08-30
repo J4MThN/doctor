@@ -30,5 +30,5 @@ export interface Article {
   icon: any;
   title: string;
   desc: string;
-  image: any;
+  subject: any;
 }
