@@ -3,18 +3,23 @@
 import { ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
-import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
-
 import { pregnancy } from "../../../data/users";
-import {Pregnancy} from "../../../types/user";
+import { Pregnancy } from "../../../types/user";
+import PaginationCostom from "../../Pagination/PaginationCostom";
+import { useState } from "react";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
 }
 
-
 export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 7;
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  const currentData = pregnancy.slice(startIndex, endIndex);
 
   const columns: ColumnsType<Pregnancy> = [
     {
@@ -48,7 +53,7 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
       width: "15%",
       align: "right",
       render: (age: number) => (
-        <span className="doctor-table-text">{age} سال</span>
+        <span className="doctor-table-text"> <span className="font-text-table">{age}</span> سال</span>
       ),
     },
 
@@ -70,7 +75,7 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
       width: "20%",
       align: "right",
       render: (count: number) => (
-        <span className="doctor-table-text">{count} روز</span>
+        <span className="doctor-table-text"> <span className="font-text-table">{count}</span> روز</span>
       ),
     },
 
@@ -98,47 +103,21 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
       }}
     >
       <div className="doctor-table-wrapper">
-        <Table<Pregnancy>
-          rowKey="key"
-          columns={columns}
-          dataSource={pregnancy}
-          pagination={{
-            pageSize: 7,
-            showSizeChanger: false,
-            showQuickJumper: false,
-            placement: ["bottomCenter"],
-            itemRender: (page, type, originalElement) => {
-              if (type === "next") {
-                return (
-                  <span className="pagination-arrow">
-                    <HugeiconsIcon
-                      icon={ArrowRight01Icon}
-                      size={24}
-                      color="#FF657D"
-                      strokeWidth={1.5}
-                    />
-                  </span>
-                );
-              }
-
-              if (type === "prev") {
-                return (
-                  <span className="pagination-arrow">
-                    <HugeiconsIcon
-                      icon={ArrowLeft01Icon}
-                      size={24}
-                      color="#AEAEB2"
-                      strokeWidth={1.5}
-                    />
-                  </span>
-                );
-              }
-
-              return originalElement;
-            },
-          }}
-          className="doctor-table"
-        />
+        <div className="doctor-table-content">
+          <Table<Pregnancy>
+            rowKey="key"
+            columns={columns}
+            dataSource={currentData}
+            pagination={false}
+            className="doctor-table"
+          />
+          <PaginationCostom
+            currentPage={currentPage}
+            pageSize={pageSize}
+            total={pregnancy.length}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       </div>
     </ConfigProvider>
   );

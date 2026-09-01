@@ -6,29 +6,33 @@ import { useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
   Edit02Icon,
   Cancel01Icon,
   EcoPowerIcon,
 } from "@hugeicons/core-free-icons";
 import Image from "next/image";
-import { Article, Point } from "../../../types";
-import { article, points } from "../../../data/users";
+import { Article } from "../../../types";
+import { article } from "../../../data/users";
+import { useState } from "react";
+import PaginationCostom from "../../Pagination/PaginationCostom";
 
-interface DoctorsTableProps {
-  activeDoctorId?: string;
-}
-
-export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
+export default function TableArticle() {
   const router = useRouter();
 
-  const handleArticleEdit = (id:string) => {
+  const handleArticleEdit = (id: string) => {
     router.push(`/article/editarticle/${id}`);
   };
-    const handleArticleDelete = (id:string) => {
-     console.log("Delete:" ,id)
+  const handleArticleDelete = (id: string) => {
+    console.log("Delete:", id);
   };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 7;
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  const currentData = article.slice(startIndex, endIndex);
 
   const columns: ColumnsType<Article> = [
     {
@@ -89,7 +93,6 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
       width: "5%",
       align: "right",
       render: (_, record) => {
-
         return (
           <div className="flex">
             <button
@@ -110,7 +113,6 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
               onClick={() => handleArticleDelete(record.key)}
               className="flex items-center justify-center w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
             >
-
               <HugeiconsIcon
                 icon={Cancel01Icon}
                 size={20}
@@ -136,47 +138,23 @@ export default function TableArticle({ activeDoctorId }: DoctorsTableProps) {
       }}
     >
       <div className="doctor-table-wrapper">
-        <Table<Article>
-          rowKey="key"
-          columns={columns}
-          dataSource={article}
-          pagination={{
-            pageSize: 7,
-            showSizeChanger: false,
-            showQuickJumper: false,
-            placement: ["bottomCenter"],
-            itemRender: (page, type, originalElement) => {
-              if (type === "next") {
-                return (
-                  <span className="pagination-arrow">
-                    <HugeiconsIcon
-                      icon={ArrowRight01Icon}
-                      size={24}
-                      color="#FF657D"
-                      strokeWidth={1.5}
-                    />
-                  </span>
-                );
-              }
-
-              if (type === "prev") {
-                return (
-                  <span className="pagination-arrow">
-                    <HugeiconsIcon
-                      icon={ArrowLeft01Icon}
-                      size={24}
-                      color="#AEAEB2"
-                      strokeWidth={1.5}
-                    />
-                  </span>
-                );
-              }
-
-              return originalElement;
-            },
-          }}
-          className="doctor-table"
-        />
+        <div className="doctor-table-content">
+          <Table<Article>
+            rowKey="key"
+            columns={columns}
+            dataSource={currentData}
+            pagination={false}
+            className="doctor-table"
+          />
+          {article.length > pageSize && (
+            <PaginationCostom
+              currentPage={currentPage}
+              pageSize={pageSize}
+              total={article.length}
+              onPageChange={setCurrentPage}
+            />
+          )}
+        </div>
       </div>
     </ConfigProvider>
   );

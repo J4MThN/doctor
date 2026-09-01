@@ -5,15 +5,12 @@ import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
-  Edit02Icon,
-  Cancel01Icon,
-} from "@hugeicons/core-free-icons";
+import { Edit02Icon, Cancel01Icon } from "@hugeicons/core-free-icons";
 import Image from "next/image";
 import { Point } from "../../../types";
 import { points } from "../../../data/users";
+import PaginationCostom from "../../Pagination/PaginationCostom";
+import { useState } from "react";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
@@ -21,6 +18,14 @@ interface DoctorsTableProps {
 
 export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 7;
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  const currentData = points.slice(startIndex, endIndex);
 
   const handlePointEdit = (id: string) => {
     router.push(`/note/editnote/${id}`);
@@ -36,7 +41,7 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
       key: "icon",
       width: "10%",
       align: "right",
-      render: (icon) => <Image className="w-9 h-8" src={icon} alt="icon" />,
+      render: (icon) => <Image width={32} height={32} className="w-8 h-8" src={icon} alt="icon" />,
     },
 
     {
@@ -68,7 +73,7 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
       width: "15%",
       align: "right",
       render: (image: number) => (
-        <span className="doctor-table-text">{image}</span>
+        <span className="doctor-table-text font-text-table">{image}</span>
       ),
     },
     {
@@ -123,47 +128,23 @@ export default function TablePoint({ activeDoctorId }: DoctorsTableProps) {
       }}
     >
       <div className="doctor-table-wrapper">
-        <Table<Point>
-          rowKey="key"
-          columns={columns}
-          dataSource={points}
-          pagination={{
-            pageSize: 7,
-            showSizeChanger: false,
-            showQuickJumper: false,
-            placement: ["bottomCenter"],
-            itemRender: (page, type, originalElement) => {
-              if (type === "next") {
-                return (
-                  <span className="pagination-arrow">
-                    <HugeiconsIcon
-                      icon={ArrowRight01Icon}
-                      size={24}
-                      color="#FF657D"
-                      strokeWidth={1.5}
-                    />
-                  </span>
-                );
-              }
-
-              if (type === "prev") {
-                return (
-                  <span className="pagination-arrow">
-                    <HugeiconsIcon
-                      icon={ArrowLeft01Icon}
-                      size={24}
-                      color="#AEAEB2"
-                      strokeWidth={1.5}
-                    />
-                  </span>
-                );
-              }
-
-              return originalElement;
-            },
-          }}
-          className="doctor-table"
-        />
+        <div className="doctor-table-content">
+          <Table<Point>
+            rowKey="key"
+            columns={columns}
+            dataSource={currentData}
+            pagination={false}
+            className="doctor-table"
+          />
+          {points.length > pageSize && (
+            <PaginationCostom
+              currentPage={currentPage}
+              pageSize={pageSize}
+              total={points.length}
+              onPageChange={setCurrentPage}
+            />
+          )}
+        </div>
       </div>
     </ConfigProvider>
   );

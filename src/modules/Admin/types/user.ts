@@ -7,6 +7,20 @@ export interface Users {
   cycleCount: number;
 }
 
+export interface Cycle {
+  key: string;
+  date: string;
+  lengh: any;
+  cycle: any;
+}
+
+export interface DailySymptom {
+  key: string;
+  cycleId: string;
+  date: string;
+  symptoms: string[];
+}
+
 export interface Pregnancy {
   key: string;
   name: string;

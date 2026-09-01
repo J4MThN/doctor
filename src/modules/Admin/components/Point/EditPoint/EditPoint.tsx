@@ -1,16 +1,11 @@
-import {points } from "@/src/modules/Admin/data/users";
+import { points } from "@/src/modules/Admin/data/users";
 
 interface EditeProps {
-    id:string;
+  id: string;
 }
 
-export const EditPoint = ({id}:EditeProps) => {
+export const EditPoint = ({ id }: EditeProps) => {
+  const selectPoint = points.find((item) => String(item.key) === id);
 
-    const selectPoint = points.find((item) => String(item.key) === id)
-
-  return (
-    <>
-    عنوان :  {selectPoint?.title}
-    </>
-  );
+  return <>عنوان : {selectPoint?.title}</>;
 };

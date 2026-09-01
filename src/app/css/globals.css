@@ -24,6 +24,11 @@ body , html  {
   overflow-x: hidden;
 }
 
+@font-face {
+  font-family: "IranYekan";
+  src: url(../../assest/font/IRANYekanXFaNum-Medium.ttf);
+}
+
 /* =========================
    Doctors Table
 ========================= */
@@ -32,11 +37,15 @@ body , html  {
   width: 100%;
   overflow: hidden;
   border-radius: 24px;
-  min-height: 0%;
+}
 
+.doctor-table-content {
+  width: 100%;
+  min-height: 512px;
   display: flex;
   flex-direction: column;
 }
+
 
 .doctor-table-wrapper .ant-table{
     border: 1px solid #E5E5EA;
@@ -52,7 +61,6 @@ body , html  {
 
 .doctor-table {
   width: 100%;
-  flex: 0 0 auto;
 }
 
 .doctor-table .ant-table-container {
@@ -66,7 +74,6 @@ body , html  {
   padding: 0 24px !important;
 
   background: #ffffff !important;
-
   color: #606060 !important;
 
   font-family: "Vazirmatn", sans-serif !important;
@@ -90,7 +97,6 @@ body , html  {
   padding: 0 24px !important;
 
   background: #ffffff !important;
-
   color: #737373 !important;
 
   font-size: 14px !important;
@@ -107,6 +113,9 @@ body , html  {
   border-bottom: none !important;
 }
 
+.font-text-table{
+  font-family: "IranYekan" , sans-serif !important;
+}
 
 .doctor-table-text {
   color: #737373;
@@ -186,101 +195,6 @@ body , html  {
   color: #ff657d !important;
 }
 
-
-.doctor-table .ant-table-pagination {
-  margin-top: auto !important;
-  margin-bottom: 8px !important;
-
-  direction: ltr;
-}
-
-
-.doctor-table
-  .ant-pagination
-  .ant-pagination-item {
-  min-width: 34px;
-  width: 34px;
-  height: 34px;
-
-  margin-inline: 4px;
-
-  border: none !important;
-  border-radius: 50% !important;
-
-  background: transparent;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.doctor-table
-  .ant-pagination
-  .ant-pagination-item
-  a {
-  width: 34px;
-  height: 34px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: #ff657d !important;
-
-  font-size: 14px;
-}
-
-.doctor-table
-  .ant-pagination
-  .ant-pagination-item-active {
-  border: 1px solid #ff657d !important;
-
-  background: #fff1f3 !important;
-}
-
-.doctor-table
-  .ant-pagination
-  .ant-pagination-item-active
-  a {
-  color: #ff657d !important;
-}
-
-.doctor-table
-  .ant-pagination
-  .ant-pagination-prev,
-.doctor-table
-  .ant-pagination
-  .ant-pagination-next {
-  width: 34px;
-  height: 34px;
-  margin-inline: 5px;
-}
-
-.doctor-table
-  .ant-pagination
-  .ant-pagination-prev
-  .ant-pagination-item-link,
-.doctor-table
-  .ant-pagination
-  .ant-pagination-next
-  .ant-pagination-item-link {
-  border: none !important;
-  background: transparent !important;
-
-  color: #ff657d !important;
-
-  font-size: 16px;
-}
-
-.doctor-table
-  .ant-pagination
-  .ant-pagination-disabled
-  .ant-pagination-item-link {
-  color: #bdbdc3 !important;
-}
-
-
 .doctor-table
   .ant-table-content
   table {
@@ -288,24 +202,8 @@ body , html  {
 }
 
 
-
-.doctor-table .ant-table-container {
-  min-height: 432px !important;
-  max-height: 459px !important;
-}
-
-.doctor-table .ant-table-pagination {
-  min-height: 40px;
-  margin-top: 10px !important;
-  margin-bottom: 0 !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .doctor-table .pagination-number {
   direction: rtl;
-  font-family: inherit;
 }
 
 .doctor-table .pagination-arrow {
@@ -386,4 +284,126 @@ body , html  {
   font-size: 14px !important;
   font-weight: 400 !important;
 
+}
+
+/* pagination */
+
+
+.doctor-pagination-wrapper{
+  height: 48px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.doctor-pagination-wrapper .ant-pagination{
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 !important;
+}
+
+.doctor-pagination-wrapper
+  .ant-pagination-item {
+  min-width: 34px;
+  width: 34px;
+  height: 34px;
+
+  margin-inline: 4px;
+
+  border: none !important;
+  border-radius: 50% !important;
+
+  background: transparent;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doctor-pagination-wrapper
+  .ant-pagination-item:hover {
+     background: #fff1f3 !important;
+  }
+
+
+.doctor-pagination-wrapper
+  .ant-pagination-item
+  a {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ff657d !important;
+
+  font-family: "IranYekan" , sans-serif !important;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+
+.doctor-pagination-wrapper
+  .ant-pagination-item-active {
+  border: 1px solid #ff657d !important;
+  background: #fff1f3 !important;
+}
+
+.doctor-pagination-wrapper
+  .ant-pagination-item-active
+  a {
+  color: #ff657d !important;
+}
+
+
+.doctor-pagination-wrapper
+  .ant-pagination-prev,
+.doctor-pagination-wrapper
+  .ant-pagination-next {
+  width: 34px;
+  height: 34px;
+
+  margin-inline: 5px;
+}
+
+.doctor-pagination-wrapper
+  .ant-pagination-prev
+  .ant-pagination-item-link,
+.doctor-pagination-wrapper
+  .ant-pagination-next
+  .ant-pagination-item-link {
+  border: none !important;
+  background: transparent !important;
+}
+
+.pagination-arrow {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.pagination-arrow-active {
+  color: #FF657D;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.pagination-arrow-active:hover {
+  opacity: 0.7;
+} 
+.pagination-arrow-disabled {
+  color: #aeaeb2;
+  cursor: default;
+  opacity: 0.7;
 }

@@ -48,19 +48,12 @@ export default function Header() {
   };
 
   return (
-    <div className="flex h-12 w-full mt-6 mr-3 ml-3">
-
+    <div className="flex h-12 w-full mt-4 mr-6">
       {/* Profile */}
       <div className="flex w-[15%] bg-white border-[#E5E5EA] items-center">
-        <Image
-          className="w-10 h-10 rounded-4xl"
-          src={Prof}
-          alt="AboutUsPic"
-        />
+        <Image src={Prof} alt="AboutUsPic" width={48} height={48} className="w-12 h-12 rounded-full object-cover"/>
 
-        <span className="pr-2 font-black text-[16px]">
-          دکتر مرضیه برومند
-        </span>
+        <span className="pr-2 font-black text-[16px]">دکتر مرضیه برومند</span>
 
         <HugeiconsIcon
           icon={ArrowDown01FreeIcons}
@@ -74,7 +67,15 @@ export default function Header() {
       <div className="flex items-center justify-center w-[75%]">
         <ul className="flex space-x-4 text-center">
           {menus.map((menu) => {
-            const isActive = pathname === menu.path || pathname.startsWith(`${menu.path}/`);
+            const isActive =
+              menu.path === "/"
+                ? pathname === "/" ||
+                  (!pathname.startsWith("/pregnancy") &&
+                    !pathname.startsWith("/note") &&
+                    !pathname.startsWith("/article") &&
+                    !pathname.startsWith("/comment"))
+                : pathname === menu.path ||
+                  pathname.startsWith(`${menu.path}/`);
 
             return (
               <li key={menu.path} className={menu.width}>
@@ -109,21 +110,13 @@ export default function Header() {
       </div>
 
       {/* Actions */}
-      <div className="flex w-[10%]">
+      <div className="flex w-[7%]">
         <div className="flex items-center justify-center border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl ml-2">
-          <HugeiconsIcon
-            icon={Setting07Icon}
-            size={24}
-            color="#6E6E6E"
-          />
+          <HugeiconsIcon icon={Setting07Icon} size={24} color="#6E6E6E" />
         </div>
 
         <div className="flex items-center justify-center border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl">
-          <HugeiconsIcon
-            icon={Notification01Icon}
-            size={24}
-            color="#6E6E6E"
-          />
+          <HugeiconsIcon icon={Notification01Icon} size={24} color="#6E6E6E" />
         </div>
       </div>
     </div>

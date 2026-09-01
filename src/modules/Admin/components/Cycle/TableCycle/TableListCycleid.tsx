@@ -9,19 +9,20 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import {
   ViewIcon,
 } from "@hugeicons/core-free-icons";
-import { Users } from "../../../types/user";
-import { user } from "../../../data/users";
+import { Cycle } from "../../../types/user";
+import { cycle } from "../../../data/users";
 import PaginationCostom from "../../Pagination/PaginationCostom";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
+  userId:string;
 }
 
-export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
+export default function TableListCycleid({ activeDoctorId,userId }: DoctorsTableProps) {
   const router = useRouter();
 
-  const handleCycleList = (id: string) => {
-    router.push(`/cycle/${id}`);
+  const handleCycleList = (cycleId: string) => {
+    router.push(`/cycle/${userId}/${cycleId}`);
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,70 +31,45 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
-  const currentData = user.slice(startIndex, endIndex);
+  const currentData = cycle.slice(startIndex, endIndex);
 
-  const columns: ColumnsType<Users> = [
+  const columns: ColumnsType<Cycle> = [
     {
-      title: "نام و نام خانوادگی",
-      dataIndex: "name",
-      key: "name",
+      title: "تاریخ پریودی",
+      dataIndex: "date",
+      key: "date",
       width: "25%",
       align: "right",
-      render: (name: string) => (
-        <span className="doctor-table-text">{name}</span>
+      render: (date: string) => (
+        <span className="doctor-table-text font-text-table">{date}</span>
       ),
     },
 
     {
-      title: "موبایل",
-      dataIndex: "mobile",
-      key: "mobile",
+      title: "طول پریودی",
+      dataIndex: "lengh",
+      key: "lengh",
       width: "20%",
       align: "right",
-      render: (mobile: string) => (
-        <span className="doctor-table-text" dir="ltr">
-          {mobile}
-        </span>
+      render: (lengh: any) => (
+        <span className="doctor-table-text"> <span className="font-text-table">{lengh}</span> روز</span>
       ),
     },
 
     {
-      title: "سن",
-      dataIndex: "age",
-      key: "age",
-      width: "15%",
-      align: "right",
-      render: (age: number) => (
-        <span className="doctor-table-text"> <span className="font-text-table">{age}</span> سال</span>
-      ),
-    },
-
-    {
-      title: "وضعیت تاهل",
-      dataIndex: "maritalStatus",
-      key: "maritalStatus",
+      title: "دوره ی پریودی",
+      dataIndex: "cycle",
+      key: "cycle",
       width: "20%",
       align: "right",
-      render: (status: string) => (
-        <span className="doctor-table-text">{status}</span>
+      render: (cycle: any) => (
+        <span className="doctor-table-text"> <span className="font-text-table">{cycle}</span> روز</span>
       ),
     },
-
-    {
-      title: "تعداد سیکل",
-      dataIndex: "cycleCount",
-      key: "cycleCount",
-      width: "20%",
-      align: "right",
-      render: (count: number) => (
-        <span className="doctor-table-text"><span className="font-text-table">{count}</span>  روز</span>
-      ),
-    },
-
     {
       title: "#",
       key: "action",
-      width: "12%",
+      width: "1%",
       align: "right",
       render: (_, record) => {
         const isActive = activeDoctorId === record.key;
@@ -112,7 +88,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
             onClick={() => handleCycleList(record.key)}
             className={`cycle-button ${isActive ? "cycle-button-active" : ""}`}
           >
-            لیست سیکل ها
+           لیست علائم روزانه
           </Button>
         );
       },
@@ -132,7 +108,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
     >
       <div className="doctor-table-wrapper">
         <div className="doctor-table-content">
-          <Table<Users>
+          <Table<Cycle>
             rowKey="key"
             columns={columns}
             dataSource={currentData}
@@ -143,7 +119,7 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
           <PaginationCostom
             currentPage={currentPage}
             pageSize={pageSize}
-            total={user.length}
+            total={cycle.length}
             onPageChange={setCurrentPage}
           />
         </div>

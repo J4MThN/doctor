@@ -15,18 +15,18 @@ export const ContentArticle = () => {
   return (
     <div className=" w-full min-h-0 m-6 rounded-3xl bg-[#F9F9FB]">
       <div className="flex w-full justify-between mt-4 mr-6 font-bold text-[#6666C6]">
-        <div className="flex">
+        <div className="flex mt-1">
           <span className="text-[16px] ml-2"> مقالات </span>
           <div className="flex items-center justify-center border border-[#6666C6] bg-[#F2F2FF] w-6 h-6 rounded-4xl">
-            <span className="text-[12px] mt-1">5</span>
+            <span className="text-[12px] pt-0.5">6</span>
           </div>
         </div>
 
-        <div className="w-[10%]">
+        <div className="ml-10">
           <button
             type="button"
             onClick={handleNavigation}
-            className="flex items-center justify-center border border-[#FF657D] bg-[#FFF1F3] w-25 h-9.5 cursor-pointer
+            className="flex items-center justify-center border border-[#FF657D] bg-[#FFF1F3] w-25 h-8.5 cursor-pointer
                     transition-all
                     duration-200 rounded-4xl "
           >

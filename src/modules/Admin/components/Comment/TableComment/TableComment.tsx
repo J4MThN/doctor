@@ -5,13 +5,11 @@ import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
-  MoreVerticalIcon,
-} from "@hugeicons/core-free-icons";
+import { MoreVerticalIcon } from "@hugeicons/core-free-icons";
 import { Comment } from "../../../types";
 import { comment } from "../../../data/users";
+import PaginationCostom from "../../Pagination/PaginationCostom";
+import { useState } from "react";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
@@ -20,12 +18,20 @@ interface DoctorsTableProps {
 export default function TableComment({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
 
-//   const handlePointEdit = (id: string) => {
-//     router.push(`/note/editnote/${id}`);
-//   };
-//   const handlePointDelete = (id: string) => {
-//     console.log("Delete:", id);
-//   };
+  //   const handlePointEdit = (id: string) => {
+  //     router.push(`/note/editnote/${id}`);
+  //   };
+  //   const handlePointDelete = (id: string) => {
+  //     console.log("Delete:", id);
+  //   };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 7;
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  const currentData = comment.slice(startIndex, endIndex);
 
   const columns: ColumnsType<Comment> = [
     {
@@ -34,8 +40,8 @@ export default function TableComment({ activeDoctorId }: DoctorsTableProps) {
       key: "icnameon",
       width: "15%",
       align: "right",
-      render: (name : string) => (
-          <span className="doctor-table-text">{name}</span>
+      render: (name: string) => (
+        <span className="doctor-table-text">{name}</span>
       ),
     },
     {
@@ -54,9 +60,7 @@ export default function TableComment({ activeDoctorId }: DoctorsTableProps) {
       key: "status",
       width: "15%",
       align: "right",
-      render: (status) => (
-        <span className="doctor-table-text">{status}</span>
-      ),
+      render: (status) => <span className="doctor-table-text">{status}</span>,
     },
 
     {
@@ -69,7 +73,7 @@ export default function TableComment({ activeDoctorId }: DoctorsTableProps) {
           <div className="flex">
             <button
               type="button"
-            //   onClick={() => handlePointEdit(record.key)}
+              //   onClick={() => handlePointEdit(record.key)}
               className="flex items-center justify-center ml-2 w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
             >
               <HugeiconsIcon
@@ -101,44 +105,18 @@ export default function TableComment({ activeDoctorId }: DoctorsTableProps) {
         <Table<Comment>
           rowKey="key"
           columns={columns}
-          dataSource={comment}
-          pagination={{
-            pageSize: 7,
-            showSizeChanger: false,
-            showQuickJumper: false,
-            placement: ["bottomCenter"],
-            itemRender: (page, type, originalElement) => {
-              if (type === "next") {
-                return (
-                  <span className="pagination-arrow">
-                    <HugeiconsIcon
-                      icon={ArrowRight01Icon}
-                      size={24}
-                      color="#FF657D"
-                      strokeWidth={1.5}
-                    />
-                  </span>
-                );
-              }
-
-              if (type === "prev") {
-                return (
-                  <span className="pagination-arrow">
-                    <HugeiconsIcon
-                      icon={ArrowLeft01Icon}
-                      size={24}
-                      color="#AEAEB2"
-                      strokeWidth={1.5}
-                    />
-                  </span>
-                );
-              }
-
-              return originalElement;
-            },
-          }}
+          dataSource={currentData}
+          pagination={false}
           className="doctor-table"
         />
+        {comment.length > pageSize && (
+          <PaginationCostom
+            currentPage={currentPage}
+            pageSize={pageSize}
+            total={comment.length}
+            onPageChange={setCurrentPage}
+          />
+        )}
       </div>
     </ConfigProvider>
   );

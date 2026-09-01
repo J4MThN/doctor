@@ -1,11 +1,10 @@
-import {Users , Pregnancy , Point ,Article, Comment} from "../types";
+import {Users , Pregnancy , Point ,Article, Comment, Cycle, DailySymptom} from "../types";
 
 import Point1 from "@/src/assest/point/icon/Group 162736.svg";
 import Point2 from "@/src/assest/point/icon/fi_10136147.svg";
 import Point3 from "@/src/assest/point/icon/Group 8.svg";
 import Point4 from "@/src/assest/point/icon/Group 162734.svg";
 import Point5 from "@/src/assest/point/icon/brain-head-1--Streamline-Ultimate.svg";
-import Point6 from "@/src/assest/point/icon/brain-head-1--Streamline-Ultimate.svg";
 
 import Article1 from "@/src/assest/article/Article.png";
 import Article2 from "@/src/assest/article/Article2.png";
@@ -113,6 +112,114 @@ export const user: Users[] = [
     cycleCount: 12,
   },
 ];
+
+export const cycle: Cycle[] = [
+  {
+    key: "1",
+    date: "1405/05/12",
+    lengh: 2,
+    cycle: 28,
+  },
+  {
+    key: "2",
+    date: "1405/05/12",
+    lengh: 4,
+    cycle: 32,
+  },
+  {
+    key: "3",
+    date: "1405/05/12",
+    lengh: 8,
+    cycle: 15,
+  },
+  {
+    key: "4",
+    date: "1405/04/10",
+    lengh: 1,
+    cycle: 19,
+  },
+  {
+    key: "5",
+    date: "1405/03/09",
+    lengh: 3,
+    cycle: 36,
+  },
+  {
+    key: "6",
+    date: "1405/02/08",
+    lengh: 5,
+    cycle: 69,
+  },
+  {
+    key: "7",
+    date: "1405/02/08",
+    lengh: 1,
+    cycle: 24,
+  },
+  {
+    key: "8",
+    date:"1405/02/08",
+    lengh: 7,
+    cycle: 34,
+  },
+  {
+    key: "9",
+    date: "1405/02/08",
+    lengh: 3,
+    cycle: 31,
+  },
+  {
+    key: "10",
+    date: "1405/02/08",
+    lengh: 4,
+    cycle: 26,
+  },
+  {
+    key: "11",
+    date: "1405/02/08",
+    lengh: 2,
+    cycle: 30,
+  },
+  {
+    key: "12",
+    date: "1405/02/08",
+    lengh: 5,
+    cycle: 33,
+  },
+];
+
+export const dailySymptom: DailySymptom[] = [
+  {
+    key:"1",
+    cycleId:"1",
+    date:"1405/05/12",
+    symptoms:[
+      "سردرد",
+      "درد شکم",
+      "خستگی"
+    ]
+  },
+    {
+    key:"2",
+    cycleId:"1",
+    date:"1405/05/13",
+    symptoms:[
+      "سردرد",
+      "درد شکم",
+      "تهوع"
+    ]
+  },
+      {
+    key:"3",
+    cycleId:"1",
+    date:"1405/05/14",
+    symptoms:[
+      "کمر درد",
+      "درد شکم",
+      "تهوع"
+    ]
+  },
+]
 
 export const pregnancy: Pregnancy[] = [
   {
@@ -279,14 +386,6 @@ export const points: Point[] = [
     desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
     image: 2,
   },
-  {
-    key: "6",
-    icon: Point6,
-    title: "ذهن و بدن چه ارتباطی دارند؟",
-    desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
-    image: 5,
-  },
-
 ];
 
 
@@ -335,7 +434,6 @@ export const article: Article[] = [
   },
 
 ];
-
 
 
 export const comment: Comment[] = [
