@@ -14,4 +14,5 @@ export const ContenPregnancy = () => {
       </div>
     </div>
   );
+  
 };
