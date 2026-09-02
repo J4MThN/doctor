@@ -18,7 +18,11 @@ export interface DailySymptom {
   key: string;
   cycleId: string;
   date: string;
-  symptoms: string[];
+  symptoms: {
+    title: string;
+    value: string;
+    icon?: any;
+  }[];
 }
 
 export interface Pregnancy {
@@ -52,4 +56,10 @@ export interface Comment {
   name: string;
   desc: string;
   status: any;
+}
+
+
+export interface ImageItem {
+  id: string;
+  src: any;
 }

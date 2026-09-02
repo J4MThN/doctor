@@ -1,4 +1,12 @@
-import {Users , Pregnancy , Point ,Article, Comment, Cycle, DailySymptom} from "../types";
+import {
+  Users,
+  Pregnancy,
+  Point,
+  Article,
+  Comment,
+  Cycle,
+  DailySymptom,
+} from "../types";
 
 import Point1 from "@/src/assest/point/icon/Group 162736.svg";
 import Point2 from "@/src/assest/point/icon/fi_10136147.svg";
@@ -13,6 +21,15 @@ import Article4 from "@/src/assest/article/Article.png";
 import Article5 from "@/src/assest/article/Article1.png";
 import Article6 from "@/src/assest/article/Article.png";
 
+import {
+  DropletIcon,
+  DispleasedIcon,
+  ZapIcon,
+  BackMuscleBodyIcon,
+  FlushedIcon,
+  BloodIcon,
+  FlowerIcon,
+} from "@hugeicons/core-free-icons";
 
 export const user: Users[] = [
   {
@@ -122,31 +139,31 @@ export const cycle: Cycle[] = [
   },
   {
     key: "2",
-    date: "1405/05/12",
+    date: "1405/05/13",
     lengh: 4,
     cycle: 32,
   },
   {
     key: "3",
-    date: "1405/05/12",
+    date: "1405/05/14",
     lengh: 8,
     cycle: 15,
   },
   {
     key: "4",
-    date: "1405/04/10",
+    date: "1405/04/15",
     lengh: 1,
     cycle: 19,
   },
   {
     key: "5",
-    date: "1405/03/09",
+    date: "1405/03/16",
     lengh: 3,
     cycle: 36,
   },
   {
     key: "6",
-    date: "1405/02/08",
+    date: "1405/02/18",
     lengh: 5,
     cycle: 69,
   },
@@ -158,31 +175,31 @@ export const cycle: Cycle[] = [
   },
   {
     key: "8",
-    date:"1405/02/08",
+    date: "1405/02/09",
     lengh: 7,
     cycle: 34,
   },
   {
     key: "9",
-    date: "1405/02/08",
+    date: "1405/02/10",
     lengh: 3,
     cycle: 31,
   },
   {
     key: "10",
-    date: "1405/02/08",
+    date: "1405/02/01",
     lengh: 4,
     cycle: 26,
   },
   {
     key: "11",
-    date: "1405/02/08",
+    date: "1405/02/02",
     lengh: 2,
     cycle: 30,
   },
   {
     key: "12",
-    date: "1405/02/08",
+    date: "1405/02/03",
     lengh: 5,
     cycle: 33,
   },
@@ -190,36 +207,321 @@ export const cycle: Cycle[] = [
 
 export const dailySymptom: DailySymptom[] = [
   {
-    key:"1",
-    cycleId:"1",
-    date:"1405/05/12",
-    symptoms:[
-      "سردرد",
-      "درد شکم",
-      "خستگی"
-    ]
+    key: "1",
+    cycleId: "1",
+    date: "1405/05/12",
+    symptoms: [
+      {
+        title: "خونریزی",
+        value: "کم",
+        icon: DropletIcon,
+      },
+      {
+        title: "درد قاعدگی",
+        value: " درد شدید",
+        icon: ZapIcon,
+      },
+      {
+        title: "ناحیه درد",
+        value: "زیر شکم ",
+        icon: BackMuscleBodyIcon,
+      },
+      {
+        title: "خلق و خوی شما",
+        value: "غمگین ",
+        icon: DispleasedIcon,
+      },
+      {
+        title: "علائم جسمی",
+        value: " درد عضلات",
+      },
+      {
+        title: "اختلال در میزان فعالیت روزانه",
+        value: "اصلا",
+      },
+    ],
+  },
+  {
+    key: "2",
+    cycleId: "2",
+    date: "1405/05/13",
+    symptoms: [
+      {
+        title: "خونریزی",
+        value: "شدید",
+        icon: BloodIcon,
+      },
+      {
+        title: "درد قاعدگی",
+        value: " کم",
+        icon: FlowerIcon,
+      },
+      {
+        title: "ناحیه درد",
+        value: "زیر شکم ",
+        icon: BackMuscleBodyIcon,
+      },
+      {
+        title: "خلق و خوی شما",
+        value: "کلافگی ",
+        icon: FlushedIcon,
+      },
+      {
+        title: "علائم جسمی",
+        value: " درد عضلات",
+      },
+      {
+        title: "اختلال در میزان فعالیت روزانه",
+        value: "اصلا",
+      },
+    ],
+  },
+  {
+    key: "3",
+    cycleId: "3",
+    date: "1405/05/14",
+    symptoms: [
+      {
+        title: "خونریزی",
+        value: "کم",
+        icon: DropletIcon,
+      },
+      {
+        title: "درد قاعدگی",
+        value: " درد شدید",
+        icon: ZapIcon,
+      },
+      {
+        title: "ناحیه درد",
+        value: "زیر شکم ",
+        icon: BackMuscleBodyIcon,
+      },
+      {
+        title: "خلق و خوی شما",
+        value: "کلافگی ",
+        icon: FlushedIcon,
+      },
+      {
+        title: "علائم جسمی",
+        value: " درد عضلات",
+      },
+      {
+        title: "اختلال در میزان فعالیت روزانه",
+        value: "اصلا",
+      },
+    ],
   },
     {
-    key:"2",
-    cycleId:"1",
-    date:"1405/05/13",
-    symptoms:[
-      "سردرد",
-      "درد شکم",
-      "تهوع"
-    ]
-  },
+    key: "4",
+    cycleId: "4",
+    date: "1405/05/15",
+    symptoms: [
       {
-    key:"3",
-    cycleId:"1",
-    date:"1405/05/14",
-    symptoms:[
-      "کمر درد",
-      "درد شکم",
-      "تهوع"
-    ]
+        title: "خونریزی",
+        value: "کم",
+        icon: DropletIcon,
+      },
+      {
+        title: "درد قاعدگی",
+        value: " درد شدید",
+        icon: ZapIcon,
+      },
+      {
+        title: "ناحیه درد",
+        value: "زیر شکم ",
+        icon: BackMuscleBodyIcon,
+      },
+      {
+        title: "خلق و خوی شما",
+        value: "غمگین ",
+        icon: DispleasedIcon,
+      },
+      {
+        title: "علائم جسمی",
+        value: " درد عضلات",
+      },
+      {
+        title: "اختلال در میزان فعالیت روزانه",
+        value: "اصلا",
+      },
+    ],
   },
-]
+  {
+    key: "5",
+    cycleId: "5",
+    date: "1405/05/16",
+    symptoms: [
+      {
+        title: "خونریزی",
+        value: "شدید",
+        icon: BloodIcon,
+      },
+      {
+        title: "درد قاعدگی",
+        value: " کم",
+        icon: FlowerIcon,
+      },
+      {
+        title: "ناحیه درد",
+        value: "زیر شکم ",
+        icon: BackMuscleBodyIcon,
+      },
+      {
+        title: "خلق و خوی شما",
+        value: "کلافگی ",
+        icon: FlushedIcon,
+      },
+      {
+        title: "علائم جسمی",
+        value: " درد عضلات",
+      },
+      {
+        title: "اختلال در میزان فعالیت روزانه",
+        value: "اصلا",
+      },
+    ],
+  },
+  {
+    key: "6",
+    cycleId: "6",
+    date: "1405/05/17",
+    symptoms: [
+      {
+        title: "خونریزی",
+        value: "کم",
+        icon: DropletIcon,
+      },
+      {
+        title: "درد قاعدگی",
+        value: " درد شدید",
+        icon: ZapIcon,
+      },
+      {
+        title: "ناحیه درد",
+        value: "زیر شکم ",
+        icon: BackMuscleBodyIcon,
+      },
+      {
+        title: "خلق و خوی شما",
+        value: "کلافگی ",
+        icon: FlushedIcon,
+      },
+      {
+        title: "علائم جسمی",
+        value: " درد عضلات",
+      },
+      {
+        title: "اختلال در میزان فعالیت روزانه",
+        value: "اصلا",
+      },
+    ],
+  },
+    {
+    key: "7",
+    cycleId: "7",
+    date: "1405/05/18",
+    symptoms: [
+      {
+        title: "خونریزی",
+        value: "کم",
+        icon: DropletIcon,
+      },
+      {
+        title: "درد قاعدگی",
+        value: " درد شدید",
+        icon: ZapIcon,
+      },
+      {
+        title: "ناحیه درد",
+        value: "زیر شکم ",
+        icon: BackMuscleBodyIcon,
+      },
+      {
+        title: "خلق و خوی شما",
+        value: "غمگین ",
+        icon: DispleasedIcon,
+      },
+      {
+        title: "علائم جسمی",
+        value: " درد عضلات",
+      },
+      {
+        title: "اختلال در میزان فعالیت روزانه",
+        value: "اصلا",
+      },
+    ],
+  },
+  {
+    key: "8",
+    cycleId: "8",
+    date: "1405/05/19",
+    symptoms: [
+      {
+        title: "خونریزی",
+        value: "شدید",
+        icon: BloodIcon,
+      },
+      {
+        title: "درد قاعدگی",
+        value: " کم",
+        icon: FlowerIcon,
+      },
+      {
+        title: "ناحیه درد",
+        value: "زیر شکم ",
+        icon: BackMuscleBodyIcon,
+      },
+      {
+        title: "خلق و خوی شما",
+        value: "کلافگی ",
+        icon: FlushedIcon,
+      },
+      {
+        title: "علائم جسمی",
+        value: " درد عضلات",
+      },
+      {
+        title: "اختلال در میزان فعالیت روزانه",
+        value: "اصلا",
+      },
+    ],
+  },
+  {
+    key: "9",
+    cycleId: "9",
+    date: "1405/05/20",
+    symptoms: [
+      {
+        title: "خونریزی",
+        value: "کم",
+        icon: DropletIcon,
+      },
+      {
+        title: "درد قاعدگی",
+        value: " درد شدید",
+        icon: ZapIcon,
+      },
+      {
+        title: "ناحیه درد",
+        value: "زیر شکم ",
+        icon: BackMuscleBodyIcon,
+      },
+      {
+        title: "خلق و خوی شما",
+        value: "کلافگی ",
+        icon: FlushedIcon,
+      },
+      {
+        title: "علائم جسمی",
+        value: " درد عضلات",
+      },
+      {
+        title: "اختلال در میزان فعالیت روزانه",
+        value: "اصلا",
+      },
+    ],
+  },
+];
 
 export const pregnancy: Pregnancy[] = [
   {
@@ -330,7 +632,7 @@ export const pregnancy: Pregnancy[] = [
     cycleCount: 12,
     pregnancyCount: "بله",
   },
-    {
+  {
     key: "13",
     name: "سمیه اکبری",
     mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
@@ -339,7 +641,7 @@ export const pregnancy: Pregnancy[] = [
     cycleCount: 12,
     pregnancyCount: "بله",
   },
-      {
+  {
     key: "14",
     name: "سمیه اکبری",
     mobile: "۰۹۳۸ ۶۵۳ ۳۶۲۵",
@@ -388,7 +690,6 @@ export const points: Point[] = [
   },
 ];
 
-
 export const article: Article[] = [
   {
     key: "1",
@@ -432,9 +733,7 @@ export const article: Article[] = [
     desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
     subject: "عمومی",
   },
-
 ];
-
 
 export const comment: Comment[] = [
   {
@@ -467,5 +766,4 @@ export const comment: Comment[] = [
     desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
     status: "تایید شده",
   },
-
 ];

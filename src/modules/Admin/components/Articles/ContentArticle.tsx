@@ -4,6 +4,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { PlusSignIcon } from "@hugeicons/core-free-icons";
 import { useRouter } from "next/navigation";
 import TableArticle from "./TableArticle/TableArticle";
+import { comment } from "../../data/users";
 
 export const ContentArticle = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ export const ContentArticle = () => {
         <div className="flex mt-1">
           <span className="text-[16px] ml-2"> مقالات </span>
           <div className="flex items-center justify-center border border-[#6666C6] bg-[#F2F2FF] w-6 h-6 rounded-4xl">
-            <span className="text-[12px] pt-0.5">6</span>
+            <span className="text-[12px] pt-0.5">{comment.length}</span>
           </div>
         </div>
 

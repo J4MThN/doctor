@@ -1,3 +1,4 @@
+import { points } from "../../data/users";
 import TableComment from "./TableComment/TableComment";
 
 export const ContentComment = () => {
@@ -7,7 +8,7 @@ export const ContentComment = () => {
         <div className="flex">
           <span className="text-[16px] ml-2"> نظرات </span>
           <div className="flex items-center justify-center border border-[#6666C6] bg-[#F2F2FF] w-6 h-6 rounded-4xl">
-            <span className="text-[12px] pt-0.5">5</span>
+            <span className="text-[12px] pt-0.5">{points.length}</span>
           </div>
         </div>
       </div>
