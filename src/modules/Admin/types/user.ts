@@ -38,6 +38,7 @@ export interface Pregnancy {
 export interface Point {
   key: string;
   icon: any;
+  iconName:string,
   title: string;
   desc: string;
   image: number;

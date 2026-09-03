@@ -10,7 +10,7 @@ import {
   ArrowRight01Icon,
   ViewIcon,
 } from "@hugeicons/core-free-icons";
-import { ImageItem } from "../../../types";
+import { ImageItem } from "../../../../types";
 
 interface PointImageGalleryProps {
   images: ImageItem[];
@@ -52,22 +52,24 @@ export default function PointImageSlider({
   };
 
   return (
-    <div className="w-140 h-118 bg-white border border-[#F3F2F2] rounded-3xl mt-4 p-4">
-      <div
-        className=" w-78 h-71 rounded-3xl border border-[#DEDEDE]
-          overflow-hidden flex mr-10.5"
-      >
-        {selectedImage ? (
-          <Image
-            src={selectedImage.src}
-            alt="عکس نکته"
-            width={451}
-            height={300}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <span className="text-[12px] text-[#AEAEB2]">عکسی وجود ندارد</span>
-        )}
+    <div className="w-full h-118 bg-white border border-[#F3F2F2] rounded-3xl mt-4 p-4">
+      <div className="flex items-center justify-center">
+        <div
+          className=" w-78 h-71 rounded-3xl border border-[#DEDEDE]
+          overflow-hidden flex"
+        >
+          {selectedImage ? (
+            <Image
+              src={selectedImage.src}
+              alt="عکس نکته"
+              width={451}
+              height={300}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <span className="text-[12px] text-[#AEAEB2]">عکسی وجود ندارد</span>
+          )}
+        </div>
       </div>
 
       <div className="flex items-start gap-2 mt-4">

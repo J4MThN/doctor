@@ -16,6 +16,8 @@ export const pointImage: Record<string, any[]> = {
     PointImage4,
     PointImage5,
     PointImage6,
+    PointImage5,
+    PointImage3,
   ],
   "5": [PointImage1, PointImage4, PointImage5, PointImage6],
 };

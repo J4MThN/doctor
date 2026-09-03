@@ -6,9 +6,7 @@ import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  ViewIcon,
-} from "@hugeicons/core-free-icons";
+import { ViewIcon } from "@hugeicons/core-free-icons";
 import { Users } from "../../../types/user";
 import { user } from "../../../data/users";
 import PaginationCostom from "../../Pagination/PaginationCostom";
@@ -19,19 +17,15 @@ interface DoctorsTableProps {
 
 export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
   const router = useRouter();
-
   const handleCycleList = (id: string) => {
     router.push(`/cycle/${id}`);
   };
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 7;
-
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-
   const currentData = user.slice(startIndex, endIndex);
-
   const columns: ColumnsType<Users> = [
     {
       title: "نام و نام خانوادگی",
@@ -43,7 +37,6 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
         <span className="doctor-table-text">{name}</span>
       ),
     },
-
     {
       title: "موبایل",
       dataIndex: "mobile",
@@ -56,7 +49,6 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
         </span>
       ),
     },
-
     {
       title: "سن",
       dataIndex: "age",
@@ -64,10 +56,12 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       width: "15%",
       align: "right",
       render: (age: number) => (
-        <span className="doctor-table-text"> <span className="font-text-table">{age}</span> سال</span>
+        <span className="doctor-table-text">
+          {" "}
+          <span className="font-text-table">{age}</span> سال
+        </span>
       ),
     },
-
     {
       title: "وضعیت تاهل",
       dataIndex: "maritalStatus",
@@ -78,7 +72,6 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
         <span className="doctor-table-text">{status}</span>
       ),
     },
-
     {
       title: "تعداد سیکل",
       dataIndex: "cycleCount",
@@ -86,10 +79,11 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       width: "20%",
       align: "right",
       render: (count: number) => (
-        <span className="doctor-table-text"><span className="font-text-table">{count}</span>  روز</span>
+        <span className="doctor-table-text">
+          <span className="font-text-table">{count}</span> روز
+        </span>
       ),
     },
-
     {
       title: "#",
       key: "action",
@@ -97,7 +91,6 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
       align: "right",
       render: (_, record) => {
         const isActive = activeDoctorId === record.key;
-
         return (
           <Button
             type="default"
@@ -151,4 +144,3 @@ export default function TableCycle({ activeDoctorId }: DoctorsTableProps) {
     </ConfigProvider>
   );
 }
-

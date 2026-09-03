@@ -311,7 +311,7 @@ export const dailySymptom: DailySymptom[] = [
       },
     ],
   },
-    {
+  {
     key: "4",
     cycleId: "4",
     date: "1405/05/15",
@@ -416,7 +416,7 @@ export const dailySymptom: DailySymptom[] = [
       },
     ],
   },
-    {
+  {
     key: "7",
     cycleId: "7",
     date: "1405/05/18",
@@ -656,6 +656,7 @@ export const points: Point[] = [
   {
     key: "1",
     icon: Point1,
+    iconName: "Group 162736.svg",
     title: "ورزش در چرخه قاعدگی",
     desc: "ورزش در دوران پریودی می‌تواند به کاهش درد قاعدگی بانوان کمک کند.",
     image: 5,
@@ -663,6 +664,7 @@ export const points: Point[] = [
   {
     key: "2",
     icon: Point2,
+    iconName: "fi_10136147.svg",
     title: "ورزش در چرخه قاعدگی",
     desc: "مراحل چرخه‌ی قاعدگی و آموزش محاسبه‌ی طول سیکل قاعدگی",
     image: 6,
@@ -670,6 +672,7 @@ export const points: Point[] = [
   {
     key: "3",
     icon: Point3,
+    iconName: "Group 8.svg",
     title: "7 روز سیکل",
     desc: "12 نشانه کم خونی که نباید نادیده بگیرید",
     image: 1,
@@ -677,6 +680,7 @@ export const points: Point[] = [
   {
     key: "4",
     icon: Point4,
+    iconName: "Group 162734.svg",
     title: "کمبود آهن در زنان چرا شایع است ؟",
     desc: "چگونه نه بگوییم؟ 24 تمرین و 30 جمله کاربردی برای نه گفتن",
     image: 4,
@@ -684,6 +688,7 @@ export const points: Point[] = [
   {
     key: "5",
     icon: Point5,
+    iconName: "brain-head-1--Streamline-Ultimate.svg",
     title: "اگر به کسی نه بگی یعنی کمتر دوسش داری؟",
     desc: "آیا باور دارید که می‌توانید تصویر مثبتی از خودتان داشته باشید؟",
     image: 2,

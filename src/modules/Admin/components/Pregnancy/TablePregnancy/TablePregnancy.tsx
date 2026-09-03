@@ -15,10 +15,8 @@ interface DoctorsTableProps {
 export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 7;
-
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-
   const currentData = pregnancy.slice(startIndex, endIndex);
 
   const columns: ColumnsType<Pregnancy> = [
@@ -32,7 +30,6 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
         <span className="doctor-table-text">{name}</span>
       ),
     },
-
     {
       title: "موبایل",
       dataIndex: "mobile",
@@ -45,7 +42,6 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
         </span>
       ),
     },
-
     {
       title: "سن",
       dataIndex: "age",
@@ -53,10 +49,12 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
       width: "15%",
       align: "right",
       render: (age: number) => (
-        <span className="doctor-table-text"> <span className="font-text-table">{age}</span> سال</span>
+        <span className="doctor-table-text">
+          {" "}
+          <span className="font-text-table">{age}</span> سال
+        </span>
       ),
     },
-
     {
       title: "وضعیت تاهل",
       dataIndex: "maritalStatus",
@@ -67,7 +65,6 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
         <span className="doctor-table-text">{status}</span>
       ),
     },
-
     {
       title: "تعداد سیکل",
       dataIndex: "cycleCount",
@@ -75,10 +72,12 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
       width: "20%",
       align: "right",
       render: (count: number) => (
-        <span className="doctor-table-text"> <span className="font-text-table">{count}</span> روز</span>
+        <span className="doctor-table-text">
+          {" "}
+          <span className="font-text-table">{count}</span> روز
+        </span>
       ),
     },
-
     {
       title: "قصد بارداری طی 12 ماه آینده",
       key: "pregnancyCount",
