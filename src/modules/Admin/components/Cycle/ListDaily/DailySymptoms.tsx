@@ -26,7 +26,7 @@ export default function DailySymptoms({ date, symptoms }: DailySymptomsProps) {
           return (
             <div
               key={index}
-              className=" w-full h-12 rounded-full border border-[#F3F2F2]bg-[#FBFBFB] flex items-center px-3"
+              className=" w-full h-12 rounded-full border border-[#F3F2F2] bg-[#FBFBFB] flex items-center px-3"
             >
               <span className=" w-[50%] text-right text-[14px] font-medium text-[#4D4D4D] ">
                 {symptom.title}

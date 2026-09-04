@@ -667,7 +667,7 @@ export const points: Point[] = [
     iconName: "fi_10136147.svg",
     title: "ورزش در چرخه قاعدگی",
     desc: "مراحل چرخه‌ی قاعدگی و آموزش محاسبه‌ی طول سیکل قاعدگی",
-    image: 6,
+    image: 2,
   },
   {
     key: "3",
@@ -683,7 +683,7 @@ export const points: Point[] = [
     iconName: "Group 162734.svg",
     title: "کمبود آهن در زنان چرا شایع است ؟",
     desc: "چگونه نه بگوییم؟ 24 تمرین و 30 جمله کاربردی برای نه گفتن",
-    image: 4,
+    image: 3,
   },
   {
     key: "5",

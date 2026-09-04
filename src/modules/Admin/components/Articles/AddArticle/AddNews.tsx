@@ -34,9 +34,9 @@ export const AddNews = () => {
             {" "}
             افزودن مقاله جدید
           </span>
-          <div className="w-153.75 h-115.5 rounded-3xl bg-white px-5 py-4 mt-4">
+          <div className="w-153.75 h-115.5 rounded-3xl bg-white px-5 py-4 mt-4 border border-[#F3F2F2]">
             <div className="w-full">
-              <label className="block text-[12px] text-[#606060] mb-2">
+              <label className="block text-[12px] text-[#1C2024] mb-2">
                 عنوان
               </label>
               <Input
@@ -45,7 +45,7 @@ export const AddNews = () => {
               />
             </div>
             <div className="w-full mt-6">
-              <label className="block text-[12px] text-[#606060] mb-2">
+              <label className="block text-[12px] text-[#1C2024] mb-2">
                 موضوع
               </label>
               <Select
@@ -73,7 +73,7 @@ export const AddNews = () => {
               />
             </div>
             <div className="w-full mt-6">
-              <label className="block text-[12px] text-[#606060] mb-2">
+              <label className="block text-[12px] text-[#1C2024] mb-2">
                 توضیحات
               </label>
               <Input.TextArea
@@ -81,7 +81,7 @@ export const AddNews = () => {
                 className="font-input-article w-xl! h-28.75! pr-2! pt-2! rounded-lg! border-[#E5E5EA]! text-[12px]! text-[#AEAEB2]! resize-none!"
               />
             </div>
-            <div className="flex items-end justify-end gap-3 mt-10">
+            <div className="flex items-end justify-end gap-3 mt-9">
               <button
                 type="button"
                 className="w-37.5 h-11 rounded-lg bg-white border border-[#80838D] text-[#80838D] text-[16px] cursor-pointer"
@@ -113,19 +113,20 @@ export const AddNews = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
+                <div className="relative w-64 h-64 mt-10">
                 <Image
                   src={Imagedefault}
                   alt="article"
-                  width={251}
-                  height={252}
-                  className="mt-10"
+                  fill
+                  className="object-cover"
                 />
+                </div>
               )}
             </div>
             <button
               type="button"
               onClick={handleImageClick}
-              className="w-25 h-25 mt-4 rounded-2xl border border-dashed border-[#6666C6] bg-white flex flex-col items-center justify-center cursor-pointer"
+              className="w-25 h-25 mt-4 rounded-2xl border-2 border-dashed border-[#6666C6] bg-white flex flex-col items-center justify-center cursor-pointer"
             >
               <HugeiconsIcon
                 icon={ImageUploadIcon}

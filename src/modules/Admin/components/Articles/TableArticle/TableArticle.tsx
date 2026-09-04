@@ -42,7 +42,7 @@ export default function TableArticle() {
       width: "10%",
       align: "right",
       render: (icon) => (
-        <Image className="w-11 h-11 rounded-[10px]" src={icon} alt="icon" />
+        <Image className="rounded-[10px]" width={44} height={44} src={icon} alt="icon" />
       ),
     },
 

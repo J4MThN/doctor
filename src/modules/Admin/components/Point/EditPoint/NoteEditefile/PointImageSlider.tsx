@@ -93,7 +93,6 @@ export default function PointImageSlider({
 
         {displayedImages.map((image) => {
           const isSelected = selectedImage?.id === image.id;
-
           return (
             <div key={image.id} className="flex flex-col items-center shrink-0">
               <button
@@ -164,7 +163,7 @@ export default function PointImageSlider({
           type="button"
           onClick={() => inputRef.current?.click()}
           className="
-           w-25 h-25 rounded-xl border border-dashed border-[#6666C6] mr-4
+           w-25 h-25 rounded-xl border-2 border-dashed border-[#6666C6] mr-4
          bg-white flex flex-col items-center justify-center gap-2 shrink-0"
         >
           <HugeiconsIcon

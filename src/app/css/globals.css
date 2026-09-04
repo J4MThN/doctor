@@ -125,6 +125,12 @@ body , html  {
   white-space: nowrap;
 }
 
+.doctor-table-text-statuse-comment{
+  font-family: "Vazirmatn", sans-serif;
+  font-weight: 400;
+}
+
+
 
 .doctor-table
   .ant-table-tbody

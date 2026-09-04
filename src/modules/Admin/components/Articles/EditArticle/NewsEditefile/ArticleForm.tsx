@@ -1,63 +1,34 @@
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Tick02Icon, Upload01Icon } from "@hugeicons/core-free-icons";
+import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import { Select } from "antd";
 
-interface PointFormProps {
+interface ArticleFormProps {
   title: string;
+  subject: string;
   desc: string;
-  iconName?: string;
-  hasIcon: boolean;
-  onIconClik: () => void;
+  onSubjectChange : (value: string) => void;
   onTitleChange: (value: string) => void;
   onDescChange: (value: string) => void;
   onSubmit: () => void;
   onCancel: () => void;
 }
 
-export default function PointForm({
+export default function ArticleForm({
   title,
+    subject,
   desc,
-  iconName,
-  hasIcon,
-  onIconClik,
+  onSubjectChange,
   onTitleChange,
   onDescChange,
   onSubmit,
   onCancel,
-}: PointFormProps) {
+}: ArticleFormProps) {
 
   return (
     <div className="w-153.75 h-115.5 bg-white border border-[#F3F2F2] rounded-3xl mt-4 p-4">
-      <div className="mb-5">
-        <label className="block text-[12px] text-[#1C2024] mb-2">آیکون</label>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            readOnly
-            value={iconName}
-            placeholder="آیکون مورد نظر را انتخاب کنید."
-            className=" w-108 h-12 rounded-lg border border-[#6666C6] bg-[#F9F9FB] px-4 text-[12px] text-[#6666C6] outline-none placeholder:text-[#999ba5]"
-          />
-          <button
-            onClick={onIconClik}
-            className=" w-35.25 h-12 rounded-lg bg-[#999BA5] flex items-center justify-center  cursor-pointer"
-          >
-            <span className="w-full px-2 text-white text-[14px] flex items-center justify-center leading-[21.9px] whitespace-nowrap ">
-              <HugeiconsIcon
-                icon={hasIcon ? Tick02Icon : Upload01Icon}
-                size={24}
-                color="currentColor"
-                strokeWidth={1.5}
-                className="ml-2 shrink-0"
-              />
-              {hasIcon ? " آپلود شد" : "آپلود فایل"}
-            </span>
-          </button>
-        </div>
-      </div>
-
-      <div className="mb-5">
+      <div className="w-full">
         <label className="block text-[12px] text-[#1C2024] mb-2">عنوان</label>
         <input
           value={title}
@@ -65,10 +36,34 @@ export default function PointForm({
           className=" w-full h-12 rounded-lg border border-[#6666C6] bg-[#F9F9FB] px-4 text-[13px] text-[#6666C6] outline-none"
         />
       </div>
-
-      <div className="mb-6">
+      <div className="w-full mt-6">
+        <label className="block text-[12px] text-[#1C2024] mb-2">موضوع</label>
+        <Select
+          value= {subject}
+          suffixIcon={
+            <HugeiconsIcon
+              icon={ArrowDown01Icon}
+              size={22}
+              color="#6666C6"
+              strokeWidth={1.5}
+            />
+          }
+          className="font-input-article w-full! h-12! rounded-lg! border-[#6666C6]! bg-[#F9F9FB]! text-[12px]! text-[#6666C6]!"
+          onChange={onSubjectChange}
+          options={[
+            {
+              value: "عمومی",
+              label: "عمومی",
+            },
+            {
+              value: "تخصصی",
+              label: "تخصصی",
+            },
+          ]}
+        />
+      </div>
+      <div className="w-full mt-6">
         <label className="block text-[12px] text-[#1C2024] mb-2">توضیحات</label>
-
         <textarea
           value={desc}
           onChange={(e) => onDescChange(e.target.value)}

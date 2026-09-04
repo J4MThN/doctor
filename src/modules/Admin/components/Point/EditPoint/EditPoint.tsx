@@ -132,7 +132,6 @@ const {
 
           <div>
             <span className="text-[16px] font-bold text-[#6666C6]">عکس ها</span>
-
             <PointImageSlider
               images={images}
               selectedImage={selectedImage}
