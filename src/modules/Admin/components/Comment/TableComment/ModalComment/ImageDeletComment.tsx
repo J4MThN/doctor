@@ -3,17 +3,21 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 
-interface DeleteImageModalProps {
+interface DeleteCommentModalProps {
+  open: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-export default function DeletImageModalArticle({
+export default function ImageDeletComment({
+  open,
   onConfirm,
   onCancel,
-}: DeleteImageModalProps) {
+}: DeleteCommentModalProps) {
+    if (!open) return null;
+    
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="w-82.5 h-50 rounded-3xl bg-white p-4">
         <div className="flex justify-start">
           <button type="button" onClick={onCancel}>

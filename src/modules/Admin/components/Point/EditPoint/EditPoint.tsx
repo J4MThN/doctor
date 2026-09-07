@@ -7,20 +7,14 @@ import { points } from "@/src/modules/Admin/data/users"
 
 import PointImageSlider from "./NoteEditefile/PointImageSlider";
 import PointForm from "./NoteEditefile/PointForm";
-import DeleteImageModal from "./Modals/DeleteImageModal";
-import IconSelectModal from "./Modals/IconSelectModal";
+import DeleteImageModal from "./ModalPoint/DeleteImageModal";
+import IconSelectModal from "./ModalPoint/IconSelectModal";
 import { usePointImages } from "../../../hook/usePointImages";
 import { usePointIcon } from "../../../hook/usePointIcon";
 
 
 interface EditPointProps {
   id: string;
-}
-
-interface IconOption {
-  id: string;
-  name: string;
-  icon: any;
 }
 
 export default function EditPoint({ id }: EditPointProps) {
