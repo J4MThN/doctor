@@ -11,6 +11,42 @@ export interface UserProfileDto {
   cycleCount: number;
 }
 
+export interface CycleDto {
+  id: number;
+  userId: number;
+  startDate: string;
+  lastDate: string;
+  periodLengthDays: number;
+  cycleLengthDays: number;
+  createDate: string;
+}
+
+export interface CreateNoteRequestDto {
+  title: string;
+  desc: string;
+}
+
+export interface AddNoteImageRequestDto {
+  imageName: string;
+}
+
+export interface NoteImageDto {
+  id: number;
+  noteId: number;
+  imageName: string;
+}
+
+export interface NoteDto {
+  id: number;
+  icon: string;
+  title: string;
+  desc: string;
+  createDate: string;
+  images: NoteImageDto[];
+}
+
+// //////////////////////
+
 export interface Users {
   key: string;
   name: string;

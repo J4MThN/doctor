@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Button,
-  ConfigProvider,
-  Table,
-} from "antd";
+import { Button, ConfigProvider, Table } from "antd";
 
 import type { ColumnsType } from "antd/es/table";
 
@@ -13,16 +9,14 @@ import { useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 
-import {
-  ViewIcon,
-} from "@hugeicons/core-free-icons";
+import { ViewIcon } from "@hugeicons/core-free-icons";
 
 import PaginationCostom from "../../Pagination/PaginationCostom";
 
-import { Users } from "../../../types";
+import { UserProfileDto, Users } from "../../../types";
 
 interface TableCycleProps {
-  users: Users[];
+  users: UserProfileDto[];
   loading: boolean;
   activeDoctorId?: string;
 }
@@ -32,48 +26,49 @@ export default function TableCycle({
   loading,
   activeDoctorId,
 }: TableCycleProps) {
-
   const router = useRouter();
 
-  const [currentPage, setCurrentPage] =
-    useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const pageSize = 7;
 
-  const startIndex =
-    (currentPage - 1) * pageSize;
+  const startIndex = (currentPage - 1) * pageSize;
 
-  const endIndex =
-    startIndex + pageSize;
+  const endIndex = startIndex + pageSize;
 
-  const currentData = users.slice(
-    startIndex,
-    endIndex
-  );
+  const currentData = users.slice(startIndex, endIndex);
 
-  const handleCycleList = (
-    id: string
-  ) => {
-    router.push(
-      `/admin/cycle/${id}`
-    );
+  const handleCycleList = (id: string) => {
+    router.push(`/admin/cycle/${id}`);
   };
 
-  const columns: ColumnsType<Users> = [
+  const columns: ColumnsType<UserProfileDto> = [
     {
-      title: "نام و نام خانوادگی",
-      dataIndex: "name",
+      title: "نام ",
       key: "name",
-      width: "25%",
+      width: "10%",
       align: "right",
 
-      render: (name: string) => (
+      render: (_, record) => (
         <span className="doctor-table-text">
-          {name}
+          {record.firstName}
         </span>
       ),
     },
- 
+
+        {
+      title: "نام خانوادگی",
+      key: "name",
+      width: "15%",
+      align: "right",
+
+      render: (_, record) => (
+        <span className="doctor-table-text">
+         {record.lastName}
+        </span>
+      ),
+    },
+
     {
       title: "موبایل",
       dataIndex: "mobile",
@@ -82,10 +77,7 @@ export default function TableCycle({
       align: "right",
 
       render: (mobile: string) => (
-        <span
-          className="doctor-table-text"
-          dir="ltr"
-        >
+        <span className="doctor-table-text" dir="ltr">
           {mobile}
         </span>
       ),
@@ -100,10 +92,7 @@ export default function TableCycle({
 
       render: (age: number) => (
         <span className="doctor-table-text">
-          <span className="font-text-table">
-            {age}
-          </span>{" "}
-          سال
+          <span className="font-text-table">{age}</span> سال
         </span>
       ),
     },
@@ -116,9 +105,7 @@ export default function TableCycle({
       align: "right",
 
       render: (status: string) => (
-        <span className="doctor-table-text">
-          {status}
-        </span>
+        <span className="doctor-table-text font-text-table">{status}</span>
       ),
     },
 
@@ -131,10 +118,7 @@ export default function TableCycle({
 
       render: (count: number) => (
         <span className="doctor-table-text">
-          <span className="font-text-table">
-            {count}
-          </span>{" "}
-          سیکل
+          <span className="font-text-table">{count}</span> سیکل
         </span>
       ),
     },
@@ -146,9 +130,7 @@ export default function TableCycle({
       align: "right",
 
       render: (_, record) => {
-
-        const isActive =
-          activeDoctorId === record.key;
+        const isActive = activeDoctorId === String(record.id);
 
         return (
           <Button
@@ -161,16 +143,8 @@ export default function TableCycle({
                 strokeWidth={1.5}
               />
             }
-            onClick={() =>
-              handleCycleList(
-                record.key
-              )
-            }
-            className={`cycle-button ${
-              isActive
-                ? "cycle-button-active"
-                : ""
-            }`}
+            onClick={() => handleCycleList(String(record.id))}
+            className={`cycle-button ${isActive ? "cycle-button-active" : ""}`}
           >
             لیست سیکل ها
           </Button>
@@ -185,36 +159,31 @@ export default function TableCycle({
       theme={{
         components: {
           Pagination: {
-            itemActiveBg:
-              "transparent",
+            itemActiveBg: "transparent",
           },
         },
       }}
     >
       <div className="doctor-table-wrapper">
-
         <div className="doctor-table-content">
-
-          <Table<Users>
-            rowKey="key"
+          <Table<UserProfileDto>
+            rowKey="id"
             columns={columns}
             dataSource={currentData}
             loading={loading}
             pagination={false}
             className="doctor-table"
           />
-
-          <PaginationCostom
-            currentPage={currentPage}
-            pageSize={pageSize}
-            total={users.length}
-            onPageChange={
-              setCurrentPage
-            }
-          />
-
+          {users.length > 7 && (
+            <PaginationCostom
+              currentPage={currentPage}
+              pageSize={pageSize}
+              total={users.length}
+              onPageChange={setCurrentPage}
+            />
+          )}
+          {/*  */}
         </div>
-
       </div>
     </ConfigProvider>
   );

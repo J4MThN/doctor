@@ -20,7 +20,7 @@ export default function TableArticle() {
   const router = useRouter();
 
   const handleArticleEdit = (id: string) => {
-    router.push(`/article/editarticle/${id}`);
+    router.push(`/admin/article/editarticle/${id}`);
   };
   const handleArticleDelete = (id: string) => {
     console.log("Delete:", id);

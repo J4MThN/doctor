@@ -7,47 +7,41 @@ import {
 } from "react";
 
 import { usersService } from "../services/users.service";
+import { UserProfileDto } from "../types";
 import { Users } from "../types";
 import { mapUserToTable } from "../mapping/users.mapper";
- 
- 
 
 export const useUsers = () => {
-  const [users, setUsers] = useState<Users[]>(
-    []
-  );
-
-  const [loading, setLoading] =
-    useState<boolean>(true);
-
-  const [error, setError] = useState<
-    string | null
-  >(null);
+  const [users, setUsers] = useState<UserProfileDto[]>([]);
+  
+  //  const [users, setUsers] = useState<Users[]>(
+  //   []
+  // );
+  
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const getUsers = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const response =
-        await usersService.getAll();
+      // const totalUsers = response.length;
 
-      const totalUsers = response.length;
+      // const tableUsers = response.map((user) =>
+      //   mapUserToTable(user, totalUsers)
+      // );
 
-      const tableUsers = response.map((user) =>
-        mapUserToTable(user, totalUsers)
-      );
+      // setUsers(tableUsers);
 
-      setUsers(tableUsers);
+      const response = await usersService.getAll();
+
+      setUsers(response);
     } catch (error) {
-      console.error(
-        "Get users error:",
-        error
-      );
+      console.error("Get users error:", error);
 
-      setError(
-        "خطا در دریافت لیست افراد."
-      );
+
+      setError("خطا در دریافت لیست افراد.");
     } finally {
       setLoading(false);
     }

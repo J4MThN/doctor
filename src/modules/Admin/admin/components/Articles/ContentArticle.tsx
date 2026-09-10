@@ -10,7 +10,7 @@ export const ContentArticle = () => {
   const router = useRouter();
 
   const handleNavigation = () => {
-    router.push("/article/addarticle");
+    router.push("/admin/article/addarticle");
   };
 
   return (

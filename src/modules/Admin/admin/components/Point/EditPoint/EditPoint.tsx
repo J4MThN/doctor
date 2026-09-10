@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { points } from "@/src/modules/Admin/data/users"
 
 import PointImageSlider from "./NoteEditefile/PointImageSlider";
 import PointForm from "./NoteEditefile/PointForm";
@@ -11,6 +10,7 @@ import DeleteImageModal from "./ModalPoint/DeleteImageModal";
 import IconSelectModal from "./ModalPoint/IconSelectModal";
 import { usePointImages } from "../../../hook/usePointImages";
 import { usePointIcon } from "../../../hook/usePointIcon";
+import { points } from "../../../data/users";
 
 
 interface EditPointProps {

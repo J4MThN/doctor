@@ -14,4 +14,20 @@ export const ENDPOINTS = {
     UPDATE_ME: "/users/me",
     DELETE: (id: number) => `/users/${id}`,
   },
+
+  CYCLES: {
+    GET_MINE: "/Cycles/mine",
+    GET_ALL: "/Cycles",
+    PREDICT_NEXT: "/Cycles/predict-next",
+  },
+
+  NOTES: {
+    GET_ALL: "/Notes",
+    CREATE: "/Notes",
+    GET_BY_ID: (id: number) => `/Notes/${id}`,
+    UPDATE: (id: number) => `/Notes/${id}`,
+    DELETE: (id: number) => `/Notes/${id}`,
+    ADD_IMAGE: (id: number) => `/Notes/${id}/images`,
+    DELETE_IMAGE: (imageId: number) => `/Notes/images/${imageId}`,
+  },
 };

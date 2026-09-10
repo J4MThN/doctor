@@ -11,9 +11,9 @@ import {
   ViewIcon,
 } from "@hugeicons/core-free-icons";
 
-import { PointImageItem } from "@/src/modules/Admin/hook/useAddPointImages";
 import Image from "next/image";
 import Imagedefault from "@/src/assest/defualimage/Group 162742.svg";
+import { PointImageItem } from "../../../hook/useAddPointImages";
 
 interface PointImagesProps {
   images: PointImageItem[];

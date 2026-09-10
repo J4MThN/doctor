@@ -30,6 +30,22 @@ body , html  {
 }
 
 /* =========================
+   Toast
+========================= */
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =========================
    Doctors Table
 ========================= */
 
@@ -46,7 +62,6 @@ body , html  {
   flex-direction: column;
 }
 
-
 .doctor-table-wrapper .ant-table{
     border: 1px solid #E5E5EA;
     border-radius: 24px;
@@ -57,7 +72,6 @@ body , html  {
   border-radius: 24px;
   overflow: hidden;
 }
-
 
 .doctor-table {
   width: 100%;
@@ -85,11 +99,9 @@ body , html  {
   border-bottom: 1px solid #E5E5EA !important;
 }
 
-
 .doctor-table .ant-table-thead > tr > th::before {
   display: none !important;
 }
-
 
 .doctor-table .ant-table-tbody > tr > td {
   height: 56px;
@@ -105,7 +117,6 @@ body , html  {
   border-bottom: 1px solid #F2F2F7 !important;
 }
 
-
 .doctor-table
   .ant-table-tbody
   > tr:last-child
@@ -115,6 +126,10 @@ body , html  {
 
 .font-text-table{
   font-family: "IranYekan" , sans-serif !important;
+}
+
+.font-text-Button{
+  font-family: "Vazirmatn" , sans-serif !important;
 }
 
 .doctor-table-text {
@@ -130,15 +145,12 @@ body , html  {
   font-weight: 400;
 }
 
-
-
 .doctor-table
   .ant-table-tbody
   > tr:hover
   > td {
   background: #ffffff !important;
 }
-
 
 .cycle-button {
   min-width: 132px;
@@ -166,7 +178,6 @@ body , html  {
   transition: all 0.2s ease;
 }
 
-
 .cycle-button .anticon {
   font-size: 15px;
   color: #8e8e93 !important;
@@ -193,7 +204,6 @@ body , html  {
 .cycle-button-active .anticon {
   color: #ff657d !important;
 }
-
 
 .cycle-button-active:hover {
   border-color: #ff657d !important;
@@ -250,7 +260,6 @@ body , html  {
   transition: all 0.2s ease;
 }
 
-
 .poin-button .anticon {
   font-size: 15px;
 }
@@ -277,7 +286,6 @@ body , html  {
   color: #ff657d !important;
 }
 
-
 .poin-button-active:hover {
   border-color: #ff657d !important;
   background: #fff1f3 !important;
@@ -293,7 +301,6 @@ body , html  {
 }
 
 /* pagination */
-
 
 .doctor-pagination-wrapper{
   height: 48px;
@@ -413,3 +420,5 @@ body , html  {
   cursor: default;
   opacity: 0.7;
 }
+
+
