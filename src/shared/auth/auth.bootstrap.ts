@@ -1,10 +1,6 @@
-import { refreshAccessToken } from "@/src/core/api/refresh/refresh.service";
-
- 
+import { refreshToken } from "@/src/core/api/refresh/refresh.manager";
 import { userService } from "@/src/modules/Authentication/login/services/user.service";
 import { useAuthStore } from "./auth.store";
-
- 
 
 export const bootstrapAuth = async (): Promise<void> => {
   const store = useAuthStore.getState();
@@ -14,16 +10,14 @@ export const bootstrapAuth = async (): Promise<void> => {
   }
 
   try {
-    const response =
-      await refreshAccessToken();
+    const newAccessToken = await refreshToken();
 
-    store.setAuth(response.accessToken);
+    store.setAuth(newAccessToken);
 
-    const profile =
-      await userService.getMe();
-
+    const profile = await userService.getMe();
     store.setProfile(profile);
   } catch {
+    // کاربر لاگین نیست یا توکن نداره - این حالت طبیعیه، نیازی به لاگ خطا نیست
     store.clearAuth();
   } finally {
     store.setInitialized(true);

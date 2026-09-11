@@ -4,22 +4,25 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { PlusSignIcon } from "@hugeicons/core-free-icons";
 import { useRouter } from "next/navigation";
 import TableArticle from "./TableArticle/TableArticle";
-import { comment } from "../../data/users";
+import { useArticles } from "../../hook/useArticles";
 
 export const ContentArticle = () => {
   const router = useRouter();
+
+  const { articles, loading, error, refetch } = useArticles();
 
   const handleNavigation = () => {
     router.push("/admin/article/addarticle");
   };
 
   return (
-    <div className=" w-full min-h-0 m-6 rounded-3xl bg-[#F9F9FB]">
+    <div className="w-full min-h-0 m-6 rounded-3xl bg-[#F9F9FB]">
       <div className="flex w-full justify-between mt-4 mr-6 font-bold text-[#6666C6]">
         <div className="flex mt-1">
-          <span className="text-[16px] ml-2"> مقالات </span>
+          <span className="text-[16px] ml-2">مقالات</span>
+
           <div className="flex items-center justify-center border border-[#6666C6] bg-[#F2F2FF] w-6 h-6 rounded-4xl">
-            <span className="text-[12px] pt-0.5">{comment.length}</span>
+            <span className="text-[12px] pt-0.5">{articles.length}</span>
           </div>
         </div>
 
@@ -27,9 +30,7 @@ export const ContentArticle = () => {
           <button
             type="button"
             onClick={handleNavigation}
-            className="flex items-center justify-center border border-[#FF657D] bg-[#FFF1F3] w-25 h-8.5 cursor-pointer
-                    transition-all
-                    duration-200 rounded-4xl "
+            className="flex items-center justify-center border border-[#FF657D] bg-[#FFF1F3] w-25 h-8.5 cursor-pointer transition-all duration-200 rounded-4xl"
           >
             <HugeiconsIcon
               icon={PlusSignIcon}
@@ -37,14 +38,16 @@ export const ContentArticle = () => {
               color="#FF657D"
               strokeWidth={1.5}
             />
+
             <span className="text-[12px] text-[#FF657D] font-bold mr-1">
-             افزودن خبر
+              افزودن مقاله
             </span>
           </button>
         </div>
       </div>
+
       <div className="mx-4 mt-4">
-        <TableArticle />
+        <TableArticle articles={articles} loading={loading} error={error} />
       </div>
     </div>
   );

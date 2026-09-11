@@ -13,7 +13,6 @@ class NotesService {
     const response = await axiosInstance.get<NoteDto[]>(
       ENDPOINTS.NOTES.GET_ALL,
     );
-
     return response.data;
   }
 
@@ -21,22 +20,25 @@ class NotesService {
     const response = await axiosInstance.get<NoteDto>(
       ENDPOINTS.NOTES.GET_BY_ID(id),
     );
-
     return response.data;
   }
 
-  async create(
-    data: Pick<CreateNoteRequestDto, "title" | "desc">,
-  ): Promise<NoteDto> {
+  async create(data: CreateNoteRequestDto): Promise<NoteDto> {
+    const formData = new FormData();
+    formData.append("Title", data.title);
+    formData.append("Desc", data.desc);
+    formData.append("Icon", data.icon);
+
     const response = await axiosInstance.post<NoteDto>(
       ENDPOINTS.NOTES.CREATE,
-      data,
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } },
     );
 
     return response.data;
   }
 
-  async update(id: number, data: CreateNoteRequestDto): Promise<void> {
+  async update(id: number, data: { title: string; desc: string }): Promise<void> {
     await axiosInstance.put(ENDPOINTS.NOTES.UPDATE(id), data);
   }
 
@@ -48,9 +50,13 @@ class NotesService {
     id: number,
     data: AddNoteImageRequestDto,
   ): Promise<NoteImageDto> {
+    const formData = new FormData();
+    formData.append("Image", data.image);
+
     const response = await axiosInstance.post<NoteImageDto>(
       ENDPOINTS.NOTES.ADD_IMAGE(id),
-      data,
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } },
     );
 
     return response.data;

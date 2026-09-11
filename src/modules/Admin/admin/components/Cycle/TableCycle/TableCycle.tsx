@@ -42,6 +42,13 @@ export default function TableCycle({
     router.push(`/admin/cycle/${id}`);
   };
 
+const maritalStatusMap: Record<string, string> = {
+  Single: "مجرد",
+  Married: "متاهل",
+  Widowed: "بیوه",
+  Divorced: "مطلقه",
+};
+
   const columns: ColumnsType<UserProfileDto> = [
     {
       title: "نام ",
@@ -50,22 +57,18 @@ export default function TableCycle({
       align: "right",
 
       render: (_, record) => (
-        <span className="doctor-table-text">
-          {record.firstName}
-        </span>
+        <span className="doctor-table-text">{record.firstName}</span>
       ),
     },
 
-        {
+    {
       title: "نام خانوادگی",
       key: "name",
       width: "15%",
       align: "right",
 
       render: (_, record) => (
-        <span className="doctor-table-text">
-         {record.lastName}
-        </span>
+        <span className="doctor-table-text">{record.lastName}</span>
       ),
     },
 
@@ -105,7 +108,9 @@ export default function TableCycle({
       align: "right",
 
       render: (status: string) => (
-        <span className="doctor-table-text font-text-table">{status}</span>
+        <span className="doctor-table-text font-text-table">
+          {maritalStatusMap[status] ?? "-"}
+        </span>
       ),
     },
 

@@ -12,6 +12,7 @@ import Image from "next/image";
 
 import PaginationCostom from "../../Pagination/PaginationCostom";
 import { NoteDto } from "../../../types";
+import { getMediaUrl } from "@/src/core/utils/media.util";
 
 interface TablePointProps {
   notes: NoteDto[];
@@ -41,11 +42,11 @@ export default function TablePoint({ notes, loading }: TablePointProps) {
       align: "right",
 
       render: (icon: string) => (
-        <Image
+        <img
           width={32}
           height={32}
           className="w-8 h-8"
-          src={icon}
+          src={getMediaUrl(icon)}
           alt="icon"
         />
       ),

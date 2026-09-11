@@ -22,12 +22,29 @@ export const ENDPOINTS = {
   },
 
   NOTES: {
-    GET_ALL: "/Notes",
-    CREATE: "/Notes",
-    GET_BY_ID: (id: number) => `/Notes/${id}`,
-    UPDATE: (id: number) => `/Notes/${id}`,
-    DELETE: (id: number) => `/Notes/${id}`,
-    ADD_IMAGE: (id: number) => `/Notes/${id}/images`,
-    DELETE_IMAGE: (imageId: number) => `/Notes/images/${imageId}`,
+    GET_ALL: "/Note",
+    CREATE: "/Note",
+    GET_BY_ID: (id: number) => `/Note/${id}`,
+    UPDATE: (id: number) => `/Note/${id}`,
+    DELETE: (id: number) => `/Note/${id}`,
+    ADD_IMAGE: (id: number) => `/Note/${id}/images`,
+    DELETE_IMAGE: (imageId: number) => `/Note/images/${imageId}`,
+  },
+
+  ARTICLES: {
+    GET_ALL: "/Articles",
+    GET_BY_ID: (id: number) => `/Articles/${id}`,
+    CREATE: "/Articles",
+    UPDATE: (id: number) => `/Articles/${id}`,
+    DELETE: (id: number) => `/Articles/${id}`,
+    ADD_IMAGE: (id: number) => `/Articles/${id}/image`,
+  },
+
+  CATEGORY_ARTICLES: {
+    GET_ALL: "/CategoryArticles",
+    GET_BY_ID: (id: number) => `/CategoryArticles/${id}`,
+    CREATE: "/CategoryArticles",
+    UPDATE: (id: number) => `/CategoryArticles/${id}`,
+    DELETE: (id: number) => `/CategoryArticles/${id}`,
   },
 };

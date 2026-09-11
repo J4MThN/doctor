@@ -1,8 +1,9 @@
 "use client";
 
-import { ConfigProvider, Table } from "antd";
+import { ConfigProvider, Table, Spin, Empty } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -10,39 +11,57 @@ import {
   Cancel01Icon,
   EcoPowerIcon,
 } from "@hugeicons/core-free-icons";
-import Image from "next/image";
-import { Article } from "../../../types";
-import { article } from "../../../data/users";
-import { useState } from "react";
-import PaginationCostom from "../../Pagination/PaginationCostom";
 
-export default function TableArticle() {
+import PaginationCostom from "../../Pagination/PaginationCostom";
+import { getMediaUrl } from "@/src/core/utils/media.util";
+
+import { ArticleResponseDto } from "../../../types";
+
+interface TableArticleProps {
+  articles: ArticleResponseDto[];
+  loading: boolean;
+  error: string | null;
+}
+
+export default function TableArticle({
+  articles,
+  loading,
+  error,
+}: TableArticleProps) {
   const router = useRouter();
 
-  const handleArticleEdit = (id: string) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const pageSize = 7;
+
+  const handleArticleEdit = (id: number) => {
     router.push(`/admin/article/editarticle/${id}`);
   };
-  const handleArticleDelete = (id: string) => {
+
+  const handleArticleDelete = (id: number) => {
     console.log("Delete:", id);
   };
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 7;
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
-  const currentData = article.slice(startIndex, endIndex);
+  const currentData = articles.slice(startIndex, endIndex);
 
-  const columns: ColumnsType<Article> = [
+  const columns: ColumnsType<ArticleResponseDto> = [
     {
-      title: " عکس",
-      dataIndex: "icon",
-      key: "icon",
+      title: "عکس",
+      dataIndex: "imagePath",
+      key: "imagePath",
       width: "10%",
       align: "right",
-      render: (icon) => (
-        <Image className="rounded-[10px]" width={44} height={44} src={icon} alt="icon" />
+      render: (imagePath: string) => (
+        <img
+          className="rounded-[10px] object-cover"
+          width={44}
+          height={44}
+          src={getMediaUrl(imagePath)}
+          alt="article"
+        />
       ),
     },
 
@@ -53,7 +72,9 @@ export default function TableArticle() {
       width: "15%",
       align: "right",
       render: (title: string) => (
-        <span className="doctor-table-text">{title}</span>
+        <span className="doctor-table-text">
+          {title}
+        </span>
       ),
     },
 
@@ -64,67 +85,92 @@ export default function TableArticle() {
       width: "30%",
       align: "right",
       render: (desc: string) => (
-        <span className="doctor-table-text">{desc}</span>
+        <span className="doctor-table-text">
+          {desc}
+        </span>
       ),
     },
 
     {
       title: "موضوع",
-      dataIndex: "subject",
-      key: "subject",
+      dataIndex: "categoryName",
+      key: "categoryName",
       width: "15%",
       align: "right",
-      render: (subject) => (
+      render: (categoryName: string | null) => (
         <span className="doctor-table-text flex">
-          {" "}
           <HugeiconsIcon
             icon={EcoPowerIcon}
             size={20}
             strokeWidth={1.5}
-            className={`ml-1 ${subject === "عمومی" ? "text-[#6666C6]" : "text-[#FF657D]"}`}
+            className="ml-1 text-[#6666C6]"
           />
-          {subject}
+
+          {categoryName || "بدون موضوع"}
         </span>
       ),
     },
+
     {
       title: "#",
       key: "action",
-      width: "5%",
+      width: "10%",
       align: "right",
-      render: (_, record) => {
-        return (
-          <div className="flex">
-            <button
-              type="button"
-              onClick={() => handleArticleEdit(record.key)}
-              className="flex items-center justify-center ml-2 w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
-            >
-              <HugeiconsIcon
-                icon={Edit02Icon}
-                size={20}
-                color="#6666C6"
-                strokeWidth={1.5}
-              />
-            </button>
+      render: (_, record) => (
+        <div className="flex">
+          <button
+            type="button"
+            onClick={() => handleArticleEdit(record.id)}
+            className="flex items-center justify-center ml-2 w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
+          >
+            <HugeiconsIcon
+              icon={Edit02Icon}
+              size={20}
+              color="#6666C6"
+              strokeWidth={1.5}
+            />
+          </button>
 
-            <button
-              type="button"
-              onClick={() => handleArticleDelete(record.key)}
-              className="flex items-center justify-center w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
-            >
-              <HugeiconsIcon
-                icon={Cancel01Icon}
-                size={20}
-                color="#E51D1D"
-                strokeWidth={1.5}
-              />
-            </button>
-          </div>
-        );
-      },
+          <button
+            type="button"
+            onClick={() => handleArticleDelete(record.id)}
+            className="flex items-center justify-center w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
+          >
+            <HugeiconsIcon
+              icon={Cancel01Icon}
+              size={20}
+              color="#E51D1D"
+              strokeWidth={1.5}
+            />
+          </button>
+        </div>
+      ),
     },
   ];
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Spin />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-10 text-red-500">
+        {error}
+      </div>
+    );
+  }
+
+  if (!articles.length) {
+    return (
+      <div className="py-10">
+        <Empty description="مقاله‌ای وجود ندارد" />
+      </div>
+    );
+  }
 
   return (
     <ConfigProvider
@@ -139,18 +185,19 @@ export default function TableArticle() {
     >
       <div className="doctor-table-wrapper">
         <div className="doctor-table-content">
-          <Table<Article>
-            rowKey="key"
+          <Table<ArticleResponseDto>
+            rowKey="id"
             columns={columns}
             dataSource={currentData}
             pagination={false}
             className="doctor-table"
           />
-          {article.length > pageSize && (
+
+          {articles.length > pageSize && (
             <PaginationCostom
               currentPage={currentPage}
               pageSize={pageSize}
-              total={article.length}
+              total={articles.length}
               onPageChange={setCurrentPage}
             />
           )}
