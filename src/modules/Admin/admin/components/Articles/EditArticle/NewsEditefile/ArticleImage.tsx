@@ -5,6 +5,7 @@ import Image from "next/image";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Delete02Icon, ImageAdd01Icon } from "@hugeicons/core-free-icons";
 import DefualImage from "@/src/assest/defualimage/Group 162742.svg";
+import { getMediaUrl } from "@/src/core/utils/media.util";
 
 interface ArticleImageProps {
   image: any | null;
@@ -21,6 +22,8 @@ export default function ArticleImage({
 }: ArticleImageProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
+ 
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -36,8 +39,8 @@ export default function ArticleImage({
           overflow-hidden flex"
         >
           {!isDeleted && image ? (
-            <Image
-              src={image}
+            <img
+              src={getMediaUrl(image)}
               alt="عکس مقاله"
               width={451}
               height={300}
@@ -49,7 +52,7 @@ export default function ArticleImage({
               onClick={() => inputRef.current?.click()}
               className="w-full h-full flex flex-col items-center justify-center gap-3 cursor-pointer"
             >
-              <Image
+              <img
                 src={DefualImage}
                 alt="article"
                 width={252}
