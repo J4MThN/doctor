@@ -10,15 +10,18 @@ import {
   Edit02Icon,
   Cancel01Icon,
   EcoPowerIcon,
+  Comment01Icon,
 } from "@hugeicons/core-free-icons";
 
 import PaginationCostom from "../../Pagination/PaginationCostom";
 import { getMediaUrl } from "@/src/core/utils/media.util";
 
-import { ArticleResponseDto } from "../../../types";
+import { ArticleResponseDto, CommentResponseDto } from "../../../types";
 
 import EmptyImage from "@/src/assest/defualimage/Empty.svg";
 import Image from "next/image";
+import { commentsService } from "../../../services/comments.service";
+import ModalArticleComment from "../ModalArticleComment/ModalArticleComment";
 
 interface TableArticleProps {
   articles: ArticleResponseDto[];
@@ -42,12 +45,43 @@ export default function TableArticle({
     useState<ArticleResponseDto[]>(articles);
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
+  const [commentArticle, setCommentArticle] =
+    useState<ArticleResponseDto | null>(null);
+
+  const [articleComments, setArticleComments] = useState<CommentResponseDto[]>(
+    [],
+  );
+
+  const [commentsLoading, setCommentsLoading] = useState(false);
+  const [commentsError, setCommentsError] = useState<string | null>(null);
+
   const handleArticleEdit = (id: number) => {
     router.push(`/admin/article/editarticle/${id}`);
   };
 
   const handleArticleDelete = (id: number) => {
     setDeleteId(id);
+  };
+
+  const handleArticleComments = async (article: ArticleResponseDto) => {
+    try {
+      setCommentArticle(article);
+      setCommentsLoading(true);
+      setCommentsError(null);
+
+      const response = await commentsService.getByArticleId(article.id);
+
+      const approvedComments = response.filter(
+        (comment) => comment.status === "Approved",
+      );
+
+      setArticleComments(approvedComments);
+    } catch (error) {
+      console.error("Get article comments error:", error);
+      setCommentsError("خطا در دریافت نظرات مقاله.");
+    } finally {
+      setCommentsLoading(false);
+    }
   };
 
   const handleConfirmDelete = async () => {
@@ -152,7 +186,18 @@ export default function TableArticle({
               strokeWidth={1.5}
             />
           </button>
-
+          <button
+            type="button"
+            onClick={() => handleArticleComments(record)}
+            className="flex items-center justify-center ml-2 w-9 h-9 border border-[#E5E5EA] cursor-pointer rounded-4xl"
+          >
+            <HugeiconsIcon
+              icon={Comment01Icon}
+              size={20}
+              color="#6666C6"
+              strokeWidth={1.5}
+            />
+          </button>
           <button
             type="button"
             onClick={() => handleArticleDelete(record.id)}
@@ -277,6 +322,19 @@ export default function TableArticle({
           </div>
         </div>
       )}
+
+      <ModalArticleComment
+        open={commentArticle !== null}
+        articleTitle={commentArticle?.title ?? ""}
+        comments={articleComments}
+        loading={commentsLoading}
+        error={commentsError}
+        onClose={() => {
+          setCommentArticle(null);
+          setArticleComments([]);
+          setCommentsError(null);
+        }}
+      />
     </>
   );
 }

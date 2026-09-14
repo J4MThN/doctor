@@ -13,6 +13,8 @@ import {
 import { ImageItem } from "../../../../types";
 import { getMediaUrl } from "@/src/core/utils/media.util";
 
+import Imagedefault from "@/src/assest/defualimage/Group 162742.svg";
+
 interface PointImageGalleryProps {
   images: ImageItem[];
   selectedImage: ImageItem | null;
@@ -68,7 +70,14 @@ export default function PointImageSlider({
               className="w-full h-full object-cover"
             />
           ) : (
-            <span className="text-[12px] text-[#AEAEB2]">عکسی وجود ندارد</span>
+            <div className="flex flex-col items-center justify-center text-[#80838D] relative w-64 h-64 mt-10 mr-7">
+              <Image
+                src={Imagedefault}
+                alt="article"
+                fill
+                className="object-cover"
+              />
+            </div>
           )}
         </div>
       </div>

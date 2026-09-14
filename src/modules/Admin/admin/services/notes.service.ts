@@ -6,6 +6,7 @@ import {
   NoteDto,
   NoteImageDto,
   AddNoteImageRequestDto,
+  UpdateNoteRequestDto,
 } from "../types";
 
 class NotesService {
@@ -38,28 +39,37 @@ class NotesService {
     return response.data;
   }
 
-  async update(id: number, data: { title: string; desc: string }): Promise<void> {
-    await axiosInstance.put(ENDPOINTS.NOTES.UPDATE(id), data);
+  async update(id: number, data: UpdateNoteRequestDto): Promise<void> {
+    const formData = new FormData();
+
+    formData.append("Title", data.title);
+    formData.append("Desc", data.desc);
+
+    if (data.icon instanceof File) {
+      formData.append("Icon", data.icon);
+    }
+
+    await axiosInstance.put(ENDPOINTS.NOTES.UPDATE(id), formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 
   async delete(id: number): Promise<void> {
     await axiosInstance.delete(ENDPOINTS.NOTES.DELETE(id));
   }
 
-  async addImage(
-    id: number,
-    data: AddNoteImageRequestDto,
-  ): Promise<NoteImageDto> {
+  async addImage(id: number, data: AddNoteImageRequestDto): Promise<void> {
     const formData = new FormData();
+
     formData.append("Image", data.image);
 
-    const response = await axiosInstance.post<NoteImageDto>(
-      ENDPOINTS.NOTES.ADD_IMAGE(id),
-      formData,
-      { headers: { "Content-Type": "multipart/form-data" } },
-    );
-
-    return response.data;
+    await axiosInstance.post(ENDPOINTS.NOTES.ADD_IMAGE(id), formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 
   async deleteImage(imageId: number): Promise<void> {

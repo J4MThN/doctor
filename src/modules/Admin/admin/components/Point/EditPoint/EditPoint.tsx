@@ -10,6 +10,9 @@ import IconSelectModal from "./ModalPoint/IconSelectModal";
 import { usePointImages } from "../../../hook/usePointImages";
 import { usePointIcon } from "../../../hook/usePointIcon";
 import { usePointById } from "../../../hook/usePointById";
+import { useEditNote } from "../../../hook/useEditNote";
+import SuccessToast from "../../Toast/SuccessToast";
+import ErrorToast from "../../Toast/ErrorToast";
 
 interface EditPointProps {
   id: string;
@@ -57,6 +60,12 @@ function EditNote({ point, pointId, onCancel }: EditNoteProps) {
   const [title, setTitle] = useState(point.title);
   const [desc, setDesc] = useState(point.desc);
 
+  const { updateNote, loading: updateLoading } = useEditNote();
+
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("خطا در ویرایش نکته.");
+
   const {
     images,
     selectedImage,
@@ -70,23 +79,49 @@ function EditNote({ point, pointId, onCancel }: EditNoteProps) {
     handleDeleteImage,
 
     setDeleteImage,
-  } = usePointImages(point.images);
+  } = usePointImages(point.id, point.images);
 
   const {
-    availableIcons,
     selectedIcon,
     selectedIconName,
-    tempIcon,
-    isIconModalOpen,
 
     handleOpenIconModal,
     handleSelectIcon,
-    handleConfirmIcon,
-    handleCancelIcon,
   } = usePointIcon(point);
 
-  const handleSubmit = () => {
-    router.push("/note");
+  const handleSubmit = async () => {
+     await new Promise((resolve) => setTimeout(resolve, 0));
+
+    if (!title.trim()) {
+      setErrorMessage("لطفاً عنوان نکته را وارد کنید.");
+      setShowError(true);
+      return;
+    }
+
+    if (!desc.trim()) {
+      setErrorMessage("لطفاً توضیحات نکته را وارد کنید.");
+      setShowError(true);
+      return;
+    }
+
+    const success = await updateNote(Number(pointId), {
+      id: point.id,
+      icon: selectedIcon ?? point.icon,
+      title: title.trim(),
+      desc: desc.trim(),
+      createDate: point.createDate,
+      images: [],
+    });
+
+    if (success) {
+      setShowSuccess(true);
+
+      setTimeout(() => {
+        router.push("/admin/note");
+      }, 1000);
+    } else {
+      setShowError(true);
+    }
   };
 
   return (
@@ -106,10 +141,12 @@ function EditNote({ point, pointId, onCancel }: EditNoteProps) {
               iconName={selectedIconName}
               hasIcon={!!selectedIcon}
               onIconClik={handleOpenIconModal}
+              onIconChange={handleSelectIcon}
               onTitleChange={setTitle}
               onDescChange={setDesc}
               onSubmit={handleSubmit}
               onCancel={onCancel}
+              loading={updateLoading}
             />
           </div>
 
@@ -136,7 +173,7 @@ function EditNote({ point, pointId, onCancel }: EditNoteProps) {
         />
       )}
 
-      {isIconModalOpen && (
+      {/* {isIconModalOpen && (
         <IconSelectModal
           currentIcon={point.icon}
           icons={availableIcons}
@@ -145,7 +182,19 @@ function EditNote({ point, pointId, onCancel }: EditNoteProps) {
           onConfirm={handleConfirmIcon}
           onCancel={handleCancelIcon}
         />
-      )}
+      )} */}
+
+      <SuccessToast
+        open={showSuccess}
+        message="نکته با موفقیت ویرایش شد."
+        onClose={() => setShowSuccess(false)}
+      />
+
+      <ErrorToast
+        open={showError}
+        message={errorMessage}
+        onClose={() => setShowError(false)}
+      />
     </div>
   );
 }

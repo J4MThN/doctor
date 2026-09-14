@@ -10,7 +10,7 @@ import {
   Cancel01Icon,
   Delete02Icon,
 } from "@hugeicons/core-free-icons";
-import { CommentResponseDto } from "../../../types";
+import { PendingCommentResponseDto } from "../../../types";
 import PaginationCostom from "../../Pagination/PaginationCostom";
 import { useCommentActions } from "../../../hook/useCommentAction";
 import { useClickOutside } from "../../../hook/useClickQutside.ts";
@@ -20,7 +20,7 @@ import Image from "next/image";
 import CommentImage from "@/src/assest/defualimage/comment.svg";
 
 interface TableCommentProps {
-  comments: CommentResponseDto[];
+  comments: PendingCommentResponseDto[];
   loading: boolean;
   error: string | null;
 }
@@ -74,7 +74,7 @@ export default function TableComment({
   }
 
   if (!actionComments.length) {
-     return (
+    return (
       <div className="py-10 flex flex-col items-center justify-center">
         <Image
           src={CommentImage}
@@ -91,15 +91,15 @@ export default function TableComment({
     );
   }
 
-  const columns: ColumnsType<CommentResponseDto> = [
+  const columns: ColumnsType<PendingCommentResponseDto> = [
     {
-      title: "نام و نام خانوادگی",
-      dataIndex: "userId",
-      key: "userId",
+      title: "عنوان مقاله",
+      dataIndex: "articleTitle",
+      key: "articleTitle",
       width: "15%",
       align: "right",
-      render: (userId: string) => (
-        <span className="doctor-table-text">{userId}</span>
+      render: (articleTitle: string) => (
+        <span className="doctor-table-text">{articleTitle}</span>
       ),
     },
     {
@@ -145,9 +145,9 @@ export default function TableComment({
       width: "5%",
       align: "right",
       render: (_, record) => {
-        const isOpen = openMenuId === String(record.id);
+        const isOpen = openMenuId === String(record.commentId);
         const recordIndex = currentData.findIndex(
-          (item) => item.id === record.id,
+          (item) => item.commentId === record.commentId,
         );
         const openUp = recordIndex >= currentData.length - 2;
 
@@ -158,7 +158,7 @@ export default function TableComment({
           >
             <button
               type="button"
-              onClick={() => handleOpenMenu(String(record.id))}
+              onClick={() => handleOpenMenu(String(record.commentId))}
               className={`flex items-center justify-center ml-2 w-9 h-9 cursor-pointer rounded-full border
                 ${
                   isOpen
@@ -181,7 +181,7 @@ export default function TableComment({
                 <button
                   type="button"
                   onClick={() =>
-                    handleStatusChange(String(record.id), "تایید شده")
+                    handleStatusChange(String(record.commentId), "تایید شده")
                   }
                   className=" group w-28 h-9 rounded-full flex items-center justify-between gap-2 px-2 text-[#60646C] hover:bg-[#FFF0F2] hover:text-[#FF657D] cursor-pointer"
                 >
@@ -196,7 +196,7 @@ export default function TableComment({
                 <button
                   type="button"
                   onClick={() =>
-                    handleStatusChange(String(record.id), "رد شده")
+                    handleStatusChange(String(record.commentId), "رد شده")
                   }
                   className=" group w-28 h-9 rounded-full flex items-center justify-between gap-2 px-2 text-[#60646C] hover:bg-[#FFF0F2] hover:text-[#FF657D] cursor-pointer"
                 >
@@ -210,7 +210,9 @@ export default function TableComment({
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleOpenDeleteModal(String(record.id))}
+                  onClick={() =>
+                    handleOpenDeleteModal(String(record.commentId))
+                  }
                   className=" group w-28 h-9 rounded-full flex items-center justify-between gap-2 px-2 text-[#60646C] hover:bg-[#FFF0F2] hover:text-[#FF657D] cursor-pointer "
                 >
                   <span className="text-[12px]">حذف پیام</span>
@@ -235,8 +237,8 @@ export default function TableComment({
       theme={{ components: { Pagination: { itemActiveBg: "transparent" } } }}
     >
       <div className="doctor-table-wrapper">
-        <Table<CommentResponseDto>
-          rowKey="id"
+        <Table<PendingCommentResponseDto>
+          rowKey="commentId"
           columns={columns}
           dataSource={currentData}
           pagination={false}

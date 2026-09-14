@@ -1,12 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Delete02Icon, ImageAdd01Icon } from "@hugeicons/core-free-icons";
 import DefualImage from "@/src/assest/defualimage/Group 162742.svg";
 import { getMediaUrl } from "@/src/core/utils/media.util";
 import Image from "next/image";
-
 
 interface ArticleImageProps {
   image: any | null;
@@ -23,9 +22,15 @@ export default function ArticleImage({
 }: ArticleImageProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    const previewUrl = URL.createObjectURL(file);
+    setPreviewImage(previewUrl);
+
     onAddImage(file);
     e.target.value = "";
   };
@@ -37,8 +42,16 @@ export default function ArticleImage({
           className=" w-71 h-71 rounded-2xl border border-[#DEDEDE]
           overflow-hidden flex"
         >
-          {!isDeleted && image ? (
-            <Image
+          {previewImage ? (
+            <img
+              src={previewImage}
+              alt="عکس مقاله"
+              width={451}
+              height={300}
+              className="w-full h-full object-cover"
+            />
+          ) : !isDeleted && image ? (
+            <img
               src={getMediaUrl(image)}
               alt="عکس مقاله"
               width={451}

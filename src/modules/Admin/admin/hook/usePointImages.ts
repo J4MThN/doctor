@@ -1,19 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ImageItem, NoteImageDto } from "../types";
 import { getMediaUrl } from "@/src/core/utils/media.util";
+import { notesService } from "../services/notes.service";
 
-export function usePointImages(noteImages: NoteImageDto[]) {
-  const originalImages: ImageItem[] = noteImages.map((image) => ({
-    id: String(image.id),
-     src: getMediaUrl(image.url),
-  }));
+export function usePointImages(noteId: number, noteImages: NoteImageDto[]) {
+  const createImages = (images: NoteImageDto[]): ImageItem[] => {
+    return images.map((image) => ({
+      id: String(image.id),
+      src: getMediaUrl(image.url),
+    }));
+  };
 
-  const [images, setImages] = useState<ImageItem[]>(originalImages);
+  const [images, setImages] = useState<ImageItem[]>(createImages(noteImages));
 
   const [selectedImage, setSelectedImage] = useState<ImageItem | null>(
-    originalImages[0] ?? null,
+    createImages(noteImages)[0] ?? null,
   );
 
   const [deleteImage, setDeleteImage] = useState<ImageItem | null>(null);
@@ -22,6 +25,15 @@ export function usePointImages(noteImages: NoteImageDto[]) {
 
   const canGoPrev = thumbnailStart > 0;
   const canGoNext = thumbnailStart + 3 < images.length;
+
+  // وقتی اطلاعات عکس‌ها از API تغییر کرد
+  useEffect(() => {
+    const newImages = createImages(noteImages);
+
+    setImages(newImages);
+    setSelectedImage(newImages[0] ?? null);
+    setThumbnailStart(0);
+  }, [noteImages]);
 
   const handleSelectImage = (image: ImageItem) => {
     setSelectedImage(image);
@@ -67,36 +79,60 @@ export function usePointImages(noteImages: NoteImageDto[]) {
     }
   };
 
-  const handleAddImage = (file: File) => {
-    const newImage: ImageItem = {
-      id: crypto.randomUUID(),
-      src: URL.createObjectURL(file),
-    };
+  // ==============================
+  // آپلود عکس جدید از طریق API
+  // ==============================
+  const handleAddImage = async (file: File) => {
+    try {
+      await notesService.addImage(noteId, {
+        image: file,
+      });
 
-    setImages((prev) => [...prev, newImage]);
-    setSelectedImage(newImage);
+      // دوباره اطلاعات نکته را از API می‌گیریم
+      // تا ID واقعی عکس جدید را داشته باشیم
+      const updatedNote = await notesService.getById(noteId);
 
-    if (images.length >= 3) {
-      setThumbnailStart(images.length - 2);
+      const newImages = createImages(updatedNote.images);
+
+      setImages(newImages);
+
+      const newImage = newImages[newImages.length - 1] ?? null;
+
+      setSelectedImage(newImage);
+
+      if (newImages.length > 3) {
+        setThumbnailStart(Math.max(newImages.length - 3, 0));
+      }
+    } catch (error) {
+      console.error("Add note image error:", error);
     }
   };
 
-  const handleDeleteImage = () => {
+  // ==============================
+  // حذف عکس از طریق API
+  // ==============================
+  const handleDeleteImage = async () => {
     if (!deleteImage) return;
 
-    const newImages = images.filter((item) => item.id !== deleteImage.id);
+    try {
+      await notesService.deleteImage(Number(deleteImage.id));
 
-    setImages(newImages);
+      const newImages = images.filter((item) => item.id !== deleteImage.id);
 
-    if (selectedImage?.id === deleteImage.id) {
-      setSelectedImage(newImages[0] ?? null);
+      setImages(newImages);
+
+      if (selectedImage?.id === deleteImage.id) {
+        setSelectedImage(newImages[0] ?? null);
+      }
+
+      const maxStart = Math.max(newImages.length - 3, 0);
+
+      setThumbnailStart((prev) => Math.min(prev, maxStart));
+
+      setDeleteImage(null);
+    } catch (error) {
+      console.error("Delete note image error:", error);
     }
-
-    const maxStart = Math.max(newImages.length - 3, 0);
-
-    setThumbnailStart((prev) => Math.min(prev, maxStart));
-
-    setDeleteImage(null);
   };
 
   return {
@@ -104,6 +140,7 @@ export function usePointImages(noteImages: NoteImageDto[]) {
     selectedImage,
     deleteImage,
     thumbnailStart,
+
     canGoPrev,
     canGoNext,
 

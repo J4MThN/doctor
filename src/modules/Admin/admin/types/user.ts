@@ -49,6 +49,19 @@ export interface NoteDto {
   images: NoteImageDto[];
 }
 
+export interface UpdateNoteRequestDto {
+  id: number;
+  icon: File | string;
+  title: string;
+  desc: string;
+  createDate: string;
+  images: {
+    id: number;
+    imageName: string;
+    url: string;
+  }[];
+}
+
 //// article
 
 export interface CreateArticleRequestDto {
@@ -102,6 +115,7 @@ export interface UpdateCategoryArticleRequestDto {
 }
 
 //// comment
+
 export interface CommentResponseDto {
   id: number;
   userId: number;
@@ -114,6 +128,13 @@ export interface CreateCommentRequestDto {
   userId: number;
   commentText: string;
   articleId: number;
+}
+
+export interface PendingCommentResponseDto {
+  commentId: number;
+  articleId: number;
+  commentText: string;
+  articleTitle: string;
 }
 
 ////////// pregnancy

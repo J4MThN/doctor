@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { CommentResponseDto } from "../types";
+import { PendingCommentResponseDto } from "../types";
 import { commentsService } from "../services/comments.service";
 
-export const useComments = (articleId: number) => {
-  const [comments, setComments] = useState<CommentResponseDto[]>([]);
+export const useComments = () => {
+  const [comments, setComments] = useState<PendingCommentResponseDto[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,7 +14,7 @@ export const useComments = (articleId: number) => {
       setLoading(true);
       setError(null);
 
-      const response = await commentsService.getByArticleId(articleId);
+      const response = await commentsService.getPending();
 
       setComments(response);
     } catch (error) {
@@ -24,7 +24,7 @@ export const useComments = (articleId: number) => {
     } finally {
       setLoading(false);
     }
-  }, [articleId]);
+  }, []);
 
   useEffect(() => {
     getComments();

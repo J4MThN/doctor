@@ -1,10 +1,10 @@
 "use client";
 
-import { CommentResponseDto } from "../../types";
+import { PendingCommentResponseDto } from "../../types";
 import TableComment from "./TableComment/TableComment";
 
 interface ContentCommentProps {
-  comments: CommentResponseDto[];
+  comments: PendingCommentResponseDto[];
   loading: boolean;
   error: string | null;
 }

@@ -50,6 +50,7 @@ export const ENDPOINTS = {
 
   COMMENTS: {
     GET_BY_ARTICLE_ID: (articleId: number) => `/Comments/article/${articleId}`,
+    GET_PENDING: "/Comments/pending",
     CREATE: "/Comments",
     APPROVE: (id: number) => `/Comments/${id}/approve`,
     REJECT: (id: number) => `/Comments/${id}/reject`,

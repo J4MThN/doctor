@@ -9,10 +9,12 @@ interface PointFormProps {
   iconName?: string;
   hasIcon: boolean;
   onIconClik: () => void;
+  onIconChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onTitleChange: (value: string) => void;
   onDescChange: (value: string) => void;
   onSubmit: () => void;
   onCancel: () => void;
+  loading?: boolean;
 }
 
 export default function PointForm({
@@ -21,12 +23,13 @@ export default function PointForm({
   iconName,
   hasIcon,
   onIconClik,
+  onIconChange,
   onTitleChange,
   onDescChange,
   onSubmit,
   onCancel,
+  loading,
 }: PointFormProps) {
-
   return (
     <div className="w-153.75 h-115.5 bg-white border border-[#F3F2F2] rounded-3xl mt-4 p-4">
       <div className="mb-5">
@@ -54,6 +57,13 @@ export default function PointForm({
               {hasIcon ? " آپلود شد" : "آپلود فایل"}
             </span>
           </button>
+          <input
+            id="point-icon-input"
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={onIconChange}
+          />
         </div>
       </div>
 
@@ -88,7 +98,13 @@ export default function PointForm({
         <button
           type="button"
           onClick={onSubmit}
-          className="w-38 h-12 rounded-lg bg-[#FF657D] text-white text-[16px] font-medium cursor-pointer"
+          disabled={loading}
+          className={`w-38 h-12 rounded-lg text-white text-[16px] font-medium transition-all duration-200 
+                    ${
+                      loading
+                        ? "bg-[#FF657D]/60 cursor-not-allowed"
+                        : "bg-[#FF657D] hover:bg-[#e9546b] active:scale-[0.98] cursor-pointer"
+                    }`}
         >
           ویرایش
         </button>

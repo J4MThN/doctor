@@ -2,18 +2,28 @@
 
 import { useEffect, useState } from "react";
 
-import { CommentResponseDto } from "../types";
+import { CommentResponseDto, PendingCommentResponseDto } from "../types";
 import { commentsService } from "../services/comments.service";
 
-export function useCommentActions(initialComments: CommentResponseDto[]) {
-  const [comments, setComments] =
-    useState<CommentResponseDto[]>(initialComments);
+export interface CommentTableItem extends PendingCommentResponseDto {
+  status: "در انتظار تایید";
+}
+
+export function useCommentActions(
+  initialComments: PendingCommentResponseDto[],
+) {
+  const [comments, setComments] = useState<CommentTableItem[]>([]);
 
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
-    setComments(initialComments);
+    setComments(
+      initialComments.map((item) => ({
+        ...item,
+        status: "در انتظار تایید",
+      })),
+    );
   }, [initialComments]);
 
   const handleStatusChange = async (
@@ -27,16 +37,8 @@ export function useCommentActions(initialComments: CommentResponseDto[]) {
         await commentsService.reject(Number(id));
       }
 
-      // آپدیت جدول بعد از موفقیت API
       setComments((prev) =>
-        prev.map((item) =>
-          String(item.id) === String(id)
-            ? {
-                ...item,
-                status,
-              }
-            : item,
-        ),
+        prev.filter((item) => String(item.commentId) !== String(id)),
       );
 
       setOpenMenuId(null);
@@ -52,7 +54,7 @@ export function useCommentActions(initialComments: CommentResponseDto[]) {
       await commentsService.delete(Number(deleteId));
 
       setComments((prev) =>
-        prev.filter((item) => String(item.id) !== String(deleteId)),
+        prev.filter((item) => String(item.commentId) !== String(deleteId)),
       );
 
       setDeleteId(null);

@@ -1,76 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { points } from "../data/users";
-
-export interface IconOption {
-  id: string;
-  name: string;
-  icon: any;
-}
 
 export function usePointIcon(point: any) {
-  // لیست آیکون‌ها همان قبلی می‌ماند
-  const availableIcons: IconOption[] = points
-    .filter((item) => item.icon)
-    .map((item) => ({
-      id: String(item.key),
-      name: item.iconName ?? "",
-      icon: item.icon,
-    }));
+  const getIconName = (icon: string | null | undefined) => {
+    if (!icon) return "";
 
-  // آیکون فعلی از API پیدا می‌شود
-  const currentIcon =
-    availableIcons.find((item) => item.icon === point.icon) ?? null;
+    const fileName = icon.split("/").pop() ?? "";
 
-  const [selectedIcon, setSelectedIcon] = useState<IconOption | null>(
-    currentIcon,
-  );
+    return decodeURIComponent(fileName);
+  };
+
+  const [selectedIcon, setSelectedIcon] = useState<File | null>(null);
 
   const [selectedIconName, setSelectedIconName] = useState(
-    currentIcon?.name ?? "",
+    getIconName(point.icon),
   );
 
-  const [isIconModalOpen, setIsIconModalOpen] = useState(false);
-
-  const [tempIcon, setTempIcon] = useState<IconOption | null>(currentIcon);
-
   const handleOpenIconModal = () => {
-    setTempIcon(selectedIcon);
-    setIsIconModalOpen(true);
+    document.getElementById("point-icon-input")?.click();
   };
 
-  const handleSelectIcon = (icon: IconOption) => {
-    setTempIcon(icon);
-  };
+  const handleSelectIcon = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
 
-  const handleConfirmIcon = () => {
-    if (!tempIcon) return;
+    if (!file) return;
 
-    setSelectedIcon(tempIcon);
-    setSelectedIconName(tempIcon.name);
+    setSelectedIcon(file);
+    setSelectedIconName(file.name);
 
-    setIsIconModalOpen(false);
-  };
-
-  const handleCancelIcon = () => {
-    setTempIcon(selectedIcon);
-    setIsIconModalOpen(false);
+    event.target.value = "";
   };
 
   return {
-    availableIcons,
-    currentIcon,
-
     selectedIcon,
     selectedIconName,
 
-    tempIcon,
-    isIconModalOpen,
-
     handleOpenIconModal,
     handleSelectIcon,
-    handleConfirmIcon,
-    handleCancelIcon,
   };
 }
