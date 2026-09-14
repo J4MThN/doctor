@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
@@ -8,30 +8,57 @@ import { useRouter } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Edit02Icon, Cancel01Icon } from "@hugeicons/core-free-icons";
 
-import Image from "next/image";
-
 import PaginationCostom from "../../Pagination/PaginationCostom";
 import { NoteDto } from "../../../types";
 import { getMediaUrl } from "@/src/core/utils/media.util";
 
+import EmptyImage from "@/src/assest/defualimage/Empty.svg";
+import Image from "next/image";
+
 interface TablePointProps {
   notes: NoteDto[];
   loading: boolean;
+  onDelete: (id: number) => Promise<boolean>;
 }
 
-export default function TablePoint({ notes, loading }: TablePointProps) {
+export default function TablePoint({
+  notes,
+  loading,
+  onDelete,
+}: TablePointProps) {
   const router = useRouter();
+
+  const [localNotes, setLocalNotes] = useState<NoteDto[]>(notes);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
+
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 7;
+
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const currentData = notes.slice(startIndex, endIndex);
+
   const handlePointEdit = (id: number) => {
     router.push(`/admin/note/editnote/${id}`);
   };
+  // باز کردن مدال
   const handlePointDelete = (id: number) => {
-    console.log("Delete:", id);
+    setDeleteId(id);
   };
+  const handleConfirmDelete = async () => {
+    if (deleteId === null) return;
+    const success = await onDelete(deleteId);
+
+    if (success) {
+      setLocalNotes((prev) => prev.filter((note) => note.id !== deleteId));
+
+      setDeleteId(null);
+    }
+  };
+
+  useEffect(() => {
+    setLocalNotes(notes);
+  }, [notes]);
 
   const columns: ColumnsType<NoteDto> = [
     {
@@ -129,38 +156,100 @@ export default function TablePoint({ notes, loading }: TablePointProps) {
     },
   ];
 
-  return (
-    <ConfigProvider
-      direction="rtl"
-      theme={{
-        components: {
-          Pagination: {
-            itemActiveBg: "transparent",
-          },
-        },
-      }}
-    >
-      <div className="doctor-table-wrapper">
-        <div className="doctor-table-content">
-          <Table<NoteDto>
-            rowKey="id"
-            columns={columns}
-            dataSource={currentData}
-            loading={loading}
-            pagination={false}
-            className="doctor-table"
-          />
+  if (!notes.length) {
+    return (
+      <div className="py-10 flex flex-col items-center justify-center">
+        <Image
+          src={EmptyImage}
+          alt="Empty"
+          width={150}
+          height={150}
+          className="object-contain mb-6"
+        />
 
-          {notes.length > pageSize && (
-            <PaginationCostom
-              currentPage={currentPage}
-              pageSize={pageSize}
-              total={notes.length}
-              onPageChange={setCurrentPage}
-            />
-          )}
-        </div>
+        <span className="font-text-table text-[16px] text-[#6666C6]">
+          لیستی وجود ندارد
+        </span>
       </div>
-    </ConfigProvider>
+    );
+  }
+
+  return (
+    <>
+      <ConfigProvider
+        direction="rtl"
+        theme={{
+          components: {
+            Pagination: {
+              itemActiveBg: "transparent",
+            },
+          },
+        }}
+      >
+        <div className="doctor-table-wrapper">
+          <div className="doctor-table-content">
+            <Table<NoteDto>
+              rowKey="id"
+              columns={columns}
+              dataSource={localNotes}
+              loading={loading}
+              pagination={false}
+              className="doctor-table"
+            />
+
+            {localNotes.length > pageSize && (
+              <PaginationCostom
+                currentPage={currentPage}
+                pageSize={pageSize}
+                total={localNotes.length}
+                onPageChange={setCurrentPage}
+              />
+            )}
+          </div>
+        </div>
+      </ConfigProvider>
+
+      {/* Delete Modal */}
+      {deleteId !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="w-82.5 h-50 rounded-3xl bg-white p-4">
+            <div className="flex justify-start">
+              <button type="button" onClick={() => setDeleteId(null)}>
+                <HugeiconsIcon
+                  icon={Cancel01Icon}
+                  size={20}
+                  strokeWidth={1.5}
+                  className="text-[#FF657D] cursor-pointer"
+                />
+              </button>
+            </div>
+
+            <div className="text-center mt-6">
+              <p className="text-[16px] font-bold text-[#4D4D4D] mt-2">
+                آیا میخواهید این نکته را حذف کنید؟
+              </p>
+            </div>
+
+            <div className="flex justify-center gap-3 mt-8">
+              <button
+                type="button"
+                onClick={() => setDeleteId(null)}
+                className="w-26 h-10 rounded-lg border border-[#80838D] text-[#80838D] text-[14px] cursor-pointer"
+              >
+                انصراف
+              </button>
+
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                className="w-26 h-10 rounded-lg bg-[#FF657D] text-white text-[14px] cursor-pointer"
+              >
+                بله
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

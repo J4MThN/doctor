@@ -45,6 +45,12 @@ body , html  {
   }
 }
 
+.ant-input-number .ant-input-number-input{
+  font-family: "Vazirmatn", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+} 
+
 /* =========================
    Doctors Table
 ========================= */

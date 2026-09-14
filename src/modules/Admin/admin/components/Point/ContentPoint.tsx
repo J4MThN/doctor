@@ -7,9 +7,12 @@ import { useRouter } from "next/navigation";
 import { useNotes } from "../../hook/useNotes";
 import { useEffect, useState } from "react";
 import ErrorToast from "../Toast/ErrorToast";
+import { usePointById } from "../../hook/usePointById";
 
 export const ContentPoint = () => {
-  const { notes, loading, error } = useNotes();
+  const { notes, loading, error  } = useNotes();
+  const { deleteNote } = usePointById();
+
 
   const router = useRouter();
 
@@ -62,7 +65,7 @@ export const ContentPoint = () => {
       />
 
       <div className="mx-4 mt-4">
-        <TablePoint notes={notes} loading={loading} />
+        <TablePoint notes={notes} loading={loading}   onDelete={deleteNote}/>
       </div>
     </div>
   );

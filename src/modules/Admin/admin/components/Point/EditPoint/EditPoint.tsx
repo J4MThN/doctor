@@ -3,15 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-
 import PointImageSlider from "./NoteEditefile/PointImageSlider";
 import PointForm from "./NoteEditefile/PointForm";
 import DeleteImageModal from "./ModalPoint/DeleteImageModal";
 import IconSelectModal from "./ModalPoint/IconSelectModal";
 import { usePointImages } from "../../../hook/usePointImages";
 import { usePointIcon } from "../../../hook/usePointIcon";
-import { points } from "../../../data/users";
-
+import { usePointById } from "../../../hook/usePointById";
 
 interface EditPointProps {
   id: string;
@@ -20,9 +18,19 @@ interface EditPointProps {
 export default function EditPoint({ id }: EditPointProps) {
   const router = useRouter();
 
-  const selectedPoint = points.find((item) => String(item.key) === String(id));
+  const { note, loading, error } = usePointById(id);
 
-  if (!selectedPoint) {
+  if (loading) {
+    return (
+      <div dir="rtl" className="flex w-full flex-1 items-center justify-center">
+        <span className="text-[14px] text-[#606060]">
+          در حال دریافت اطلاعات...
+        </span>
+      </div>
+    );
+  }
+
+  if (error || !note) {
     return (
       <div dir="rtl" className="flex w-full flex-1 items-center justify-center">
         <span className="text-[14px] text-[#606060]">
@@ -33,11 +41,7 @@ export default function EditPoint({ id }: EditPointProps) {
   }
 
   return (
-    <EditNote
-      point={selectedPoint}
-      pointId={id}
-      onCancel={() => router.push("/note")}
-    />
+    <EditNote point={note} pointId={id} onCancel={() => router.push("/note")} />
   );
 }
 
@@ -54,49 +58,34 @@ function EditNote({ point, pointId, onCancel }: EditNoteProps) {
   const [desc, setDesc] = useState(point.desc);
 
   const {
-  images,
-  selectedImage,
-  deleteImage,
-  thumbnailStart,
+    images,
+    selectedImage,
+    deleteImage,
+    thumbnailStart,
 
-  handleSelectImage,
-  handlePrevImages,
-  handleNextImages,
-  handleAddImage,
-  handleDeleteImage,
+    handleSelectImage,
+    handlePrevImages,
+    handleNextImages,
+    handleAddImage,
+    handleDeleteImage,
 
-  setDeleteImage,
-} = usePointImages(pointId);
+    setDeleteImage,
+  } = usePointImages(point.images);
 
-const {
-  availableIcons,
-  selectedIcon,
-  selectedIconName,
-  tempIcon,
-  isIconModalOpen,
+  const {
+    availableIcons,
+    selectedIcon,
+    selectedIconName,
+    tempIcon,
+    isIconModalOpen,
 
-  handleOpenIconModal,
-  handleSelectIcon,
-  handleConfirmIcon,
-  handleCancelIcon,
-} = usePointIcon(point);
+    handleOpenIconModal,
+    handleSelectIcon,
+    handleConfirmIcon,
+    handleCancelIcon,
+  } = usePointIcon(point);
 
   const handleSubmit = () => {
-    const index = points.findIndex(
-      (item) => String(item.key) === String(pointId),
-    );
-    if (index === -1) return;
-
-    points[index] = {
-      ...points[index],
-      icon: selectedIcon?.icon,
-      iconName: selectedIcon?.name ?? "",
-
-      title,/*  */
-      desc,
-      image: images.length,
-    };
-
     router.push("/note");
   };
 

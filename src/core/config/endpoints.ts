@@ -47,4 +47,16 @@ export const ENDPOINTS = {
     UPDATE: (id: number) => `/CategoryArticles/${id}`,
     DELETE: (id: number) => `/CategoryArticles/${id}`,
   },
+
+  COMMENTS: {
+    GET_BY_ARTICLE_ID: (articleId: number) => `/Comments/article/${articleId}`,
+    CREATE: "/Comments",
+    APPROVE: (id: number) => `/Comments/${id}/approve`,
+    REJECT: (id: number) => `/Comments/${id}/reject`,
+    DELETE: (id: number) => `/Comments/${id}`,
+  },
+
+  PREGNANCIES: {
+    GET_MINE: "/Pregnancies/mine",
+  },
 };

@@ -21,8 +21,7 @@ export interface CycleDto {
   createDate: string;
 }
 
-
-////////// note 
+////////// note
 
 export interface CreateNoteRequestDto {
   title: string;
@@ -38,6 +37,7 @@ export interface NoteImageDto {
   id: number;
   noteId: number;
   imageName: string;
+  url: string;
 }
 
 export interface NoteDto {
@@ -101,7 +101,29 @@ export interface UpdateCategoryArticleRequestDto {
   name: string;
 }
 
+//// comment
+export interface CommentResponseDto {
+  id: number;
+  userId: number;
+  commentText: string;
+  createDate: string;
+  articleId: number;
+  status: string;
+}
+export interface CreateCommentRequestDto {
+  userId: number;
+  commentText: string;
+  articleId: number;
+}
 
+////////// pregnancy
+
+export interface PregnancyDto {
+  id: number;
+  userId: number;
+  status: string;
+  createDate: string;
+}
 // //////////////////////
 
 export interface Users {
@@ -112,7 +134,6 @@ export interface Users {
   maritalStatus: string;
   cycleCount: number;
 }
-
 
 export interface Cycle {
   key: string;
@@ -145,7 +166,7 @@ export interface Pregnancy {
 export interface Point {
   key: string;
   icon: any;
-  iconName:string,
+  iconName: string;
   title: string;
   desc: string;
   image: number;
@@ -165,7 +186,6 @@ export interface Comment {
   desc: string;
   status: any;
 }
-
 
 export interface ImageItem {
   id: string;

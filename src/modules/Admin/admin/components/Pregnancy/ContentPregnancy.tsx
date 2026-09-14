@@ -1,17 +1,21 @@
-import { pregnancy } from "../../data/users";
+"use client";
+
+import { usePregnancies } from "../../hook/usePregnancies";
 import TablePregnancy from "./TablePregnancy/TablePregnancy";
 
 export const ContenPregnancy = () => {
+    const {pregnancies,loading,error,} = usePregnancies();
+
   return (
     <div className=" w-full min-h-0 m-6 rounded-3xl bg-[#F9F9FB]">
       <div className="flex mt-4 mr-6 font-bold text-[#6666C6]">
         <span className="text-[16px] ml-2"> افراد </span>
         <div className="flex items-center justify-center border border-[#6666C6] bg-[#F2F2FF] w-6 h-6 rounded-4xl">
-          <span className="text-[12px] pt-0.5">{pregnancy.length}</span>
+          <span className="text-[12px] pt-0.5">{pregnancies.length}</span>
         </div>
       </div>
       <div className="mx-4 mt-4">
-      <TablePregnancy />
+      <TablePregnancy pregnancies={pregnancies} loading={loading} error={error} />
       </div>
     </div>
   );

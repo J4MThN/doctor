@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, ConfigProvider, Table } from "antd";
+import { Button, ConfigProvider, Empty, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 
@@ -10,6 +10,9 @@ import { ViewIcon } from "@hugeicons/core-free-icons";
 
 import { CycleDto } from "../../../types";
 import PaginationCostom from "../../Pagination/PaginationCostom";
+
+import EmptyImage from "@/src/assest/defualimage/Empty.svg";
+import Image from "next/image";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
@@ -47,9 +50,7 @@ export default function TableListCycleid({
       width: "25%",
       align: "right",
       render: (date: string) => (
-        <span className="doctor-table-text font-text-table">
-          {date}
-        </span>
+        <span className="doctor-table-text font-text-table">{date}</span>
       ),
     },
 
@@ -61,10 +62,7 @@ export default function TableListCycleid({
       align: "right",
       render: (length: number) => (
         <span className="doctor-table-text">
-          <span className="font-text-table">
-            {length}
-          </span>{" "}
-          روز
+          <span className="font-text-table">{length}</span> روز
         </span>
       ),
     },
@@ -77,10 +75,7 @@ export default function TableListCycleid({
       align: "right",
       render: (cycleLength: number) => (
         <span className="doctor-table-text">
-          <span className="font-text-table">
-            {cycleLength}
-          </span>{" "}
-          روز
+          <span className="font-text-table">{cycleLength}</span> روز
         </span>
       ),
     },
@@ -92,8 +87,7 @@ export default function TableListCycleid({
       align: "right",
 
       render: (_, record) => {
-        const isActive =
-          activeDoctorId === String(record.id);
+        const isActive = activeDoctorId === String(record.id);
 
         return (
           <Button
@@ -106,14 +100,8 @@ export default function TableListCycleid({
                 strokeWidth={1.5}
               />
             }
-            onClick={() =>
-              handleCycleList(record.id)
-            }
-            className={`cycle-button ${
-              isActive
-                ? "cycle-button-active"
-                : ""
-            }`}
+            onClick={() => handleCycleList(record.id)}
+            className={`cycle-button ${isActive ? "cycle-button-active" : ""}`}
           >
             لیست علائم روزانه
           </Button>
@@ -121,6 +109,24 @@ export default function TableListCycleid({
       },
     },
   ];
+
+  if (!loading && !cycles.length) {
+    return (
+      <div className="py-10 flex flex-col items-center justify-center">
+        <Image
+          src={EmptyImage}
+          alt="Empty"
+          width={150}
+          height={150}
+          className="object-contain mb-6"
+        />
+
+        <span className="font-text-table text-[16px] text-[#6666C6]">
+          لیستی وجود ندارد
+        </span>
+      </div>
+    );
+  }
 
   return (
     <ConfigProvider
@@ -135,7 +141,6 @@ export default function TableListCycleid({
     >
       <div className="doctor-table-wrapper">
         <div className="doctor-table-content">
-
           <Table<CycleDto>
             rowKey="id"
             columns={columns}
@@ -153,7 +158,6 @@ export default function TableListCycleid({
               onPageChange={setCurrentPage}
             />
           )}
-
         </div>
       </div>
     </ConfigProvider>

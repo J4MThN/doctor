@@ -11,6 +11,7 @@ import {
   ViewIcon,
 } from "@hugeicons/core-free-icons";
 import { ImageItem } from "../../../../types";
+import { getMediaUrl } from "@/src/core/utils/media.util";
 
 interface PointImageGalleryProps {
   images: ImageItem[];
@@ -59,7 +60,7 @@ export default function PointImageSlider({
           overflow-hidden flex"
         >
           {selectedImage ? (
-            <Image
+            <img
               src={selectedImage.src}
               alt="عکس نکته"
               width={451}
@@ -105,8 +106,8 @@ export default function PointImageSlider({
                       : "border-[#F3F2F2] opacity-70"
                   }`}
               >
-                <Image
-                  src={image.src}
+                <img
+                  src={getMediaUrl(image.src)}
                   alt="عکس"
                   width={80}
                   height={70}

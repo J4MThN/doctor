@@ -1,94 +1,163 @@
 "use client";
 
-import { ConfigProvider, Table } from "antd";
+import { ConfigProvider, Spin, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
-import { pregnancy } from "../../../data/users";
-import { Pregnancy } from "../../../types/user";
 import PaginationCostom from "../../Pagination/PaginationCostom";
 import { useState } from "react";
+import { PregnancyTableData } from "../../../hook/usePregnancies";
+
+
+import EmptyImage from "@/src/assest/defualimage/Empty.svg";
+import Image from "next/image";
 
 interface DoctorsTableProps {
+  pregnancies: PregnancyTableData[];
+  loading: boolean;
+  error: string | null;
   activeDoctorId?: string;
 }
 
-export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
+const calculateAge = (birthDate: string) => {
+  if (!birthDate) return 0;
+
+  const birth = new Date(birthDate);
+  const today = new Date();
+
+  let age = today.getFullYear() - birth.getFullYear();
+
+  const monthDifference = today.getMonth() - birth.getMonth();
+
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birth.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
+};
+
+export default function TablePregnancy({
+  pregnancies,
+  loading,
+  error,
+}: DoctorsTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 7;
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const currentData = pregnancy.slice(startIndex, endIndex);
+  const currentData = pregnancies.slice(startIndex, endIndex);
 
-  const columns: ColumnsType<Pregnancy> = [
+  const columns: ColumnsType<PregnancyTableData> = [
     {
       title: "نام و نام خانوادگی",
-      dataIndex: "name",
+      dataIndex: "user",
       key: "name",
       width: "20%",
       align: "right",
-      render: (name: string) => (
-        <span className="doctor-table-text">{name}</span>
+      render: (user) => (
+        <span className="doctor-table-text">
+          {user ? `${user.firstName} ${user.lastName}` : "-"}
+        </span>
       ),
     },
     {
       title: "موبایل",
-      dataIndex: "mobile",
+      dataIndex: "user",
       key: "mobile",
       width: "15%",
       align: "right",
-      render: (mobile: string) => (
+      render: (user) => (
         <span className="doctor-table-text" dir="ltr">
-          {mobile}
+          {user?.mobile ?? "-"}
         </span>
       ),
     },
     {
       title: "سن",
-      dataIndex: "age",
+      dataIndex: "user",
       key: "age",
       width: "15%",
       align: "right",
-      render: (age: number) => (
+      render: (user) => (
         <span className="doctor-table-text">
           {" "}
-          <span className="font-text-table">{age}</span> سال
+          <span className="font-text-table">
+            {user ? calculateAge(user.birthDate) : "-"}
+          </span>{" "}
+          سال
         </span>
       ),
     },
     {
       title: "وضعیت تاهل",
-      dataIndex: "maritalStatus",
+      dataIndex: "user",
       key: "maritalStatus",
       width: "15%",
       align: "right",
-      render: (status: string) => (
-        <span className="doctor-table-text">{status}</span>
+      render: (user) => (
+        <span className="doctor-table-text">{user?.maritalStatus ?? "-"}</span>
       ),
     },
     {
       title: "تعداد سیکل",
-      dataIndex: "cycleCount",
+      dataIndex: "user",
       key: "cycleCount",
       width: "20%",
       align: "right",
-      render: (count: number) => (
+      render: (user) => (
         <span className="doctor-table-text">
           {" "}
-          <span className="font-text-table">{count}</span> روز
+          <span className="font-text-table">{user?.cycleCount ?? "-"}</span> روز
         </span>
       ),
     },
     {
       title: "قصد بارداری طی 12 ماه آینده",
       key: "pregnancyCount",
-      dataIndex: "pregnancyCount",
+      dataIndex: "status",
       width: "20%",
       align: "right",
-      render: (name: string) => (
-        <span className="doctor-table-text">{name}</span>
+      render: (status: string) => (
+        <span className="doctor-table-text">{status || "-"}</span>
       ),
     },
   ];
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Spin />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-10 text-red-500">
+        {error}
+      </div>
+    );
+  }
+
+  if (!pregnancies.length) {
+    return (
+           <div className="py-10 flex flex-col items-center justify-center">
+        <Image
+          src={EmptyImage}
+          alt="Empty"
+          width={150}
+          height={150}
+          className="object-contain mb-6"
+        />
+
+        <span className="font-text-table text-[16px] text-[#6666C6]">
+          لیستی وجود ندارد
+        </span>
+      </div>
+    );
+  }
 
   return (
     <ConfigProvider
@@ -103,19 +172,21 @@ export default function TablePregnancy({ activeDoctorId }: DoctorsTableProps) {
     >
       <div className="doctor-table-wrapper">
         <div className="doctor-table-content">
-          <Table<Pregnancy>
-            rowKey="key"
+          <Table<PregnancyTableData>
+            rowKey="id"
             columns={columns}
             dataSource={currentData}
             pagination={false}
             className="doctor-table"
           />
-          <PaginationCostom
-            currentPage={currentPage}
-            pageSize={pageSize}
-            total={pregnancy.length}
-            onPageChange={setCurrentPage}
-          />
+          {pregnancies.length > 7 && (
+            <PaginationCostom
+              currentPage={currentPage}
+              pageSize={pageSize}
+              total={pregnancies.length}
+              onPageChange={setCurrentPage}
+            />
+          )}
         </div>
       </div>
     </ConfigProvider>

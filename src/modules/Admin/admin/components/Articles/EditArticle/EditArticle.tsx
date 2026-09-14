@@ -8,9 +8,9 @@ import DeletImageModalArticle from "./ModalArticle/DeletImageModalArticle";
 import { useArticleImage } from "../../../hook/useArticleImage";
 
 import { useEditArticle } from "../../../hook/useEditArticle";
-import { article } from "../../../data/users";
 import ErrorToast from "../../Toast/ErrorToast";
 import SuccessToast from "../../Toast/SuccessToast";
+import { useCategoryArticles } from "../../../hook/useCategoryArticles";
 
 interface EditArticleProps {
   id: string;
@@ -39,7 +39,7 @@ export default function EditArticle({ id }: EditArticleProps) {
     <EditArticleForm
       articleData={apiArticle}
       articleId={id}
-      onCancel={() => router.push("/article")}
+      onCancel={() => router.push("/admin/article")}
     />
   );
 }
@@ -63,18 +63,26 @@ function EditArticleForm({
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
 
+  // کد اضافه شده برای دسته‌بندی و زمان مطالعه
+  const [categoryId, setCategoryId] = useState<number | null>(
+    articleData.categoryId ?? null,
+  );
+
+  const [timeRead, setTimeRead] = useState<number | null>(
+    articleData.timeRead ?? null,
+  );
+  const { categories, loading: categoriesLoading } = useCategoryArticles();
+
   useEffect(() => {
     if (!articleData) return;
 
     setTitle(articleData.title ?? "");
     setDesc(articleData.desc ?? "");
-    setSubject(
-      articleData.type === "Public"
-        ? "عمومی"
-        : articleData.type === "Private"
-          ? "تخصصی"
-          : (articleData.subject ?? ""),
-    );
+    setSubject(articleData.type ?? "");
+
+    // کد اضافه شده برای دسته‌بندی و زمان مطالعه
+    setCategoryId(articleData.categoryId ?? null);
+    setTimeRead(articleData.timeRead ?? null);
   }, [articleData]);
 
   const {
@@ -86,14 +94,32 @@ function EditArticleForm({
 
   const { updateArticle, loading: updateLoading } = useEditArticle();
 
-  // کد اضافه شده برای ارسال ویرایش به API
+  // کد اضافه شده برای ارسال ویرایش  API
+  const [errorMessage, setErrorMessage] = useState("خطا در ویرایش مقاله.");
+
   const handleApiSubmit = async () => {
+    if (!subject) {
+      setErrorMessage("لطفاً موضوع مقاله را انتخاب کنید.");
+      setShowError(true);
+      return;
+    }
+    if (!categoryId) {
+      setErrorMessage("لطفاً دسته‌بندی مقاله را انتخاب کنید.");
+      setShowError(true);
+      return;
+    }
+    if (!timeRead) {
+      setErrorMessage("لطفاً زمان مطالعه را وارد کنید.");
+      setShowError(true);
+      return;
+    }
+
     const success = await updateArticle(Number(articleId), {
       title,
       desc,
-      type: subject === "عمومی" ? "Public" : "Private",
-      categoryId: articleData.categoryId,
-      timeRead: articleData.timeRead,
+      type: subject,
+      categoryId: categoryId!,
+      timeRead: timeRead!,
     });
 
     if (success) {
@@ -126,7 +152,7 @@ function EditArticleForm({
     >
       <div className="mt-4 mr-6">
         <div className="flex gap-20">
-          <div>
+          <div className="w-[42.9%] h-[48%]">
             <span className="text-[16px] font-bold text-[#6666C6]">
               ویرایش مقاله
             </span>
@@ -139,9 +165,16 @@ function EditArticleForm({
               onDescChange={setDesc}
               onSubmit={handleApiSubmit}
               onCancel={onCancel}
+              // کد اضافه شده
+              categoryId={categoryId}
+              timeRead={timeRead}
+              onCategoryChange={setCategoryId}
+              onTimeReadChange={setTimeRead}
+              categories={categories}
+              categoriesLoading={categoriesLoading}
             />
           </div>
-          <div>
+          <div className="w-[22.2%]  h-[48%]">
             <span className="text-[16px] font-bold text-[#6666C6]">عکس </span>
             <ArticleImage
               image={uploadedImage ?? articleData.imagePath}
@@ -166,7 +199,7 @@ function EditArticleForm({
 
       <ErrorToast
         open={showError}
-        message="خطا در ویرایش مقاله."
+        message={errorMessage}
         onClose={() => setShowError(false)}
       />
     </div>

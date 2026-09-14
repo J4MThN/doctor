@@ -5,13 +5,19 @@ import { ConfigProvider, Input, Select, InputNumber } from "antd";
 import Image from "next/image";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ImageUploadIcon, ArrowDown01Icon } from "@hugeicons/core-free-icons";
+import {
+  ImageUploadIcon,
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+} from "@hugeicons/core-free-icons";
 
 import Imagedefault from "@/src/assest/defualimage/Group 162742.svg";
 
 import { useAddArticle } from "../../../hook/useAddArticle";
 import { useArticleImage } from "../../../hook/useArticleImage";
 import { useCategoryArticles } from "../../../hook/useCategoryArticles";
+import SuccessToast from "../../Toast/SuccessToast";
+import ErrorToast from "../../Toast/ErrorToast";
 
 export const AddNews = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -37,7 +43,7 @@ export const AddNews = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
-  const [type, setType] = useState<string>("Public");
+  const [type, setType] = useState<string | null>(null);
 
   const [categoryId, setCategoryId] = useState<number | null>(null);
 
@@ -100,7 +106,7 @@ export const AddNews = () => {
     const result = await createArticle({
       title: title.trim(),
       desc: desc.trim(),
-      type,
+      type: type!,
       categoryId,
       timeRead,
     });
@@ -118,7 +124,7 @@ export const AddNews = () => {
   const handleCancel = () => {
     setTitle("");
     setDesc("");
-    setType("Public");
+    setType(null);
     setCategoryId(null);
     setTimeRead(null);
   };
@@ -134,9 +140,9 @@ export const AddNews = () => {
             افزودن مقاله جدید
           </span>
 
-          <div className="w-153.75 h-115.5 rounded-3xl bg-white px-5 py-4 mt-4 border border-[#F3F2F2]">
+          <div className="w-full rounded-3xl bg-white px-5 py-4 mt-4 border border-[#F3F2F2]">
             {/* عنوان */}
-            <div className="w-full">
+            <div className="w-full h-full">
               <label className="block text-[12px] text-[#1C2024] mb-2">
                 عنوان
               </label>
@@ -146,89 +152,123 @@ export const AddNews = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 disabled={!!articleId}
                 placeholder="عنوان مورد نظر را وارد کنید"
-                className="font-input-article w-xl! h-12! rounded-lg! border-[#E5E5EA]! text-[12px]! text-[#AEAEB2]!"
+                className={`font-input-article w-full! h-12! rounded-lg! text-[12px]!
+                ${
+                  title.trim()
+                    ? "border-[#6666C6]! text-[#606060]!"
+                    : "border-[#E5E5EA]! text-[#AEAEB2]!"
+                }`}
               />
             </div>
 
             {/* نوع مقاله */}
-            <div className="w-full mt-6">
-              <label className="block text-[12px] text-[#1C2024] mb-2">
-                موضوع
-              </label>
-
-              <Select
-                value={type === "Public" ? "1" : "2"}
-                disabled={!!articleId}
-                suffixIcon={
-                  <HugeiconsIcon
-                    icon={ArrowDown01Icon}
-                    size={22}
-                    color="#AEAEB2"
-                    strokeWidth={1.5}
-                  />
-                }
-                className="font-input-article w-xl! h-12! rounded-lg! border-[#E5E5EA]! text-[12px]! text-[#AEAEB2]!"
-                onChange={(value) =>
-                  handleTypeChange(value === "1" ? "Public" : "Private")
-                }
-                options={[
-                  {
-                    value: "1",
-                    label: "عمومی",
-                  },
-                  {
-                    value: "2",
-                    label: "تخصصی",
-                  },
-                ]}
-              />
-            </div>
-
-            {/* =========================
+            <div className="w-full flex gap-4 mt-6">
+              <div className="flex-1 min-w-0">
+                <label className="block text-[12px] text-[#1C2024] mb-2">
+                  موضوع
+                </label>
+                <Select
+                  value={type}
+                  onChange={(value) => handleTypeChange(value)}
+                  disabled={!!articleId}
+                  placeholder="موضوع را انتخاب کنید"
+                  allowClear
+                  suffixIcon={
+                    <HugeiconsIcon
+                      icon={ArrowDown01Icon}
+                      size={22}
+                      color="#AEAEB2"
+                      strokeWidth={1.5}
+                    />
+                  }
+                  className={`font-input-article w-full! h-12! rounded-lg! text-[12px]!
+                              ${
+                                type
+                                  ? "border-[#6666C6]! text-[#606060]!"
+                                  : "border-[#E5E5EA]! text-[#AEAEB2]!"
+                              }`}
+                  options={[
+                    {
+                      value: "Public",
+                      label: "عمومی",
+                    },
+                    {
+                      value: "Private",
+                      label: "تخصصی",
+                    },
+                  ]}
+                />
+              </div>
+              {/* =========================
                 دسته‌بندی مقاله
-            ========================== */}
-            <div className="w-full mt-6">
-              <label className="block text-[12px] text-[#1C2024] mb-2">
-                دسته‌بندی
-              </label>
+              ========================== */}
+              <div className="flex-1 min-w-0">
+                <label className="block text-[12px] text-[#1C2024] mb-2">
+                  دسته‌بندی
+                </label>
 
-              <Select
-                value={categoryId}
-                onChange={(value) => setCategoryId(value)}
-                disabled={!!articleId || categoriesLoading}
-                loading={categoriesLoading}
-                placeholder="دسته‌بندی را انتخاب کنید"
-                allowClear
-                suffixIcon={
-                  <HugeiconsIcon
-                    icon={ArrowDown01Icon}
-                    size={22}
-                    color="#AEAEB2"
-                    strokeWidth={1.5}
-                  />
-                }
-                className="font-input-article w-xl! h-12! rounded-lg! border-[#E5E5EA]! text-[12px]! text-[#AEAEB2]!"
-                options={categories.map((category) => ({
-                  value: category.id,
-                  label: category.name,
-                }))}
-              />
-            </div>
+                <Select
+                  value={categoryId}
+                  onChange={(value) => setCategoryId(value)}
+                  disabled={!!articleId || categoriesLoading}
+                  loading={categoriesLoading}
+                  placeholder="دسته‌بندی را انتخاب کنید"
+                  allowClear
+                  suffixIcon={
+                    <HugeiconsIcon
+                      icon={ArrowDown01Icon}
+                      size={22}
+                      color="#AEAEB2"
+                      strokeWidth={1.5}
+                    />
+                  }
+                  className={`font-input-article ont-input-article w-full! h-12! rounded-lg! text-[12px]!
+                    ${
+                      categoryId
+                        ? "border-[#6666C6]! text-[#606060]!"
+                        : "border-[#E5E5EA]! text-[#AEAEB2]!"
+                    }`}
+                  options={categories.map((category) => ({
+                    value: category.id,
+                    label: category.name,
+                  }))}
+                />
+              </div>
+              {/* زمان مطالعه */}
+              <div className="flex-1 min-w-0">
+                <label className="block text-[12px] text-[#1C2024] mb-2">
+                  زمان مطالعه{" "}
+                  <span className="text-[10px] text-[#737373]">(دقیقه)</span>
+                </label>
 
-            {/* زمان مطالعه */}
-            <div className="w-full mt-6">
-              <label className="block text-[12px] text-[#1C2024] mb-2">
-                زمان مطالعه (دقیقه)
-              </label>
-
-              <InputNumber
-                value={timeRead}
-                onChange={(value) => setTimeRead(value)}
-                disabled={!!articleId}
-                min={1}
-                placeholder="زمان مطالعه را وارد کنید"
-                className="font-input-article w-xl! h-12! rounded-lg! border-[#E5E5EA]! text-[12px]!"
-              />
+                <InputNumber
+                  value={timeRead}
+                  onChange={(value) => setTimeRead(value)}
+                  disabled={!!articleId}
+                  min={1}
+                  placeholder="زمان مطالعه را وارد کنید"
+                  upHandler={
+                    <HugeiconsIcon
+                      icon={ArrowUp01Icon}
+                      size={14}
+                      color="#6666C6"
+                    />
+                  }
+                  downHandler={
+                    <HugeiconsIcon
+                      icon={ArrowDown01Icon}
+                      size={14}
+                      color="#6666C6"
+                    />
+                  }
+                  className={`font-input-article w-full! h-12! rounded-lg! text-[12px]!
+                  ${
+                    timeRead
+                      ? "border-[#6666C6]! text-[#606060]!"
+                      : "border-[#E5E5EA]! text-[#AEAEB2]!"
+                  }`}
+                />
+              </div>
             </div>
 
             {/* توضیحات */}
@@ -242,7 +282,12 @@ export const AddNews = () => {
                 onChange={(e) => setDesc(e.target.value)}
                 disabled={!!articleId}
                 placeholder="توضیحات مورد نظر را وارد کنید"
-                className="font-input-article w-xl! h-28.75! pr-2! pt-2! rounded-lg! border-[#E5E5EA]! text-[12px]! text-[#AEAEB2]! resize-none!"
+                className={`font-input-article w-xl! h-28.75! pr-2! pt-2! rounded-lg! text-[12px]! resize-none!
+                  ${
+                    desc.trim()
+                      ? "border-[#6666C6]! text-[#606060]!"
+                      : "border-[#E5E5EA]! text-[#AEAEB2]!"
+                  }`}
               />
             </div>
 
@@ -254,11 +299,11 @@ export const AddNews = () => {
             )}
 
             {/* موفقیت */}
-            {showSuccess && (
-              <p className="mt-3 text-[12px] text-green-600">
-                مقاله با موفقیت ثبت شد. اکنون می‌توانید تصویر را اضافه کنید.
-              </p>
-            )}
+            <SuccessToast
+              open={showSuccess}
+              message=" مقاله با موفقیت ثبت شد! حالا عکس را ثبت کنید."
+              onClose={() => setShowSuccess(false)}
+            />
 
             {/* دکمه‌ها */}
             <div className="flex items-end justify-end gap-3 mt-9">
@@ -291,9 +336,9 @@ export const AddNews = () => {
             افزودن عکس
           </span>
 
-          <div className="w-110 h-114 rounded-3xl bg-white flex flex-col items-center border border-[#F3F2F2] px-5 py-4 mt-4">
+          <div className="w-full rounded-3xl bg-white flex flex-col items-center border border-[#F3F2F2] px-5 pb-4 pt-2 mt-4">
             {/* تصویر */}
-            <div className="w-71 h-71 mt-3 rounded-[20px] border border-[#E5E5EA] overflow-hidden flex items-center justify-center">
+            <div className="w-71 h-71 mt-3 rounded-2xl border border-[#E5E5EA] overflow-hidden flex items-center justify-center">
               {image ? (
                 <Image
                   src={image}

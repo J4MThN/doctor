@@ -1,27 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { ImageItem, NoteImageDto } from "../types";
+import { getMediaUrl } from "@/src/core/utils/media.util";
 
-import { pointImage } from "../data/pointImage";
-import { ImageItem } from "../types";
+export function usePointImages(noteImages: NoteImageDto[]) {
+  const originalImages: ImageItem[] = noteImages.map((image) => ({
+    id: String(image.id),
+     src: getMediaUrl(image.url),
+  }));
 
-export function usePointImages(pointId: string) {
-  const originalImages = pointImage[pointId] ?? [];
-
-  const [images, setImages] = useState<ImageItem[]>(
-    originalImages.map((image, index) => ({
-      id: `${pointId}-${index}`,
-      src: image,
-    })),
-  );
+  const [images, setImages] = useState<ImageItem[]>(originalImages);
 
   const [selectedImage, setSelectedImage] = useState<ImageItem | null>(
-    originalImages.length
-      ? {
-          id: `${pointId}-0`,
-          src: originalImages[0],
-        }
-      : null,
+    originalImages[0] ?? null,
   );
 
   const [deleteImage, setDeleteImage] = useState<ImageItem | null>(null);

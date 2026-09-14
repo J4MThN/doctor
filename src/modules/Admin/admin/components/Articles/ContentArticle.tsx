@@ -5,11 +5,13 @@ import { PlusSignIcon } from "@hugeicons/core-free-icons";
 import { useRouter } from "next/navigation";
 import TableArticle from "./TableArticle/TableArticle";
 import { useArticles } from "../../hook/useArticles";
+import { useArticleById } from "../../hook/useArticleById";
 
 export const ContentArticle = () => {
   const router = useRouter();
 
-  const { articles, loading, error, refetch } = useArticles();
+  const { articles, loading, error  } = useArticles();
+  const { deleteArticle } = useArticleById();
 
   const handleNavigation = () => {
     router.push("/admin/article/addarticle");
@@ -47,7 +49,7 @@ export const ContentArticle = () => {
       </div>
 
       <div className="mx-4 mt-4">
-        <TableArticle articles={articles} loading={loading} error={error} />
+        <TableArticle articles={articles} loading={loading} error={error} onDelete={deleteArticle} />
       </div>
     </div>
   );

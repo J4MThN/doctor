@@ -10,6 +10,7 @@ export interface IconOption {
 }
 
 export function usePointIcon(point: any) {
+  // لیست آیکون‌ها همان قبلی می‌ماند
   const availableIcons: IconOption[] = points
     .filter((item) => item.icon)
     .map((item) => ({
@@ -18,6 +19,7 @@ export function usePointIcon(point: any) {
       icon: item.icon,
     }));
 
+  // آیکون فعلی از API پیدا می‌شود
   const currentIcon =
     availableIcons.find((item) => item.icon === point.icon) ?? null;
 
@@ -26,7 +28,7 @@ export function usePointIcon(point: any) {
   );
 
   const [selectedIconName, setSelectedIconName] = useState(
-    point.iconName ?? "",
+    currentIcon?.name ?? "",
   );
 
   const [isIconModalOpen, setIsIconModalOpen] = useState(false);

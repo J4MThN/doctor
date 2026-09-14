@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { ConfigProvider, Table } from "antd";
+import { ConfigProvider, Empty, Spin, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -10,21 +10,30 @@ import {
   Cancel01Icon,
   Delete02Icon,
 } from "@hugeicons/core-free-icons";
-import { Comment } from "../../../types";
+import { CommentResponseDto } from "../../../types";
 import PaginationCostom from "../../Pagination/PaginationCostom";
 import { useCommentActions } from "../../../hook/useCommentAction";
 import { useClickOutside } from "../../../hook/useClickQutside.ts";
 import ImageDeletComment from "./ModalComment/ImageDeletComment";
 
-interface DoctorsTableProps {
-  activeDoctorId?: string;
+import Image from "next/image";
+import CommentImage from "@/src/assest/defualimage/comment.svg";
+
+interface TableCommentProps {
+  comments: CommentResponseDto[];
+  loading: boolean;
+  error: string | null;
 }
 
-export default function TableComment({}: DoctorsTableProps) {
+export default function TableComment({
+  comments,
+  loading,
+  error,
+}: TableCommentProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const {
-    comments,
+    comments: actionComments,
     openMenuId,
     deleteId,
     handleStatusChange,
@@ -33,36 +42,74 @@ export default function TableComment({}: DoctorsTableProps) {
     handleOpenDeleteModal,
     handleCloseDeleteModal,
     setOpenMenuId,
-  } = useCommentActions();
+  } = useCommentActions(comments);
 
   const pageSize = 7;
+
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const currentData = comments.slice(startIndex, endIndex);
+
+  const currentData = actionComments.slice(startIndex, endIndex);
+
   const closeMenu = useCallback(() => {
     setOpenMenuId(null);
   }, [setOpenMenuId]);
+
   useClickOutside(menuRef, closeMenu);
 
-  const columns: ColumnsType<Comment> = [
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-10">
+        <Spin />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-10 text-red-500">
+        {error}
+      </div>
+    );
+  }
+
+  if (!actionComments.length) {
+     return (
+      <div className="py-10 flex flex-col items-center justify-center">
+        <Image
+          src={CommentImage}
+          alt="Comment"
+          width={150}
+          height={150}
+          className="object-contain mb-6"
+        />
+
+        <span className="font-text-table text-[16px] text-[#6666C6]">
+          نظری وجود ندارد
+        </span>
+      </div>
+    );
+  }
+
+  const columns: ColumnsType<CommentResponseDto> = [
     {
       title: "نام و نام خانوادگی",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "userId",
+      key: "userId",
       width: "15%",
       align: "right",
-      render: (name: string) => (
-        <span className="doctor-table-text">{name}</span>
+      render: (userId: string) => (
+        <span className="doctor-table-text">{userId}</span>
       ),
     },
     {
       title: "متن نظر",
-      dataIndex: "desc",
-      key: "desc",
+      dataIndex: "commentText",
+      key: "commentText",
       width: "30%",
       align: "right",
-      render: (desc: string) => (
-        <span className="doctor-table-text">{desc}</span>
+      render: (commentText: string) => (
+        <span className="doctor-table-text">{commentText}</span>
       ),
     },
     {
@@ -98,9 +145,9 @@ export default function TableComment({}: DoctorsTableProps) {
       width: "5%",
       align: "right",
       render: (_, record) => {
-        const isOpen = openMenuId === record.key;
+        const isOpen = openMenuId === String(record.id);
         const recordIndex = currentData.findIndex(
-          (item) => item.key === record.key,
+          (item) => item.id === record.id,
         );
         const openUp = recordIndex >= currentData.length - 2;
 
@@ -111,7 +158,7 @@ export default function TableComment({}: DoctorsTableProps) {
           >
             <button
               type="button"
-              onClick={() => handleOpenMenu(record.key)}
+              onClick={() => handleOpenMenu(String(record.id))}
               className={`flex items-center justify-center ml-2 w-9 h-9 cursor-pointer rounded-full border
                 ${
                   isOpen
@@ -133,7 +180,9 @@ export default function TableComment({}: DoctorsTableProps) {
               >
                 <button
                   type="button"
-                  onClick={() => handleStatusChange(record.key, "تایید شده")}
+                  onClick={() =>
+                    handleStatusChange(String(record.id), "تایید شده")
+                  }
                   className=" group w-28 h-9 rounded-full flex items-center justify-between gap-2 px-2 text-[#60646C] hover:bg-[#FFF0F2] hover:text-[#FF657D] cursor-pointer"
                 >
                   <span className="text-[12px]">تایید کردن</span>
@@ -146,7 +195,9 @@ export default function TableComment({}: DoctorsTableProps) {
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleStatusChange(record.key, "رد شده")}
+                  onClick={() =>
+                    handleStatusChange(String(record.id), "رد شده")
+                  }
                   className=" group w-28 h-9 rounded-full flex items-center justify-between gap-2 px-2 text-[#60646C] hover:bg-[#FFF0F2] hover:text-[#FF657D] cursor-pointer"
                 >
                   <span className="text-[12px]">رد کردن</span>
@@ -159,7 +210,7 @@ export default function TableComment({}: DoctorsTableProps) {
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleOpenDeleteModal(record.key)}
+                  onClick={() => handleOpenDeleteModal(String(record.id))}
                   className=" group w-28 h-9 rounded-full flex items-center justify-between gap-2 px-2 text-[#60646C] hover:bg-[#FFF0F2] hover:text-[#FF657D] cursor-pointer "
                 >
                   <span className="text-[12px]">حذف پیام</span>
@@ -184,18 +235,18 @@ export default function TableComment({}: DoctorsTableProps) {
       theme={{ components: { Pagination: { itemActiveBg: "transparent" } } }}
     >
       <div className="doctor-table-wrapper">
-        <Table<Comment>
-          rowKey="key"
+        <Table<CommentResponseDto>
+          rowKey="id"
           columns={columns}
           dataSource={currentData}
           pagination={false}
           className="doctor-table"
         />
-        {comments.length > pageSize && (
+        {actionComments.length > pageSize && (
           <PaginationCostom
             currentPage={currentPage}
             pageSize={pageSize}
-            total={comments.length}
+            total={actionComments.length}
             onPageChange={setCurrentPage}
           />
         )}

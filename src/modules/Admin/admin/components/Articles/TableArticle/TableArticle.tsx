@@ -3,7 +3,7 @@
 import { ConfigProvider, Table, Spin, Empty } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -17,35 +17,61 @@ import { getMediaUrl } from "@/src/core/utils/media.util";
 
 import { ArticleResponseDto } from "../../../types";
 
+import EmptyImage from "@/src/assest/defualimage/Empty.svg";
+import Image from "next/image";
+
 interface TableArticleProps {
   articles: ArticleResponseDto[];
   loading: boolean;
   error: string | null;
+  onDelete: (id: number) => Promise<boolean>;
 }
 
 export default function TableArticle({
   articles,
   loading,
   error,
+  onDelete,
 }: TableArticleProps) {
   const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(1);
-
   const pageSize = 7;
+
+  const [localArticles, setLocalArticles] =
+    useState<ArticleResponseDto[]>(articles);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
 
   const handleArticleEdit = (id: number) => {
     router.push(`/admin/article/editarticle/${id}`);
   };
 
   const handleArticleDelete = (id: number) => {
-    console.log("Delete:", id);
+    setDeleteId(id);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (deleteId === null) return;
+
+    const success = await onDelete(deleteId);
+
+    if (success) {
+      setLocalArticles((prev) =>
+        prev.filter((article) => article.id !== deleteId),
+      );
+
+      setDeleteId(null);
+    }
   };
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
-  const currentData = articles.slice(startIndex, endIndex);
+  const currentData = localArticles.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    setLocalArticles(articles);
+  }, [articles]);
 
   const columns: ColumnsType<ArticleResponseDto> = [
     {
@@ -72,9 +98,7 @@ export default function TableArticle({
       width: "15%",
       align: "right",
       render: (title: string) => (
-        <span className="doctor-table-text">
-          {title}
-        </span>
+        <span className="doctor-table-text">{title}</span>
       ),
     },
 
@@ -85,9 +109,7 @@ export default function TableArticle({
       width: "30%",
       align: "right",
       render: (desc: string) => (
-        <span className="doctor-table-text">
-          {desc}
-        </span>
+        <span className="doctor-table-text">{desc}</span>
       ),
     },
 
@@ -166,43 +188,95 @@ export default function TableArticle({
 
   if (!articles.length) {
     return (
-      <div className="py-10">
-        <Empty description="مقاله‌ای وجود ندارد" />
+      <div className="py-10 flex flex-col items-center justify-center">
+        <Image
+          src={EmptyImage}
+          alt="Empty"
+          width={150}
+          height={150}
+          className="object-contain mb-6"
+        />
+
+        <span className="font-text-table text-[16px] text-[#6666C6]">
+          لیستی وجود ندارد
+        </span>
       </div>
     );
   }
 
   return (
-    <ConfigProvider
-      direction="rtl"
-      theme={{
-        components: {
-          Pagination: {
-            itemActiveBg: "transparent",
+    <>
+      <ConfigProvider
+        direction="rtl"
+        theme={{
+          components: {
+            Pagination: {
+              itemActiveBg: "transparent",
+            },
           },
-        },
-      }}
-    >
-      <div className="doctor-table-wrapper">
-        <div className="doctor-table-content">
-          <Table<ArticleResponseDto>
-            rowKey="id"
-            columns={columns}
-            dataSource={currentData}
-            pagination={false}
-            className="doctor-table"
-          />
-
-          {articles.length > pageSize && (
-            <PaginationCostom
-              currentPage={currentPage}
-              pageSize={pageSize}
-              total={articles.length}
-              onPageChange={setCurrentPage}
+        }}
+      >
+        <div className="doctor-table-wrapper">
+          <div className="doctor-table-content">
+            <Table<ArticleResponseDto>
+              rowKey="id"
+              columns={columns}
+              dataSource={currentData}
+              pagination={false}
+              className="doctor-table"
             />
-          )}
+
+            {localArticles.length > pageSize && (
+              <PaginationCostom
+                currentPage={currentPage}
+                pageSize={pageSize}
+                total={localArticles.length}
+                onPageChange={setCurrentPage}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </ConfigProvider>
+      </ConfigProvider>
+      {deleteId !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="w-82.5 h-50 rounded-3xl bg-white p-4">
+            <div className="flex justify-start">
+              <button type="button" onClick={() => setDeleteId(null)}>
+                <HugeiconsIcon
+                  icon={Cancel01Icon}
+                  size={20}
+                  strokeWidth={1.5}
+                  className="text-[#FF657D] cursor-pointer"
+                />
+              </button>
+            </div>
+
+            <div className="text-center mt-6">
+              <p className="text-[16px] font-bold text-[#4D4D4D] mt-2">
+                آیا میخواهید این مقاله را حذف کنید؟
+              </p>
+            </div>
+
+            <div className="flex justify-center gap-3 mt-8">
+              <button
+                type="button"
+                onClick={() => setDeleteId(null)}
+                className="w-26 h-10 rounded-lg border border-[#80838D] text-[#80838D] text-[14px] cursor-pointer"
+              >
+                انصراف
+              </button>
+
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                className="w-26 h-10 rounded-lg bg-[#FF657D] text-white text-[14px] cursor-pointer"
+              >
+                بله
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
