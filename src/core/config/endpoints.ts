@@ -18,6 +18,7 @@ export const ENDPOINTS = {
   CYCLES: {
     GET_MINE: "/Cycles/mine",
     GET_ALL: "/Cycles",
+    GET_BY_USER_ID: (userId: number) => `/Cycles/user/${userId}`,
     PREDICT_NEXT: "/Cycles/predict-next",
   },
 
@@ -48,6 +49,12 @@ export const ENDPOINTS = {
     DELETE: (id: number) => `/CategoryArticles/${id}`,
   },
 
+  DAILY_SYMPTOMS: {
+    GET_MINE: "/DailySymptoms/mine",
+    GET_BY_CYCLE_ID: (cycleId: number) => `/DailySymptoms/cycle/${cycleId}`,
+    CREATE: "/DailySymptoms",
+  },
+
   COMMENTS: {
     GET_BY_ARTICLE_ID: (articleId: number) => `/Comments/article/${articleId}`,
     GET_PENDING: "/Comments/pending",
@@ -55,6 +62,11 @@ export const ENDPOINTS = {
     APPROVE: (id: number) => `/Comments/${id}/approve`,
     REJECT: (id: number) => `/Comments/${id}/reject`,
     DELETE: (id: number) => `/Comments/${id}`,
+  },
+
+  QUESTIONS: {
+    GET_ALL: "/Questions",
+    GET_BY_ID: (id: number) => `/Questions/${id}`,
   },
 
   PREGNANCIES: {

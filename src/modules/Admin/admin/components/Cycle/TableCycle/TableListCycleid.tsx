@@ -39,7 +39,7 @@ export default function TableListCycleid({
   const currentData = cycles.slice(startIndex, endIndex);
 
   const handleCycleList = (cycleId: number) => {
-    router.push(`/cycle/${userId}/${cycleId}`);
+    router.push(`/admin/cycle/${userId}/${cycleId}`);
   };
 
   const columns: ColumnsType<CycleDto> = [

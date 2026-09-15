@@ -145,6 +145,38 @@ export interface PregnancyDto {
   status: string;
   createDate: string;
 }
+
+////////// symptom
+
+export interface DailySymptomDto {
+  id: number;
+  userId: number;
+  cycleId: number;
+  questionId: number;
+  answerId: number;
+  cycleDay: number;
+  createDate: string;
+}
+
+export interface CreateDailySymptomRequestDto {
+  cycleId: number;
+  questionId: number;
+  answerId: number;
+  cycleDay: number;
+}
+
+////////// question
+
+export interface QuestionOptionDto {
+  id: number;
+  text: string;
+}
+
+export interface QuestionDto {
+  id: number;
+  text: string;
+  options: QuestionOptionDto[];
+}
 // //////////////////////
 
 export interface Users {

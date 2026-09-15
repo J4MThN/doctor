@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { toGregorian, jalaaliMonthLength } from "jalaali-js";
@@ -63,6 +63,14 @@ export default function Calender({
   const initialDate = parseDate(selectedDate);
   const [year, setYear] = useState(initialDate.year);
   const [month, setMonth] = useState(initialDate.month);
+
+  useEffect(() => {
+    const date = parseDate(selectedDate);
+
+    setYear(date.year);
+    setMonth(date.month);
+  }, [selectedDate]);
+
   const totalDays = jalaaliMonthLength(year, month);
   const firstDay = getFirstDay(year, month);
 
