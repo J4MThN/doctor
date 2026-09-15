@@ -7,9 +7,9 @@ import PaginationCostom from "../../Pagination/PaginationCostom";
 import { useState } from "react";
 import { PregnancyTableData } from "../../../hook/usePregnancies";
 
-
 import EmptyImage from "@/src/assest/defualimage/Empty.svg";
 import Image from "next/image";
+import { usePagination } from "../../../hook/usePagination";
 
 interface DoctorsTableProps {
   pregnancies: PregnancyTableData[];
@@ -43,11 +43,8 @@ export default function TablePregnancy({
   loading,
   error,
 }: DoctorsTableProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 7;
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentData = pregnancies.slice(startIndex, endIndex);
+  const { currentPage, currentData, pageSize, total, handlePageChange } =
+    usePagination(pregnancies, 7);
 
   const columns: ColumnsType<PregnancyTableData> = [
     {
@@ -143,7 +140,7 @@ export default function TablePregnancy({
 
   if (!pregnancies.length) {
     return (
-           <div className="py-10 flex flex-col items-center justify-center">
+      <div className="py-10 flex flex-col items-center justify-center">
         <Image
           src={EmptyImage}
           alt="Empty"
@@ -179,12 +176,12 @@ export default function TablePregnancy({
             pagination={false}
             className="doctor-table"
           />
-          {pregnancies.length > 7 && (
+          {total > 7 && (
             <PaginationCostom
               currentPage={currentPage}
               pageSize={pageSize}
-              total={pregnancies.length}
-              onPageChange={setCurrentPage}
+              total={total}
+              onPageChange={handlePageChange}
             />
           )}
         </div>

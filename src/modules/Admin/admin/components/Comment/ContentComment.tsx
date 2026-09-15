@@ -1,6 +1,6 @@
 "use client";
 
-import { PendingCommentResponseDto } from "../../types";
+import { PendingCommentResponseDto } from "../../types/comment.types";
 import TableComment from "./TableComment/TableComment";
 
 interface ContentCommentProps {

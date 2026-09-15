@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
-import { ConfigProvider, Empty, Spin, Table } from "antd";
+import { useCallback, useRef } from "react";
+import { ConfigProvider, Spin, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -10,7 +10,6 @@ import {
   Cancel01Icon,
   Delete02Icon,
 } from "@hugeicons/core-free-icons";
-import { PendingCommentResponseDto } from "../../../types";
 import PaginationCostom from "../../Pagination/PaginationCostom";
 import { useCommentActions } from "../../../hook/useCommentAction";
 import { useClickOutside } from "../../../hook/useClickQutside.ts";
@@ -18,6 +17,8 @@ import ImageDeletComment from "./ModalComment/ImageDeletComment";
 
 import Image from "next/image";
 import CommentImage from "@/src/assest/defualimage/comment.svg";
+import { PendingCommentResponseDto } from "../../../types/comment.types";
+import { usePagination } from "../../../hook/usePagination";
 
 interface TableCommentProps {
   comments: PendingCommentResponseDto[];
@@ -31,7 +32,6 @@ export default function TableComment({
   error,
 }: TableCommentProps) {
   const menuRef = useRef<HTMLDivElement>(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const {
     comments: actionComments,
     openMenuId,
@@ -44,12 +44,8 @@ export default function TableComment({
     setOpenMenuId,
   } = useCommentActions(comments);
 
-  const pageSize = 7;
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-
-  const currentData = actionComments.slice(startIndex, endIndex);
+  const { currentPage, currentData, pageSize, total, handlePageChange } =
+    usePagination(actionComments, 7);
 
   const closeMenu = useCallback(() => {
     setOpenMenuId(null);
@@ -244,12 +240,12 @@ export default function TableComment({
           pagination={false}
           className="doctor-table"
         />
-        {actionComments.length > pageSize && (
+        {total > pageSize && (
           <PaginationCostom
             currentPage={currentPage}
             pageSize={pageSize}
-            total={actionComments.length}
-            onPageChange={setCurrentPage}
+            total={total}
+            onPageChange={handlePageChange}
           />
         )}
         <ImageDeletComment

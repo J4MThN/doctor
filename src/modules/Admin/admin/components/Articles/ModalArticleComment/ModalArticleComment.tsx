@@ -3,8 +3,7 @@
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { Spin } from "antd";
-
-import { CommentResponseDto } from "../../../types";
+import { CommentResponseDto } from "../../../types/comment.types";
 
 interface ArticleCommentsModalProps {
   open: boolean;

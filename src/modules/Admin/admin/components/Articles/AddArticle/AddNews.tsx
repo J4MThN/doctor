@@ -17,7 +17,6 @@ import { useAddArticle } from "../../../hook/useAddArticle";
 import { useArticleImage } from "../../../hook/useArticleImage";
 import { useCategoryArticles } from "../../../hook/useCategoryArticles";
 import SuccessToast from "../../Toast/SuccessToast";
-import ErrorToast from "../../Toast/ErrorToast";
 
 export const AddNews = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);

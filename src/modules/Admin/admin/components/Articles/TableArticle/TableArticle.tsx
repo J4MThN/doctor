@@ -1,6 +1,6 @@
 "use client";
 
-import { ConfigProvider, Table, Spin, Empty } from "antd";
+import { ConfigProvider, Table, Spin } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,12 +16,13 @@ import {
 import PaginationCostom from "../../Pagination/PaginationCostom";
 import { getMediaUrl } from "@/src/core/utils/media.util";
 
-import { ArticleResponseDto, CommentResponseDto } from "../../../types";
-
 import EmptyImage from "@/src/assest/defualimage/Empty.svg";
 import Image from "next/image";
 import { commentsService } from "../../../services/comments.service";
 import ModalArticleComment from "../ModalArticleComment/ModalArticleComment";
+import { ArticleResponseDto } from "../../../types/article.types";
+import { CommentResponseDto } from "../../../types/comment.types";
+import { usePagination } from "../../../hook/usePagination";
 
 interface TableArticleProps {
   articles: ArticleResponseDto[];
@@ -38,11 +39,11 @@ export default function TableArticle({
 }: TableArticleProps) {
   const router = useRouter();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 7;
-
   const [localArticles, setLocalArticles] =
     useState<ArticleResponseDto[]>(articles);
+  const { currentPage, currentData, pageSize, total, handlePageChange } =
+    usePagination(localArticles, 7);
+
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
   const [commentArticle, setCommentArticle] =
@@ -97,11 +98,6 @@ export default function TableArticle({
       setDeleteId(null);
     }
   };
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-
-  const currentData = localArticles.slice(startIndex, endIndex);
 
   useEffect(() => {
     setLocalArticles(articles);
@@ -271,12 +267,12 @@ export default function TableArticle({
               className="doctor-table"
             />
 
-            {localArticles.length > pageSize && (
+            {total > pageSize && (
               <PaginationCostom
                 currentPage={currentPage}
                 pageSize={pageSize}
-                total={localArticles.length}
-                onPageChange={setCurrentPage}
+                total={total}
+                onPageChange={handlePageChange}
               />
             )}
           </div>

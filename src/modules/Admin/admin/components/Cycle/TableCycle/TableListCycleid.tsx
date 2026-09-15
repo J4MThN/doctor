@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { Button, ConfigProvider, Empty, Table } from "antd";
+import { Button, ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ViewIcon } from "@hugeicons/core-free-icons";
 
-import { CycleDto } from "../../../types";
 import PaginationCostom from "../../Pagination/PaginationCostom";
 
 import EmptyImage from "@/src/assest/defualimage/Empty.svg";
 import Image from "next/image";
+import { CycleDto } from "../../../types/cycle.types";
+import { usePagination } from "../../../hook/usePagination";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
@@ -29,14 +29,8 @@ export default function TableListCycleid({
 }: DoctorsTableProps) {
   const router = useRouter();
 
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const pageSize = 7;
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-
-  const currentData = cycles.slice(startIndex, endIndex);
+  const { currentPage, currentData, pageSize, total, handlePageChange } =
+    usePagination(cycles, 7);
 
   const handleCycleList = (cycleId: number) => {
     router.push(`/admin/cycle/${userId}/${cycleId}`);
@@ -150,12 +144,12 @@ export default function TableListCycleid({
             className="doctor-table"
           />
 
-          {cycles.length > 7 && (
+          {total > 7 && (
             <PaginationCostom
               currentPage={currentPage}
               pageSize={pageSize}
-              total={cycles.length}
-              onPageChange={setCurrentPage}
+              total={total}
+              onPageChange={handlePageChange}
             />
           )}
         </div>

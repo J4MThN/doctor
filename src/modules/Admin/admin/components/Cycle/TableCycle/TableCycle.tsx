@@ -1,19 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { Button, ConfigProvider, Table } from "antd";
-
 import type { ColumnsType } from "antd/es/table";
-
 import { useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-
 import { ViewIcon } from "@hugeicons/core-free-icons";
 
 import PaginationCostom from "../../Pagination/PaginationCostom";
 
-import { UserProfileDto, Users } from "../../../types";
+import { UserProfileDto } from "../../../types";
+import { usePagination } from "../../../hook/usePagination";
 
 interface TableCycleProps {
   users: UserProfileDto[];
@@ -27,27 +24,19 @@ export default function TableCycle({
   activeDoctorId,
 }: TableCycleProps) {
   const router = useRouter();
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const pageSize = 7;
-
-  const startIndex = (currentPage - 1) * pageSize;
-
-  const endIndex = startIndex + pageSize;
-
-  const currentData = users.slice(startIndex, endIndex);
+  const { currentPage, currentData, pageSize, total, handlePageChange } =
+    usePagination(users, 7);
 
   const handleCycleList = (id: string) => {
     router.push(`/admin/cycle/${id}`);
   };
 
-const maritalStatusMap: Record<string, string> = {
-  Single: "مجرد",
-  Married: "متاهل",
-  Widowed: "بیوه",
-  Divorced: "مطلقه",
-};
+  const maritalStatusMap: Record<string, string> = {
+    Single: "مجرد",
+    Married: "متاهل",
+    Widowed: "بیوه",
+    Divorced: "مطلقه",
+  };
 
   const columns: ColumnsType<UserProfileDto> = [
     {
@@ -179,12 +168,12 @@ const maritalStatusMap: Record<string, string> = {
             pagination={false}
             className="doctor-table"
           />
-          {users.length > 7 && (
+          {total > 7 && (
             <PaginationCostom
               currentPage={currentPage}
               pageSize={pageSize}
-              total={users.length}
-              onPageChange={setCurrentPage}
+              total={total}
+              onPageChange={handlePageChange}
             />
           )}
           {/*  */}

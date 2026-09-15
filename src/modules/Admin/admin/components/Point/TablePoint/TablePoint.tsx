@@ -14,6 +14,7 @@ import { getMediaUrl } from "@/src/core/utils/media.util";
 
 import EmptyImage from "@/src/assest/defualimage/Empty.svg";
 import Image from "next/image";
+import { usePagination } from "../../../hook/usePagination";
 
 interface TablePointProps {
   notes: NoteDto[];
@@ -31,12 +32,8 @@ export default function TablePoint({
   const [localNotes, setLocalNotes] = useState<NoteDto[]>(notes);
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 7;
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentData = notes.slice(startIndex, endIndex);
+  const { currentPage, currentData, pageSize, total, handlePageChange } =
+    usePagination(localNotes, 7);
 
   const handlePointEdit = (id: number) => {
     router.push(`/admin/note/editnote/${id}`);
@@ -197,12 +194,12 @@ export default function TablePoint({
               className="doctor-table"
             />
 
-            {localNotes.length > pageSize && (
+            {total > pageSize && (
               <PaginationCostom
                 currentPage={currentPage}
                 pageSize={pageSize}
-                total={localNotes.length}
-                onPageChange={setCurrentPage}
+                total={total}
+                onPageChange={handlePageChange}
               />
             )}
           </div>
