@@ -83,9 +83,16 @@ export default function TablePoint({
       width: "15%",
       align: "right",
 
-      render: (title: string) => (
-        <span className="doctor-table-text">{title}</span>
-      ),
+      render: (title: string) => {
+        const maxLength = 60;
+        const shortText =
+          title.length > maxLength ? `${title.slice(0, maxLength)}...` : title;
+        return (
+          <span className="doctor-table-text" title={title}>
+            {shortText}
+          </span>
+        );
+      },
     },
 
     {
@@ -95,9 +102,17 @@ export default function TablePoint({
       width: "30%",
       align: "right",
 
-      render: (desc: string) => (
-        <span className="doctor-table-text">{desc}</span>
-      ),
+      render: (desc: string) => {
+        const maxLength = 60;
+        const shortText =
+          desc.length > maxLength ? `${desc.slice(0, maxLength)}...` : desc;
+
+        return (
+          <span className="doctor-table-text" title={desc}>
+            {shortText}
+          </span>
+        );
+      },
     },
 
     {

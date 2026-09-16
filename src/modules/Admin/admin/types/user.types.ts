@@ -11,4 +11,9 @@ export interface UserProfileDto {
   cycleCount: number;
 }
 
-
+export interface UpdateUserProfileDto {
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  maritalStatus: string;
+}

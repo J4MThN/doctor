@@ -5,13 +5,10 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  ArrowDown01FreeIcons,
-  Logout,
-  Notification01Icon,
-  Setting07Icon,
-} from "@hugeicons/core-free-icons";
+import { Edit02Icon, Logout } from "@hugeicons/core-free-icons";
 import { useLogout } from "@/src/shared/auth/use-logout";
+import { useState } from "react";
+import ModalProfile from "./ModalProfile";
 
 type HeaderUser = {
   firstName: string;
@@ -28,6 +25,8 @@ export default function Header({ user }: HeaderProps) {
   const pathname = usePathname();
 
   const { logout } = useLogout();
+
+  const [profileOpen, setProfileOpen] = useState(false);
 
   const onLogOut = async () => {
     await logout();
@@ -66,51 +65,45 @@ export default function Header({ user }: HeaderProps) {
   };
 
   return (
-    <div className="flex h-12 w-full mt-4 mr-6">
-      {/* Profile */}
-      <div className="flex w-[15%] bg-white border-[#E5E5EA] items-center">
-        <Image
-          src={Prof}
-          alt="AboutUsPic"
-          width={48}
-          height={48}
-          className="w-12 h-12 rounded-full object-cover"
-        />
+    <>
+      <div className="flex h-12 w-full mt-4 mr-6">
+        {/* Profile */}
+        <div className="flex w-[15%] bg-white border-[#E5E5EA] items-center">
+          <Image
+            src={Prof}
+            alt="AboutUsPic"
+            width={48}
+            height={48}
+            className="w-12 h-12 rounded-full object-cover"
+          />
 
-        <span className="pr-2 font-black text-[16px]">
-          {user
-            ? `دکتر ${user.firstName} ${user.lastName}`
-            : "در حال بارگذاری..."}
-        </span>
+          <span className="pr-2 font-black text-[16px]">
+            {user
+              ? `دکتر ${user.firstName} ${user.lastName}`
+              : "در حال بارگذاری..."}
+          </span>
+        </div>
 
-        <HugeiconsIcon
-          icon={ArrowDown01FreeIcons}
-          size={20}
-          color="#6E6E6E"
-          className="mr-3"
-        />
-      </div>
+        {/* Menu */}
+        <div className="flex items-center justify-center w-[75%]">
+          <ul className="flex space-x-4 text-center">
+            {menus.map((menu) => {
+              const isActive =
+                menu.path === "/admin"
+                  ? pathname === "/admin" ||
+                    (!pathname.startsWith("/admin/pregnancy") &&
+                      !pathname.startsWith("/admin/note") &&
+                      !pathname.startsWith("/admin/article") &&
+                      !pathname.startsWith("/admin/comment"))
+                  : pathname === menu.path ||
+                    pathname.startsWith(`${menu.path}/`);
 
-      {/* Menu */}
-      <div className="flex items-center justify-center w-[75%]">
-        <ul className="flex space-x-4 text-center">
-          {menus.map((menu) => {
-            const isActive =
-              menu.path === "/admin"
-                ? pathname === "/admin" ||
-                  (!pathname.startsWith("/admin/pregnancy") &&
-                    !pathname.startsWith("/admin/note") &&
-                    !pathname.startsWith("/admin/article") &&
-                    !pathname.startsWith("/admin/comment"))
-                : pathname === menu.path ||
-                  pathname.startsWith(`${menu.path}/`);
-
-            return (
-              <li key={menu.path} className={menu.width}>
-                <button
-                  type="button"
-                  onClick={() => handleNavigation(menu.path)}
-                  className={`
+              return (
+                <li key={menu.path} className={menu.width}>
+                  <button
+                    type="button"
+                    onClick={() => handleNavigation(menu.path)}
+                    className={`
                     w-full
                     h-12
                     rounded-4xl
@@ -128,29 +121,39 @@ export default function Header({ user }: HeaderProps) {
                         : "border-[#F2F2F7] text-[#80838D] font-normal text-sm"
                     }
                   `}
-                >
-                  {menu.title}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
-      {/* Actions */}
-      <div className="flex w-[7%]">
-        <div
-          onClick={onLogOut}
-          className="flex items-center justify-center border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl ml-2 cursor-pointer "
-          title="خروج"
-        >
-          <HugeiconsIcon icon={Logout} size={24} color="#6E6E6E" />
+                  >
+                    {menu.title}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
-        <div className="flex items-center justify-center border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl">
-          <HugeiconsIcon icon={Notification01Icon} size={24} color="#6E6E6E" />
+        {/* Actions */}
+        <div className="flex w-[7%]">
+          <div
+            onClick={onLogOut}
+            className="flex items-center justify-center border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl ml-2 cursor-pointer"
+            title="خروج"
+          >
+            <HugeiconsIcon icon={Logout} size={24} color="#6E6E6E" />
+          </div>
+
+          <div
+            onClick={() => setProfileOpen(true)}
+            className="flex items-center justify-center border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl cursor-pointer"
+          >
+            <HugeiconsIcon icon={Edit02Icon} size={24} color="#6E6E6E" />
+          </div>
         </div>
       </div>
-    </div>
+      {profileOpen && (
+        <ModalProfile
+          open={profileOpen}
+          onClose={() => setProfileOpen(false)}
+        />
+      )}
+    </>
   );
 }

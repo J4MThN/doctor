@@ -94,9 +94,19 @@ export default function TableComment({
       key: "articleTitle",
       width: "15%",
       align: "right",
-      render: (articleTitle: string) => (
-        <span className="doctor-table-text">{articleTitle}</span>
-      ),
+      render: (articleTitle: string) => {
+        const maxLength = 40;
+        const shortText =
+          articleTitle.length > maxLength
+            ? `${articleTitle.slice(0, maxLength)}...`
+            : articleTitle;
+
+        return (
+          <span className="doctor-table-text" title={articleTitle}>
+            {shortText}
+          </span>
+        );
+      },
     },
     {
       title: "متن نظر",
@@ -104,9 +114,19 @@ export default function TableComment({
       key: "commentText",
       width: "30%",
       align: "right",
-      render: (commentText: string) => (
-        <span className="doctor-table-text">{commentText}</span>
-      ),
+      render: (commentText: string) => {
+        const maxLength = 100;
+        const shortText =
+          commentText.length > maxLength
+            ? `${commentText.slice(0, maxLength)}...`
+            : commentText;
+
+        return (
+          <span className="doctor-table-text" title={commentText}>
+            {shortText}
+          </span>
+        );
+      },
     },
     {
       title: "وضعیت",
@@ -233,26 +253,28 @@ export default function TableComment({
       theme={{ components: { Pagination: { itemActiveBg: "transparent" } } }}
     >
       <div className="doctor-table-wrapper">
-        <Table<PendingCommentResponseDto>
-          rowKey="commentId"
-          columns={columns}
-          dataSource={currentData}
-          pagination={false}
-          className="doctor-table"
-        />
-        {total > pageSize && (
-          <PaginationCostom
-            currentPage={currentPage}
-            pageSize={pageSize}
-            total={total}
-            onPageChange={handlePageChange}
+        <div className="doctor-table-content">
+          <Table<PendingCommentResponseDto>
+            rowKey="commentId"
+            columns={columns}
+            dataSource={currentData}
+            pagination={false}
+            className="doctor-table"
           />
-        )}
-        <ImageDeletComment
-          open={deleteId !== null}
-          onConfirm={handleDelete}
-          onCancel={handleCloseDeleteModal}
-        />
+          {total > pageSize && (
+            <PaginationCostom
+              currentPage={currentPage}
+              pageSize={pageSize}
+              total={total}
+              onPageChange={handlePageChange}
+            />
+          )}
+          <ImageDeletComment
+            open={deleteId !== null}
+            onConfirm={handleDelete}
+            onCancel={handleCloseDeleteModal}
+          />
+        </div>
       </div>
     </ConfigProvider>
   );

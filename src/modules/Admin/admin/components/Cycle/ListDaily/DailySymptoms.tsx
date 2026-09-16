@@ -14,7 +14,7 @@ interface DailySymptomsProps {
 
 export default function DailySymptoms({ date, symptoms }: DailySymptomsProps) {
   return (
-    <div className="w-219.25 h-122 rounded-2xl border border-[#F3F2F2] bg-white p-4">
+    <div className="w-[60%] rounded-2xl border border-[#F3F2F2] bg-white p-4">
       <div className="flex items-center mb-4">
         <span className="text-[14px] font-bold text-[#4D4D4D]">
           علائم روزانه شما
@@ -26,9 +26,9 @@ export default function DailySymptoms({ date, symptoms }: DailySymptomsProps) {
           return (
             <div
               key={index}
-              className=" w-full h-12 rounded-full border border-[#F3F2F2] bg-[#FBFBFB] flex items-center px-3"
+              className="w-full rounded-full border border-[#F3F2F2] bg-[#FBFBFB] flex items-center p-4"
             >
-              <span className=" w-[50%] text-right text-[14px] font-medium text-[#4D4D4D] ">
+              <span className="w-[50%] text-right text-[14px] font-medium text-[#4D4D4D] ">
                 {symptom.title}
               </span>
 
@@ -36,7 +36,7 @@ export default function DailySymptoms({ date, symptoms }: DailySymptomsProps) {
                 {symptom.value}
               </span>
               {symptom.icon && (
-                <div className=" w-8 h-8 rounded-full bg-[#FF93A3] flex items-center justify-center mr-2 ">
+                <div className="w-8 h-8 rounded-full bg-[#FF93A3] flex items-center justify-center mr-2 ">
                   <HugeiconsIcon
                     icon={symptom.icon}
                     size={18}

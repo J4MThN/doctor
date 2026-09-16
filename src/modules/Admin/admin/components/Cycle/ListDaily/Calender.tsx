@@ -99,10 +99,10 @@ export default function Calender({
   };
 
   return (
-    <div className="w-113 h-100 rounded-2xl border border-[#F3F2F2] bg-white pt-4 pl-6 pr-6 ">
+    <div className="w-[31%] rounded-2xl border border-[#F3F2F2] bg-white pt-4 pl-6 pr-6 pb-6">
       <div className="text-[14px] font-bold text-[#4D4D4D] mb-4">تقویم</div>
       <div className="border border-[#FFECEF] rounded-[9px]">
-        <div className="w-100.25 h-12 rounded-t-lg bg-[#FFECEF] flex items-center justify-between px-3 mb-4">
+        <div className="w-full h-12 rounded-t-lg bg-[#FFECEF] flex items-center justify-between px-3 mb-4">
           <button
             type="button"
             onClick={() => changeMonth(-1)}

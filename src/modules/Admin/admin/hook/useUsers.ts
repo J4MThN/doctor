@@ -1,23 +1,17 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { usersService } from "../services/users.service";
 import { UserProfileDto } from "../types";
-import { Users } from "../types";
-import { mapUserToTable } from "../mapping/users.mapper";
 
 export const useUsers = () => {
   const [users, setUsers] = useState<UserProfileDto[]>([]);
-  
+
   //  const [users, setUsers] = useState<Users[]>(
   //   []
   // );
-  
+
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,7 +33,6 @@ export const useUsers = () => {
       setUsers(response);
     } catch (error) {
       console.error("Get users error:", error);
-
 
       setError("خطا در دریافت لیست افراد.");
     } finally {
