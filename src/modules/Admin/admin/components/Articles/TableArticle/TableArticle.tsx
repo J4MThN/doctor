@@ -1,6 +1,6 @@
 "use client";
 
-import { ConfigProvider, Table, Spin } from "antd";
+import { ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ import ModalArticleComment from "../ModalArticleComment/ModalArticleComment";
 import { ArticleResponseDto } from "../../../types/article.types";
 import { CommentResponseDto } from "../../../types/comment.types";
 import { usePagination } from "../../../hook/usePagination";
+import TableSkeleton from "../../TableSkeleton/TableSkeleton";
 
 interface TableArticleProps {
   articles: ArticleResponseDto[];
@@ -151,7 +152,11 @@ export default function TableArticle({
         const shortText =
           desc.length > maxLength ? `${desc.slice(0, maxLength)}...` : desc;
 
-        return <span className="doctor-table-text" title={desc}>{shortText}</span>;
+        return (
+          <span className="doctor-table-text" title={desc}>
+            {shortText}
+          </span>
+        );
       },
     },
 
@@ -225,9 +230,30 @@ export default function TableArticle({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-10">
-        <Spin />
-      </div>
+      <TableSkeleton
+        columns={[
+          { width: "11.39%" },
+          { width: "23.47%" },
+          { width: "34.31%" },
+          { width: "10.21%" },
+          {
+            width: "1fr",
+            type: "button",
+            buttonWidth: 40,
+          },
+          {
+            width: "1fr",
+            type: "button",
+            buttonWidth: 40,
+          },
+          {
+            width: "1fr",
+            type: "button",
+            buttonWidth: 40,
+          },
+        ]}
+        rows={5}
+      />
     );
   }
 

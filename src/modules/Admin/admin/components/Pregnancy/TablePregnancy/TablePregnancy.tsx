@@ -1,6 +1,6 @@
 "use client";
 
-import { ConfigProvider, Spin, Table } from "antd";
+import { ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
 import PaginationCostom from "../../Pagination/PaginationCostom";
@@ -10,6 +10,7 @@ import { PregnancyTableData } from "../../../hook/usePregnancies";
 import EmptyImage from "@/src/assest/defualimage/Empty.svg";
 import Image from "next/image";
 import { usePagination } from "../../../hook/usePagination";
+import TableSkeleton from "../../TableSkeleton/TableSkeleton";
 
 interface DoctorsTableProps {
   pregnancies: PregnancyTableData[];
@@ -124,9 +125,17 @@ export default function TablePregnancy({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-10">
-        <Spin />
-      </div>
+      <TableSkeleton
+        columns={[
+          { width: "20%" },
+          { width: "20%" },
+          { width: "10%" },
+          { width: "10%" },
+          { width: "20%" },
+          { width: "20%" },
+        ]}
+        rows={5}
+      />
     );
   }
 

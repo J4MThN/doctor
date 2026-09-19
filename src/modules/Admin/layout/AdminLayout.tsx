@@ -27,8 +27,13 @@ export default function AdminLayout() {
   if (pathname.startsWith("/admin/article/addarticle")) {
     items = ["خانه", "لیست مقالات", "افزودن مقاله"];
   }
-
-  if (pathname.startsWith("/admin/cycle/")) {
+  
+  if (
+    pathname.startsWith("/admin/cycle/") &&
+    pathname.split("/").length === 5
+  ) {
+    items = ["خانه", "لیست افراد", "لیست سیکل ها", "لیست علائم روزانه"];
+  } else if (pathname.startsWith("/admin/cycle/")) {
     items = ["خانه", "لیست افراد", "لیست سیکل ها"];
   }
 

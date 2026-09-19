@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import { ConfigProvider, Spin, Table } from "antd";
+import { ConfigProvider, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -19,6 +19,7 @@ import Image from "next/image";
 import CommentImage from "@/src/assest/defualimage/comment.svg";
 import { PendingCommentResponseDto } from "../../../types/comment.types";
 import { usePagination } from "../../../hook/usePagination";
+import TableSkeleton from "../../TableSkeleton/TableSkeleton";
 
 interface TableCommentProps {
   comments: PendingCommentResponseDto[];
@@ -55,9 +56,21 @@ export default function TableComment({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-10">
-        <Spin />
-      </div>
+      <TableSkeleton
+        columns={[
+          { width: "10%" },
+          { width: "42%" },
+          { width: "20%" },
+               {
+            width: "15%",
+          },
+            {
+            width: "8%",
+            buttonWidth: 40,
+          },
+        ]}
+        rows={5}
+      />
     );
   }
 

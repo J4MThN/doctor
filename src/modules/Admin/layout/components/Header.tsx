@@ -8,7 +8,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Edit02Icon, Logout } from "@hugeicons/core-free-icons";
 import { useLogout } from "@/src/shared/auth/use-logout";
 import { useState } from "react";
-import ModalProfile from "./ModalProfile";
+import ModalProfile from "./Modals/ModalProfile";
+import ModalLogout from "./Modals/ModalLogOut";
 
 type HeaderUser = {
   firstName: string;
@@ -27,8 +28,16 @@ export default function Header({ user }: HeaderProps) {
   const { logout } = useLogout();
 
   const [profileOpen, setProfileOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
-  const onLogOut = async () => {
+  const onLogOut = async (confirm = false) => {
+    if (!confirm) {
+      setLogoutOpen(true);
+      return;
+    }
+
+    setLogoutOpen(false);
+
     await logout();
   };
 
@@ -133,7 +142,7 @@ export default function Header({ user }: HeaderProps) {
         {/* Actions */}
         <div className="flex w-[7%]">
           <div
-            onClick={onLogOut}
+            onClick={() => onLogOut()}
             className="flex items-center justify-center border-2 border-[#E5E5EA] w-12 h-12 rounded-4xl ml-2 cursor-pointer"
             title="خروج"
           >
@@ -154,6 +163,12 @@ export default function Header({ user }: HeaderProps) {
           onClose={() => setProfileOpen(false)}
         />
       )}
+
+      <ModalLogout
+        open={logoutOpen}
+        onConfirm={() => onLogOut(true)}
+        onCancel={() => setLogoutOpen(false)}
+      />
     </>
   );
 }

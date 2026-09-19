@@ -15,6 +15,7 @@ import { getMediaUrl } from "@/src/core/utils/media.util";
 import EmptyImage from "@/src/assest/defualimage/Empty.svg";
 import Image from "next/image";
 import { usePagination } from "../../../hook/usePagination";
+import TableSkeleton from "../../TableSkeleton/TableSkeleton";
 
 interface TablePointProps {
   notes: NoteDto[];
@@ -167,6 +168,30 @@ export default function TablePoint({
       },
     },
   ];
+
+  if (loading) {
+    return (
+      <TableSkeleton
+        columns={[
+          { width: "11%" },
+          { width: "25%" },
+          { width: "28%" },
+          { width: "14%" },
+          {
+            width: "8%",
+            type: "button",
+            buttonWidth: 40,
+          },
+          {
+            width: "8%",
+            type: "button",
+            buttonWidth: 40,
+          },
+        ]}
+        rows={5}
+      />
+    );
+  }
 
   if (!notes.length) {
     return (

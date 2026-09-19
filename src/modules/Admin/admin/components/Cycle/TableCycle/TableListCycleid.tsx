@@ -13,6 +13,7 @@ import EmptyImage from "@/src/assest/defualimage/Empty.svg";
 import Image from "next/image";
 import { CycleDto } from "../../../types/cycle.types";
 import { usePagination } from "../../../hook/usePagination";
+import TableSkeleton from "../../TableSkeleton/TableSkeleton";
 
 interface DoctorsTableProps {
   activeDoctorId?: string;
@@ -104,7 +105,25 @@ export default function TableListCycleid({
     },
   ];
 
-  if (!loading && !cycles.length) {
+  if (loading) {
+    return (
+      <TableSkeleton
+        columns={[
+          { width: "25%" },
+          { width: "20%" },
+          { width: "20%" },
+          {
+            width: "1fr",
+            type: "button",
+            buttonWidth: 140,
+          },
+        ]}
+        rows={5}
+      />
+    );
+  }
+
+  if (!cycles.length) {
     return (
       <div className="py-10 flex flex-col items-center justify-center">
         <Image
@@ -139,7 +158,6 @@ export default function TableListCycleid({
             rowKey="id"
             columns={columns}
             dataSource={currentData}
-            loading={loading}
             pagination={false}
             className="doctor-table"
           />

@@ -33,26 +33,25 @@ export default function ModalArticleComment({
         dir="rtl"
         className="w-200 min-h-60 rounded-3xl bg-white flex flex-col"
       >
-        <div className="flex items-center justify-between pt-6 px-6">
-          <div className="flex items-start justify-start">
-            <button type="button" onClick={onClose} className="cursor-pointer">
-              <HugeiconsIcon
-                icon={Cancel01Icon}
-                size={24}
-                strokeWidth={2}
-                className="text-[#FF657D]"
-              />
-            </button>
+        <div className="flex justify-between item-start p-4 bg-[#FFECEF] mb-2 rounded-t-3xl">
+          <div className="flex items-center">
+            <h2 className="text-[14px] font-bold text-[#6666C6] pr-2">
+              {" "}
+              لیست نظرات مقاله ی{" "}
+            </h2>
+            <span className="text-[14px] font-bold text-[#808080] mr-2">
+              ({articleTitle})
+            </span>
           </div>
-        </div>
-        <div className="flex item-start p-6 bg-[#FFECEF] mt-4 mb-2">
-          <h2 className="text-[16px] font-bold text-[#6666C6] pr-2">
-            {" "}
-            لیست نظرات مقاله ی{" "}
-          </h2>
-          <span className="text-[16px] font-bold text-[#808080] mr-2">
-            ({articleTitle})
-          </span>
+
+          <button type="button" onClick={onClose} className="cursor-pointer">
+            <HugeiconsIcon
+              icon={Cancel01Icon}
+              size={24}
+              strokeWidth={2}
+              className="text-[#FF657D]"
+            />
+          </button>
         </div>
 
         <div className="p-6 flex-1 min-h-0">
@@ -76,7 +75,7 @@ export default function ModalArticleComment({
             <div
               className="custom-scrollbar overflow-y-auto overflow-x-hidden p-3"
               style={{
-                maxHeight: comments.length > 2 ? "200px" : "none",
+                maxHeight: comments.length > 3 ? "300px" : "none",
                 direction: "ltr",
               }}
             >

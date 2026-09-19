@@ -11,6 +11,7 @@ import PaginationCostom from "../../Pagination/PaginationCostom";
 
 import { UserProfileDto } from "../../../types";
 import { usePagination } from "../../../hook/usePagination";
+import TableSkeleton from "../../TableSkeleton/TableSkeleton";
 
 interface TableCycleProps {
   users: UserProfileDto[];
@@ -147,6 +148,27 @@ export default function TableCycle({
     },
   ];
 
+  if (loading) {
+    return (
+      <TableSkeleton
+        columns={[
+          { width: "10%" },
+          { width: "13%" },
+          { width: "17%" },
+          { width: "12%" },
+          { width: "16%" },
+          { width: "16%" },
+          {
+            width: "10%",
+            type: "button",
+            buttonWidth: 130,
+          },
+        ]}
+        rows={5}
+      />
+    );
+  }
+
   return (
     <ConfigProvider
       direction="rtl"
@@ -164,7 +186,6 @@ export default function TableCycle({
             rowKey="id"
             columns={columns}
             dataSource={currentData}
-            loading={loading}
             pagination={false}
             className="doctor-table"
           />

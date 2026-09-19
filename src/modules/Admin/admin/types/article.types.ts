@@ -13,6 +13,7 @@ export interface UpdateArticleRequestDto {
   timeRead: number;
   title: string;
   desc: string;
+  imagePath: string;
 }
 
 export interface AddArticleImageRequestDto {

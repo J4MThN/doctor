@@ -120,6 +120,7 @@ function EditArticleForm({
       type: subject,
       categoryId: categoryId!,
       timeRead: timeRead!,
+      imagePath: articleData.imagePath,
     });
 
     if (success) {

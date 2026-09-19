@@ -1,11 +1,9 @@
 @import "tailwindcss";
 
 :root {
-
   --background: #ffffff;
   --foreground: #171717;
 }
-
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -20,7 +18,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-body , html  {
+body,
+html {
   overflow-x: hidden;
 }
 
@@ -45,11 +44,11 @@ body , html  {
   }
 }
 
-.ant-input-number .ant-input-number-input{
+.ant-input-number .ant-input-number-input {
   font-family: "Vazirmatn", sans-serif !important;
   font-size: 12px !important;
   font-weight: 400 !important;
-} 
+}
 
 /* =========================
    Doctors Table
@@ -68,13 +67,13 @@ body , html  {
   flex-direction: column;
 }
 
-.doctor-table-wrapper .ant-table{
-    border: 1px solid #E5E5EA;
-    border-radius: 24px;
-    overflow: hidden;
+.doctor-table-wrapper .ant-table {
+  border: 1px solid #e5e5ea;
+  border-radius: 24px;
+  overflow: hidden;
 }
 
-.doctor-table-wrapper .ant-table-container{
+.doctor-table-wrapper .ant-table-container {
   border-radius: 24px;
   overflow: hidden;
 }
@@ -102,7 +101,7 @@ body , html  {
 
   text-align: center;
 
-  border-bottom: 1px solid #E5E5EA !important;
+  border-bottom: 1px solid #e5e5ea !important;
 }
 
 .doctor-table .ant-table-thead > tr > th::before {
@@ -120,22 +119,19 @@ body , html  {
   font-size: 14px !important;
   font-weight: 300 !important;
 
-  border-bottom: 1px solid #F2F2F7 !important;
+  border-bottom: 1px solid #f2f2f7 !important;
 }
 
-.doctor-table
-  .ant-table-tbody
-  > tr:last-child
-  > td {
+.doctor-table .ant-table-tbody > tr:last-child > td {
   border-bottom: none !important;
 }
 
-.font-text-table{
-  font-family: "IranYekan" , sans-serif !important;
+.font-text-table {
+  font-family: "IranYekan", sans-serif !important;
 }
 
-.font-text-Button{
-  font-family: "Vazirmatn" , sans-serif !important;
+.font-text-Button {
+  font-family: "Vazirmatn", sans-serif !important;
 }
 
 .doctor-table-text {
@@ -146,22 +142,19 @@ body , html  {
   white-space: nowrap;
 }
 
-.doctor-table-text-statuse-comment{
+.doctor-table-text-statuse-comment {
   font-family: "Vazirmatn", sans-serif;
   font-weight: 400;
 }
 
-.doctor-table
-  .ant-table-tbody
-  > tr:hover
-  > td {
+.doctor-table .ant-table-tbody > tr:hover > td {
   background: #ffffff !important;
 }
 
 .cycle-button {
   min-width: 132px;
   height: 38px;
-  font-family: 'Vazirmatn';
+  font-family: "Vazirmatn";
   padding: 0 12px !important;
 
   display: inline-flex;
@@ -169,7 +162,7 @@ body , html  {
   justify-content: center;
   gap: 5px;
 
-  border: 1px solid #C7C7CC ;
+  border: 1px solid #c7c7cc;
   border-radius: 20px !important;
 
   background: #ffffff !important;
@@ -217,12 +210,9 @@ body , html  {
   color: #ff657d !important;
 }
 
-.doctor-table
-  .ant-table-content
-  table {
+.doctor-table .ant-table-content table {
   border-spacing: 0;
 }
-
 
 .doctor-table .pagination-number {
   direction: rtl;
@@ -245,7 +235,7 @@ body , html  {
 .poin-button {
   min-width: 40px;
   height: 40px;
-  font-family: 'Vazirmatn';
+  font-family: "Vazirmatn";
   padding: 0 12px !important;
 
   display: inline-flex;
@@ -253,7 +243,7 @@ body , html  {
   justify-content: center;
   gap: 5px;
 
-  border: 1px solid #e5e5ea ;
+  border: 1px solid #e5e5ea;
   border-radius: 20px !important;
 
   background: #ffffff !important;
@@ -298,26 +288,23 @@ body , html  {
   color: #ff657d !important;
 }
 
-
 .font-input-article {
- font-family: 'Vazirmatn'!important ;
+  font-family: "Vazirmatn" !important ;
   font-size: 14px !important;
   font-weight: 400 !important;
-
 }
 
 /* pagination */
 
-.doctor-pagination-wrapper{
+.doctor-pagination-wrapper {
   height: 48px;
   margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
-.doctor-pagination-wrapper .ant-pagination{
+.doctor-pagination-wrapper .ant-pagination {
   direction: ltr;
   display: flex;
   align-items: center;
@@ -325,8 +312,7 @@ body , html  {
   margin: 0 !important;
 }
 
-.doctor-pagination-wrapper
-  .ant-pagination-item {
+.doctor-pagination-wrapper .ant-pagination-item {
   min-width: 34px;
   width: 34px;
   height: 34px;
@@ -343,15 +329,11 @@ body , html  {
   justify-content: center;
 }
 
-.doctor-pagination-wrapper
-  .ant-pagination-item:hover {
-     background: #fff1f3 !important;
-  }
+.doctor-pagination-wrapper .ant-pagination-item:hover {
+  background: #fff1f3 !important;
+}
 
-
-.doctor-pagination-wrapper
-  .ant-pagination-item
-  a {
+.doctor-pagination-wrapper .ant-pagination-item a {
   width: 34px;
   height: 34px;
 
@@ -361,43 +343,32 @@ body , html  {
 
   color: #ff657d !important;
 
-  font-family: "IranYekan" , sans-serif !important;
+  font-family: "IranYekan", sans-serif !important;
 
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
 }
 
-
-.doctor-pagination-wrapper
-  .ant-pagination-item-active {
+.doctor-pagination-wrapper .ant-pagination-item-active {
   border: 1px solid #ff657d !important;
   background: #fff1f3 !important;
 }
 
-.doctor-pagination-wrapper
-  .ant-pagination-item-active
-  a {
+.doctor-pagination-wrapper .ant-pagination-item-active a {
   color: #ff657d !important;
 }
 
-
-.doctor-pagination-wrapper
-  .ant-pagination-prev,
-.doctor-pagination-wrapper
-  .ant-pagination-next {
+.doctor-pagination-wrapper .ant-pagination-prev,
+.doctor-pagination-wrapper .ant-pagination-next {
   width: 34px;
   height: 34px;
 
   margin-inline: 5px;
 }
 
-.doctor-pagination-wrapper
-  .ant-pagination-prev
-  .ant-pagination-item-link,
-.doctor-pagination-wrapper
-  .ant-pagination-next
-  .ant-pagination-item-link {
+.doctor-pagination-wrapper .ant-pagination-prev .ant-pagination-item-link,
+.doctor-pagination-wrapper .ant-pagination-next .ant-pagination-item-link {
   border: none !important;
   background: transparent !important;
 }
@@ -409,31 +380,29 @@ body , html  {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .pagination-arrow-active {
-  color: #FF657D;
+  color: #ff657d;
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
 
 .pagination-arrow-active:hover {
   opacity: 0.7;
-} 
+}
 .pagination-arrow-disabled {
   color: #aeaeb2;
   cursor: default;
   opacity: 0.7;
 }
 
-
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #F1F1F5;
+  background: #f1f1f5;
   border-radius: 9999px;
 }
 
@@ -444,4 +413,21 @@ body , html  {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #5555b5;
+}
+
+/* selection */
+
+.table-skeleton .ant-skeleton-input,
+.table-skeleton .ant-skeleton-button {
+  background: #eeeeff;
+}
+
+.table-skeleton .ant-skeleton-input::after,
+.table-skeleton .ant-skeleton-button::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(102, 102, 198, 0.18),
+    transparent
+  );
 }
