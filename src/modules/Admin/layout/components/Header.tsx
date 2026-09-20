@@ -1,6 +1,6 @@
 "use client";
 
-import Prof from "@/src/assest/profdoctor/nody-عکس-پزشکی-1633070672.webp";
+import Prof from "@/src/assest/defualimage/Profile.svg";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 

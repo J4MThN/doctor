@@ -16,5 +16,5 @@ export interface UpdateUserProfileDto {
   lastName: string;
   birthDate: string;
   maritalStatus: string;
-  newPassword: string;
+  newPassword?: string;
 }
