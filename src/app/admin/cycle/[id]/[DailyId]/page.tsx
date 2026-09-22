@@ -1,7 +1,6 @@
 import { ListDaily } from "@/src/modules/Admin/admin/components/Cycle/ListDaily/ListDaily";
-import { user } from "@/src/modules/Admin/admin/data/users";
+import { usersService } from "@/src/modules/Admin/admin/services/users.service";
 
- 
 const page = async ({
   params,
 }: {
@@ -9,13 +8,16 @@ const page = async ({
 }) => {
   const { id, DailyId } = await params;
 
-  const selectedUser = user.find((item) => String(item.key) === String(id));
+  const selectedUser = await usersService.getById(Number(id));
+
   return (
     <div className="flex w-full flex-1 min-h-0 bg-white">
       <div className=" w-full min-h-0 m-6 rounded-3xl bg-[#F9F9FB]">
         <div className="flex mt-4 mr-6 font-bold text-[#6666C6]">
           <span className="text-[16px] ml-2"> لیست علائم روزانه </span>
-          <span className="text-[14px] ml-2 text-[#FF657D] font-normal pt-1">({selectedUser?.name})</span>
+          <span className="text-[14px] ml-2 text-[#FF657D] font-normal pt-1">
+            (({selectedUser?.firstName} {selectedUser?.lastName}))
+          </span>
         </div>
         <div className="mx-4 mt-4">
           <ListDaily id={id} cycleId={DailyId} />

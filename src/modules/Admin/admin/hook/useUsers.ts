@@ -8,10 +8,6 @@ import { UserProfileDto } from "../types";
 export const useUsers = () => {
   const [users, setUsers] = useState<UserProfileDto[]>([]);
 
-  //  const [users, setUsers] = useState<Users[]>(
-  //   []
-  // );
-
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,14 +15,6 @@ export const useUsers = () => {
     try {
       setLoading(true);
       setError(null);
-
-      // const totalUsers = response.length;
-
-      // const tableUsers = response.map((user) =>
-      //   mapUserToTable(user, totalUsers)
-      // );
-
-      // setUsers(tableUsers);
 
       const response = await usersService.getAll();
 
