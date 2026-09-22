@@ -29,7 +29,7 @@ export default function TableCycle({
     usePagination(users, 7);
 
   const handleCycleList = (id: string) => {
-    router.push(`/admin/cycle/${id}`);
+    router.push(`/admin/cycle/detail?id=${id}`);
   };
 
   const maritalStatusMap: Record<string, string> = {

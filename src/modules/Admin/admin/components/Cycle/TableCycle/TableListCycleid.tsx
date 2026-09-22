@@ -34,7 +34,7 @@ export default function TableListCycleid({
     usePagination(cycles, 7);
 
   const handleCycleList = (cycleId: number) => {
-    router.push(`/admin/cycle/${userId}/${cycleId}`);
+    router.push(`/admin/cycle/daily?id=${userId}&DailyId=${cycleId}`);
   };
 
   const columns: ColumnsType<CycleDto> = [
